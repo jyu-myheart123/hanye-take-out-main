@@ -1,0 +1,1 @@
+INSERT INTO hanye_take_out.employee (name, account, password, phone, age, gender, status) VALUES ('超级管理员', 'cyh', 'e10adc3949ba59abbe56e057f20f883e', '13800138000', 25, 1, 1);
