@@ -1,14 +1,11 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <router-view />
+  <div class="app-shell">
+    <router-view />
+  </div>
 </template>
 
-<style>
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+<style scoped>
+.app-shell {
+  min-height: 100vh;
 }
 </style>

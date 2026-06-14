@@ -1,82 +1,59 @@
 <script setup lang="ts">
-// 引入组件
+import { onMounted, ref, watch } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import TurnoverStatistics from './components/TurnoverStatistics.vue'
 import UserStatistics from './components/UserStatistics.vue'
 import OrderStatistics from './components/OrderStatistics.vue'
 import Top from './components/Top10.vue'
-
-import { onMounted, ref, watch } from 'vue'
+import { get1stAndToday, past7Day, past30Day, pastWeek, pastMonth } from '@/utils/date'
 import {
-  get1stAndToday,
-  past7Day,
-  past30Day,
-  pastWeek,
-  pastMonth,
-} from '@/utils/date'
-import {
-  getTurnoverStatisticsAPI,
-  getUserStatisticsAPI,
+  exportInforAPI,
   getOrderStatisticsAPI,
   getTop10StatisticsAPI,
-  exportInforAPI,
+  getTurnoverStatisticsAPI,
+  getUserStatisticsAPI,
 } from '@/api/statistics'
-import { ElMessage, ElMessageBox } from 'element-plus'
-
 
 interface TurnoverData {
-  dateList: string[];
-  turnoverList: number[];
+  dateList: string[]
+  turnoverList: number[]
 }
+
 interface UserData {
-  dateList: string[];
-  totalUserList: number[];
-  newUserList: number[];
+  dateList: string[]
+  totalUserList: number[]
+  newUserList: number[]
 }
+
 interface OrderData {
-  orderCompletionRate: number;
-  validOrderCount: number;
-  totalOrderCount: number;
+  orderCompletionRate: number
+  validOrderCount: number
+  totalOrderCount: number
   data: {
-    dateList: string[];
-    orderCountList: number[];
-    validOrderCountList: number[];
-  };
+    dateList: string[]
+    orderCountList: number[]
+    validOrderCountList: number[]
+  }
 }
+
 interface Top10Data {
-  nameList: string[];
-  numberList: number[];
+  nameList: string[]
+  numberList: number[]
 }
 
 const overviewData = ref({})
-// const flag = ref(2)
 const tateData = ref<string[]>([])
-const turnoverData = ref<TurnoverData>({
-  dateList: [],
-  turnoverList: []
-})
-const userData = ref<UserData>({
-  dateList: [],
-  totalUserList: [],
-  newUserList: []
-})
+const turnoverData = ref<TurnoverData>({ dateList: [], turnoverList: [] })
+const userData = ref<UserData>({ dateList: [], totalUserList: [], newUserList: [] })
 const orderData = ref<OrderData>({
   orderCompletionRate: 0,
   validOrderCount: 0,
   totalOrderCount: 0,
-  data: {
-    dateList: [],
-    orderCountList: [],
-    validOrderCountList: []
-  }
+  data: { dateList: [], orderCountList: [], validOrderCountList: [] },
 })
-const top10Data = ref<Top10Data>({
-  nameList: [],
-  numberList: []
-})
-
-onMounted(() => {
-  getTitleNum(2)
-})
+const top10Data = ref<Top10Data>({ nameList: [], numberList: [] })
+const nowIndex = ref(1)
+const tabsParam = ['昨日', '近 7 日', '近 30 日', '本周', '本月']
 
 const init = (begin: string, end: string) => {
   getTurnoverStatisticsData(begin, end)
@@ -85,17 +62,14 @@ const init = (begin: string, end: string) => {
   getTopData(begin, end)
 }
 
-// chart1 营业额统计
 const getTurnoverStatisticsData = async (begin: string, end: string) => {
   const { data } = await getTurnoverStatisticsAPI({ begin, end })
   turnoverData.value = {
     dateList: data.data.dateList.split(','),
-    turnoverList: data.data.turnoverList.split(',')
+    turnoverList: data.data.turnoverList.split(','),
   }
-  console.log('获取到营业额统计数据：', turnoverData.value)
 }
 
-// chart2 用户统计
 const getUserStatisticsData = async (begin: string, end: string) => {
   const { data: res } = await getUserStatisticsAPI({ begin, end })
   userData.value = {
@@ -103,10 +77,8 @@ const getUserStatisticsData = async (begin: string, end: string) => {
     totalUserList: res.data.totalUserList.split(','),
     newUserList: res.data.newUserList.split(','),
   }
-  console.log('获取到用户统计数据：', userData.value)
 }
 
-// chart3 订单统计
 const getOrderStatisticsData = async (begin: string, end: string) => {
   const { data: res } = await getOrderStatisticsAPI({ begin, end })
   orderData.value = {
@@ -117,22 +89,18 @@ const getOrderStatisticsData = async (begin: string, end: string) => {
     },
     totalOrderCount: res.data.totalOrderCount,
     validOrderCount: res.data.validOrderCount,
-    orderCompletionRate: res.data.orderCompletionRate
+    orderCompletionRate: res.data.orderCompletionRate,
   }
-  console.log('获取到订单统计数据：', orderData.value)
 }
 
-// chart4 销量排名TOP10
 const getTopData = async (begin: string, end: string) => {
   const { data: res } = await getTop10StatisticsAPI({ begin, end })
   top10Data.value = {
     nameList: res.data.nameList.split(',').reverse(),
     numberList: res.data.numberList.split(',').reverse(),
   }
-  console.log('获取到销量top10统计数据：', top10Data.value)
 }
 
-// 获取当前选中的tab时间
 const getTitleNum = (data: number) => {
   switch (data) {
     case 1:
@@ -151,225 +119,175 @@ const getTitleNum = (data: number) => {
       tateData.value = pastMonth()
       break
   }
-  // 根据新的时间段获取数据
   init(tateData.value[0], tateData.value[1])
 }
 
-const nowIndex = ref(0);
-const tabsParam = ['昨日', '近7日', '近30日', '本周', '本月'];
-
 watch(nowIndex, (val) => {
-  // 在这里执行 flag 变化时的操作
-  console.log('Flag 变化为:', val);
+  getTitleNum(val + 1)
 })
 
 const toggleTabs = (index: number) => {
-  nowIndex.value = index;
-  getTitleNum(index + 1);
-};
-
+  nowIndex.value = index
+}
 
 const handleExport = async () => {
   try {
-    const confirm = await ElMessageBox.confirm(
-      '是否导出最近30天运营数据?',
-      '导出数据',
-      {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning',
-      }
-    );
-    // 如果用户确认导出
+    const confirm = await ElMessageBox.confirm('是否导出最近 30 天的运营数据？', '导出数据', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+
     if (confirm) {
-      const { data } = await exportInforAPI();
-      // 程序模拟点击a标签行为，实现下载excel功能
-      let url = window.URL.createObjectURL(data);
-      var a = document.createElement('a');
-      document.body.appendChild(a);
-      a.href = url;
-      a.download = '运营数据统计报表.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-      ElMessage({
-        type: 'success',
-        message: '导出成功',
-      });
+      const { data } = await exportInforAPI()
+      const url = window.URL.createObjectURL(data)
+      const a = document.createElement('a')
+      document.body.appendChild(a)
+      a.href = url
+      a.download = '运营数据统计报表.xlsx'
+      a.click()
+      window.URL.revokeObjectURL(url)
+      ElMessage.success('导出成功')
     }
   } catch (error) {
-    // 捕获 ElMessageBox.confirm 的取消操作
     if (error === 'cancel') {
-      ElMessage({
-        type: 'info',
-        message: '取消导出',
-      });
-    } else {
-      console.error('导出失败:', error);
-      ElMessage({
-        type: 'error',
-        message: '导出失败',
-      });
+      ElMessage.info('已取消导出')
+      return
     }
+    console.error('导出失败:', error)
+    ElMessage.error('导出失败')
   }
-};
+}
+
+onMounted(() => {
+  getTitleNum(2)
+})
 </script>
 
 <template>
-  <div class="title-index">
-    <div class="tab-change">
-      <div class="tab-item" v-for="(item, index) in tabsParam" @click="toggleTabs(index)"
-        :class="{ active: index === nowIndex }" :key="index">
-        <div class="item">{{ item }}</div>
+  <div class="statistics-shell">
+    <div class="page-head">
+      <div class="page-head__meta">
+        <h2>经营数据统计</h2>
+        <p>围绕营收、用户、订单与销量 Top10 提供同一视觉体系下的数据分析页面。</p>
       </div>
-      <div class="get-time">
-        <p> 已选时间：{{ tateData[0] }} 至 {{ tateData[tateData.length - 1] }} </p>
+      <div class="page-head__stats">
+        <span class="page-stat">总订单 <strong>{{ orderData.totalOrderCount || 0 }}</strong></span>
+        <span class="page-stat">有效订单 <strong>{{ orderData.validOrderCount || 0 }}</strong></span>
+        <span class="page-stat">完成率 <strong>{{ ((orderData.orderCompletionRate || 0) * 100).toFixed(0) }}%</strong></span>
       </div>
     </div>
-    <el-button type="success" @click="handleExport">数据导出</el-button>
-  </div>
-  <div class="page">
-    <el-row :gutter="20">
-      <div class="turnover">
-        <!-- 营业额统计 -->
+
+    <div class="statistics-toolbar">
+      <div class="tab-change">
+        <div
+          v-for="(item, index) in tabsParam"
+          :key="index"
+          class="tab-item"
+          :class="{ active: index === nowIndex }"
+          @click="toggleTabs(index)"
+        >
+          <div class="item">{{ item }}</div>
+        </div>
+      </div>
+      <div class="time-range">已选时间：{{ tateData[0] }} 至 {{ tateData[tateData.length - 1] }}</div>
+      <el-button type="primary" size="large" @click="handleExport">导出数据报表</el-button>
+    </div>
+
+    <div class="statistics-grid">
+      <section class="stat-card">
         <TurnoverStatistics :turnoverdata="turnoverData" />
-      </div>
-      <div class="user">
-        <!-- 用户统计 -->
+      </section>
+      <section class="stat-card">
         <UserStatistics :userdata="userData" />
-      </div>
-    </el-row>
-    <el-row :gutter="20">
-      <div class="order">
-        <!-- 订单统计 -->
+      </section>
+      <section class="stat-card">
         <OrderStatistics :orderdata="orderData" :overviewData="overviewData" />
-      </div>
-      <div class="top10">
-        <!-- 销量排名TOP10 -->
+      </section>
+      <section class="stat-card">
         <Top :top10data="top10Data" />
-      </div>
-    </el-row>
+      </section>
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.page {
-  margin: 20px;
-  padding: 0;
-  background-color: #e9f5ff;
+.statistics-shell {
+  padding: 10px 6px 24px;
 }
 
-.title-index {
+.statistics-toolbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin: 20px 30px 0 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
 
-  .tab-change {
-    display: flex;
-    border-radius: 4px;
+.tab-change {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(23, 50, 57, 0.06);
+}
 
-    .tab-item {
-      width: 100px;
-      height: 40px;
-      text-align: center;
-      line-height: 40px;
-      color: #333;
-      border: 1px solid #e5e4e4;
-      background-color: white;
-      border-left: none;
-      cursor: pointer;
+.tab-item {
+  min-width: 98px;
+  padding: 10px 14px;
+  text-align: center;
+  border-radius: 999px;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
 
-      .special-item {
-        .el-badge__content {
-          width: 20px;
-          padding: 0 5px;
-        }
-      }
-    }
+.tab-item.active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(239, 143, 53, 0.24);
+}
 
-    .get-time {
-      width: 300px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      align-items: center;
-      font-size: 14px;
-      color: #333;
-    }
+.time-range {
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text-sub);
+  box-shadow: inset 0 0 0 1px rgba(23, 50, 57, 0.06);
+}
 
-    .active {
-      background-color: #22ccff;
-      font-weight: bold;
-    }
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
 
-    .tab-item:first-child {
-      border-left: 1px solid #e5e4e4;
-    }
+.stat-card {
+  min-height: 420px;
+  padding: 22px;
+  border-radius: 28px;
+  background: rgba(255, 252, 247, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 1024px) {
+  .statistics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .statistics-toolbar {
+    align-items: stretch;
   }
 
-}
+  .tab-change {
+    flex-wrap: wrap;
+  }
 
-
-.el-select {
-  margin: 20px;
-  width: 100px;
-  float: right;
-  right: 40px;
-}
-
-.turnover {
-  display: inline-block;
-  width: 48%;
-  height: 440px;
-  margin: 10px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-.user {
-  display: inline-block;
-  width: 48%;
-  height: 440px;
-  margin: 10px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  vertical-align: top;
-}
-
-.order {
-  display: inline-block;
-  width: 48%;
-  height: 450px;
-  margin: 10px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-.top10 {
-  display: inline-block;
-  width: 48%;
-  height: 450px;
-  margin: 10px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  vertical-align: top;
-}
-</style>
-
-<!-- 全局样式 -->
-<style>
-.my-card {
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  /* justify-content: center; */
-}
-
-.pagination {
-  justify-content: center;
+  .time-range {
+    width: 100%;
+  }
 }
 </style>

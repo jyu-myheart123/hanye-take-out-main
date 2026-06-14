@@ -1,36 +1,33 @@
 <script setup lang="ts">
-
 import { reactive, ref } from 'vue'
-import { getDishPageListAPI, updateDishStatusAPI, deleteDishesAPI } from '@/api/dish'
-import { getCategoryPageListAPI } from '@/api/category'
-import { ElMessage, ElMessageBox, ElTable } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox, ElTable } from 'element-plus'
+import { deleteDishesAPI, getDishPageListAPI, updateDishStatusAPI } from '@/api/dish'
+import { getCategoryPageListAPI } from '@/api/category'
 
-// ------ .d.ts 属性类型接口 ------
-// 接收到不在接口中定义的属性的数据，ts会报错，但是类型推断错误不会妨碍接收，控制台还是能打印的
-interface dish {
+interface Dish {
   id: number
   name: string
   pic: string
   detail: string
   price: number
-  status: string
+  status: number
   categoryId: number
   updateTime: string
 }
+
 interface Category {
   id: number
   name: string
 }
 
-
-// ------ 数据 ------
-
-// 当前页的菜品列表
-const dishList = ref<dish[]>([])
-// 菜品id对应的分类列表，即categoryId字段不能只展示id值，应该根据id查询到对应的分类名进行回显
+const router = useRouter()
+const dishList = ref<Dish[]>([])
 const categoryList = ref<Category[]>([])
-// 分页参数
+const total = ref(0)
+const multiTableRef = ref<InstanceType<typeof ElTable>>()
+const multiSelection = ref<Dish[]>([])
+
 const pageData = reactive({
   name: '',
   categoryId: '',
@@ -38,267 +35,185 @@ const pageData = reactive({
   page: 1,
   pageSize: 6,
 })
-const total = ref(0)
+
 const options = [
-  {
-    value: '1',
-    label: '起售',
-  },
-  {
-    value: '0',
-    label: '停售',
-  }
+  { value: '1', label: '起售' },
+  { value: '0', label: '停售' },
 ]
 
-
-
-// ------ 方法 ------
-
-// 页面初始化
 const init = async () => {
-  const { data: res_category } = await getCategoryPageListAPI({ page: 1, pageSize: 100, type: 1 })
-  console.log('分类列表')
-  console.log(res_category.data)
-  categoryList.value = res_category.data.records
-  console.log('categoryList: ', categoryList.value)
+  const { data: resCategory } = await getCategoryPageListAPI({ page: 1, pageSize: 100, type: 1 })
+  categoryList.value = resCategory.data.records
 }
-// 刷新页面数据
+
 const showPageList = async () => {
   const { data: res } = await getDishPageListAPI(pageData)
-  console.log('菜品列表')
-  console.log(res.data)
   dishList.value = res.data.records
   total.value = res.data.total
 }
-init() // 页面初始化，写在这里时的生命周期是beforecreated/created的时候
-showPageList() // 页面一开始就要展示分页菜品列表
 
-// 监听翻页和每页显示数量的变化
+init()
+showPageList()
+
 const handleCurrentChange = (val: number) => {
   pageData.page = val
-  // 根据输入框是否有值/进行了查询，来决定是所有歌曲还是查询后的列表
   showPageList()
 }
 
 const handleSizeChange = (val: number) => {
   pageData.pageSize = val
-  // 根据输入框是否有值/进行了查询，来决定是所有歌曲还是查询后的列表
   showPageList()
 }
 
-const multiTableRef = ref<InstanceType<typeof ElTable>>()
-const multiSelection = ref<dish[]>([])
-
-const handleSelectionChange = (val: dish[]) => {
+const handleSelectionChange = (val: Dish[]) => {
   multiSelection.value = val
-  console.log('value', val)
-  console.log('multiSelection.value', multiSelection.value)
 }
 
-// 新增和修改菜品都是同一个页面，不过要根据路径传参的方式来区分
-const router = useRouter()
-const to_add_update = (row?: any) => {
-  console.log('看有没有传过来，来判断要add还是update', row)
-  if (row && row.id) {
+const toAddUpdate = (row?: Dish) => {
+  if (row?.id) {
     router.push({
       path: '/dish/add',
-      query: { id: row.id }
+      query: { id: row.id },
     })
-  } else {
-    router.push('/dish/add')
+    return
   }
+  router.push('/dish/add')
 }
 
-// 修改菜品状态
-const change_btn = async (row: any) => {
-  console.log('要修改的行数据')
-  console.log(row)
+const changeBtn = async (row: Dish) => {
   await updateDishStatusAPI(row.id)
-  // 修改后刷新页面，更新数据
-  showPageList()
-  ElMessage({
-    type: 'success',
-    message: '修改成功',
-  })
+  await showPageList()
+  ElMessage.success('状态修改成功')
 }
 
-// 删除菜品
-const deleteBatch = (row?: any) => {
-  console.log('要删除的行数据')
-  console.log(row)
-  ElMessageBox.confirm(
-    '该操作会永久删除菜品，是否继续？',
-    'Warning',
-    {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      type: 'warning',
-    }
-  )
+const deleteBatch = (row?: Dish) => {
+  ElMessageBox.confirm('该操作会永久删除菜品，是否继续？', '删除菜品', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
     .then(async () => {
-      // 1. 没传入行数据，批量删除
-      if (row == undefined) {
-        console.log(multiSelection.value)
-        if (multiSelection.value.length == 0) {
-          ElMessage({
-            type: 'warning',
-            message: '请先选择要删除的菜品',
-          })
+      if (!row) {
+        if (multiSelection.value.length === 0) {
+          ElMessage.warning('请先勾选需要删除的菜品')
           return
         }
-        // 拿到当前 multiSelection.value 的所有id，然后调用批量删除接口
-        let ids: any = []
-        multiSelection.value.map(item => {
-          ids.push(item.id)
-        })
-        ids = ids.join(',')
-        console.log('ids', ids)
-        let res = await deleteDishesAPI(ids)
-        if (res.data.code != 0) return
+        const ids = multiSelection.value.map((item) => item.id).join(',')
+        const res = await deleteDishesAPI(ids)
+        if (res.data.code !== 0) return
+      } else {
+        const res = await deleteDishesAPI(String(row.id))
+        if (res.data.code !== 0) return
       }
-      // 2. 传入行数据，单个删除
-      else {
-        console.log('id包装成数组，然后调用批量删除接口')
-        console.log(row.id)
-        let res = await deleteDishesAPI(row.id)
-        if (res.data.code != 0) return
-      }
-      // 删除后刷新页面，更新数据
-      showPageList()
-      ElMessage({
-        type: 'success',
-        message: '删除成功',
-      })
+      await showPageList()
+      ElMessage.success('删除成功')
     })
     .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: '取消删除',
-      })
+      ElMessage.info('已取消删除')
     })
 }
 </script>
 
 <template>
-  <el-card>
-    <div class="horizontal">
-      <el-input size="large" class="input" v-model="pageData.name" placeholder="请输入菜品名" />
-      <el-select size="large" class="input" clearable v-model="pageData.categoryId" placeholder="选择分类类型">
+  <el-card class="page-card">
+    <div class="page-head">
+      <div class="page-head__meta">
+        <h2>菜品管理</h2>
+        <p>更聚焦地查看菜品图片、分类、售价和上下架状态，支持批量删除。</p>
+      </div>
+      <div class="page-head__stats">
+        <span class="page-stat">菜品总数 <strong>{{ total }}</strong></span>
+        <span class="page-stat">已选条目 <strong>{{ multiSelection.length }}</strong></span>
+      </div>
+    </div>
+
+    <div class="page-toolbar">
+      <el-input v-model="pageData.name" size="large" placeholder="输入菜品名称搜索" clearable />
+      <el-select v-model="pageData.categoryId" size="large" clearable placeholder="选择分类">
         <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />
       </el-select>
-      <el-select class="input" clearable v-model="pageData.status" placeholder="选择菜品状态" size="large">
+      <el-select v-model="pageData.status" size="large" clearable placeholder="选择售卖状态">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
-      <el-button size="large" class="btn" round type="success" @click="showPageList()">查询菜品</el-button>
-      <el-button size="large" class="btn" round type="danger" @click="deleteBatch()">批量删除</el-button>
-      <el-button size="large" class="btn" type="primary" @click="to_add_update()">
+      <div class="toolbar-spacer"></div>
+      <el-button size="large" type="success" @click="showPageList()">查询菜品</el-button>
+      <el-button size="large" type="danger" plain @click="deleteBatch()">批量删除</el-button>
+      <el-button size="large" type="primary" @click="toAddUpdate()">
         <el-icon style="font-size: 15px; margin-right: 10px;">
           <Plus />
-        </el-icon>添加菜品
+        </el-icon>
+        添加菜品
       </el-button>
     </div>
-    <el-table class="table_box" ref="multiTableRef" :data="dishList" stripe @selection-change="handleSelectionChange">
+
+    <el-table ref="multiTableRef" :data="dishList" stripe @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
-      <!-- <el-table-column prop="id" label="id" /> -->
       <el-table-column prop="name" label="菜名" align="center" />
       <el-table-column prop="pic" label="图片" align="center">
         <template #default="scope">
-          <img v-if="scope.row.pic" :src="scope.row.pic" alt="" />
-          <img v-else src="/src/assets/image/user_default.png" alt="" />
+          <img v-if="scope.row.pic" :src="scope.row.pic" alt="" class="page-table-image" />
+          <img v-else src="/src/assets/image/user_default.png" alt="" class="page-table-image" />
         </template>
       </el-table-column>
-      <el-table-column prop="detail" label="详情" width="200px" align="center" />
+      <el-table-column prop="detail" label="详情" width="220" align="center" show-overflow-tooltip />
       <el-table-column prop="price" label="价格" align="center" />
       <el-table-column prop="status" label="状态" align="center">
         <template #default="scope">
           <el-tag :type="scope.row.status === 1 ? 'success' : 'danger'" round>
-            {{ scope.row.status === 1 ? '启售' : '停售' }}
+            {{ scope.row.status === 1 ? '起售' : '停售' }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="categoryId" label="所属分类" align="center">
-        <!-- scope 的父组件是 el-table -->
         <template #default="scope">
-          <!-- 遍历categoryList，找到categoryId对应的name   ?.防止找不到对应关系而报错 -->
-          {{ categoryList.find(item => item.id === scope.row.categoryId)?.name }}
+          {{ categoryList.find((item) => item.id === scope.row.categoryId)?.name }}
         </template>
       </el-table-column>
-      <el-table-column prop="updateTime" label="上次操作时间" width="180px" align="center" />
-      <el-table-column label="操作" width="200px" align="center">
+      <el-table-column prop="updateTime" label="最近操作时间" width="180" align="center" />
+      <el-table-column label="操作" width="220" align="center">
         <template #default="scope">
-          <el-button @click="to_add_update(scope.row)" type="primary">修改</el-button>
-          <el-button @click="change_btn(scope.row)" plain :type="scope.row.status === 1 ? 'danger' : 'primary'">
-            {{ scope.row.status === 1 ? '停售' : '起售' }}</el-button>
-          <el-button @click="deleteBatch(scope.row)" type="danger">删除</el-button>
+          <el-button type="primary" @click="toAddUpdate(scope.row)">修改</el-button>
+          <el-button plain :type="scope.row.status === 1 ? 'danger' : 'primary'" @click="changeBtn(scope.row)">
+            {{ scope.row.status === 1 ? '停售' : '起售' }}
+          </el-button>
+          <el-button type="danger" @click="deleteBatch(scope.row)">删除</el-button>
         </template>
       </el-table-column>
       <template #empty>
-        <el-empty description=" 没有数据" />
+        <el-empty description="暂无菜品数据" />
       </template>
     </el-table>
 
-    <!-- element ui 官方推荐使用 v-model 双向绑定 而不是使用事件监听 -->
-    <!-- 但是为了监听后还要调用相关函数，看来只能用事件了... -->
-    <!-- 有没有办法让v-model的值发生改变时自动触发更新函数？ -->
-    <el-pagination class="page" background layout="total, sizes, prev, pager, next, jumper" :total="total"
-      :page-sizes="[2, 4, 6, 8]" v-model:current-page="pageData.page" v-model:page-size="pageData.pageSize"
-      @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+    <el-pagination
+      class="page"
+      background
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      :page-sizes="[2, 4, 6, 8]"
+      v-model:current-page="pageData.page"
+      v-model:page-size="pageData.pageSize"
+      @current-change="handleCurrentChange"
+      @size-change="handleSizeChange"
+    />
   </el-card>
 </template>
 
-
 <style lang="less" scoped>
-// element-plus的样式修改
-.el-table {
-  width: 90%;
-  height: 500px;
-  margin: 3rem auto;
-  text-align: center;
-  border: 1px solid #e4e4e4;
+.page-card {
+  :deep(.el-card__body) {
+    padding: 28px;
+  }
 }
 
 :deep(.el-table tr) {
-  font-size: 12px;
+  font-size: 13px;
 }
 
-.el-button {
-  width: 45px;
-  font-size: 12px;
+:deep(.el-table .el-button) {
+  min-width: 56px;
 }
 
 .el-pagination {
   justify-content: center;
-}
-
-// 自定义样式
-body {
-  background-color: #c91c1c;
-}
-
-.horizontal {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 0 80px;
-
-  .input {
-    width: 160px;
-  }
-
-  .btn {
-    width: 120px;
-  }
-}
-
-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-}
-
-.add_btn {
-  width: 100px;
-  height: 40px;
-  margin-left: 900px;
 }
 </style>

@@ -1,584 +1,743 @@
 <script setup lang="ts" name="layout">
-import { RouterView, useRouter, useRoute } from 'vue-router'
-import { ElMessageBox, ElMessage } from 'element-plus'
-import { useUserInfoStore } from '@/store'
-import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 import { fixPwdAPI } from '@/api/employee'
-import { getStatusAPI, fixStatusAPI } from '@/api/shop'
-import { ElNotification } from 'element-plus'
+import { fixStatusAPI, getStatusAPI } from '@/api/shop'
+import { useUserInfoStore } from '@/store'
+import brandLogo from '@/assets/image/logo2.png'
 
-// ------ data ------
+const router = useRouter()
+const route = useRoute()
+const userInfoStore = useUserInfoStore()
+
 const dialogFormVisible = ref(false)
 const dialogStatusVisible = ref(false)
-const formLabelWidth = '80px'
 const isCollapse = ref(false)
+const formLabelWidth = '92px'
 
 const menuList = [
-  {
-    title: '控制台',
-    path: '/dashboard',
-    icon: 'pieChart',
-  },
-  {
-    title: '数据统计',
-    path: '/statistics',
-    icon: 'memo',
-  },
-  {
-    title: '订单管理',
-    path: '/order',
-    icon: 'collection',
-  },
-  {
-    title: '分类管理',
-    path: '/category',
-    icon: 'postcard',
-  },
-  {
-    title: '套餐管理',
-    path: '/setmeal',
-    icon: 'user',
-  },
-  {
-    title: '菜品管理',
-    path: '/dish',
-    icon: 'dish',
-  },
-  {
-    title: '员工管理',
-    path: '/employee',
-    icon: 'setting',
-  },
+  { title: '控制台', path: '/dashboard', icon: 'PieChart', desc: '经营概览与实时提醒' },
+  { title: '数据统计', path: '/statistics', icon: 'DataAnalysis', desc: '营收、用户与订单趋势' },
+  { title: '订单管理', path: '/order', icon: 'Tickets', desc: '接单、配送、取消处理' },
+  { title: '分类管理', path: '/category', icon: 'Grid', desc: '菜品与套餐分类配置' },
+  { title: '套餐管理', path: '/setmeal', icon: 'Food', desc: '套餐信息与上下架' },
+  { title: '菜品管理', path: '/dish', icon: 'Dish', desc: '菜品详情、口味与状态' },
+  { title: '员工管理', path: '/employee', icon: 'User', desc: '账号、权限与人员信息' }
 ]
 
 const form = reactive({
   oldPwd: '',
   newPwd: '',
-  rePwd: '',
+  rePwd: ''
 })
+
 const pwdRef = ref()
 const status = ref(1)
-const status_active = ref(1) // 单选框绑定的动态值
+const statusActive = ref(1)
+const websocket = ref<WebSocket | null>(null)
+const audio1 = ref<HTMLAudioElement | null>(null)
+const audio2 = ref<HTMLAudioElement | null>(null)
 
-// 自定义校验规则: 两次密码是否一致
-const samePwd = (rules: any, value: any, callback: any) => {
+const samePwd = (_rule: unknown, value: string, callback: (error?: Error) => void) => {
   if (value !== form.newPwd) {
-    // 如果验证失败，则调用 回调函数时，指定一个 Error 对象。
-    callback(new Error('两次输入的密码不一致!'))
-  } else {
-    // 如果验证成功，则直接调用 callback 回调函数即可。
-    callback()
+    callback(new Error('两次输入的密码不一致'))
+    return
   }
+  callback()
 }
-const rules = { // 表单的规则检验对象
+
+const rules = {
   oldPwd: [
     { required: true, message: '请输入原密码', trigger: 'blur' },
     {
       pattern: /^[a-zA-Z0-9]{1,10}$/,
-      message: '原密码必须是1-10的大小写字母数字',
+      message: '原密码需为 1-10 位字母或数字',
       trigger: 'blur'
     }
   ],
   newPwd: [
     { required: true, message: '请输入新密码', trigger: 'blur' },
-    { pattern: /^\S{6,15}$/, message: '新密码必须是6-15的非空字符', trigger: 'blur' }
+    { pattern: /^\S{6,15}$/, message: '新密码需为 6-15 位非空字符', trigger: 'blur' }
   ],
   rePwd: [
     { required: true, message: '请再次输入新密码', trigger: 'blur' },
-    { pattern: /^\S{6,15}$/, message: '新密码必须是6-15的非空字符', trigger: 'blur' },
+    { pattern: /^\S{6,15}$/, message: '新密码需为 6-15 位非空字符', trigger: 'blur' },
     { validator: samePwd, trigger: 'blur' }
   ]
 }
 
-// ------ method ------
-const router = useRouter()
-const userInfoStore = useUserInfoStore()
-const route = useRoute();
-// 根据当前路由的路径返回要激活的菜单项
-const getActiveAside = () => {
-  console.log('当前路由的路径--------------', route.path)
-  return route.path;
-};
+const currentMenu = computed(() => {
+  return menuList.find((item) => route.path.startsWith(item.path)) || menuList[0]
+})
 
-// 初始化时获取营业状态
+const activePath = computed(() => currentMenu.value.path)
+const currentUserName = computed(() => userInfoStore.userInfo?.account || '未登录')
+const currentStatusText = computed(() => (status.value === 1 ? '营业中' : '打烊中'))
+
 const init = async () => {
   const { data: res } = await getStatusAPI()
-  console.log('初始化后的status status_active', res.data)
   status.value = res.data
-  status_active.value = res.data
+  statusActive.value = res.data
 }
-init()
 
-// 关闭修改店铺状态对话框
 const cancelStatus = () => {
-  ElMessage({
-    type: 'info',
-    message: '已取消修改',
-  })
   dialogStatusVisible.value = false
+  statusActive.value = status.value
+  ElMessage.info('已取消修改')
 }
-// 关闭修改密码对话框
+
 const cancelForm = () => {
-  ElMessage({
-    type: 'info',
-    message: '已取消修改',
-  })
   dialogFormVisible.value = false
+  form.oldPwd = ''
+  form.newPwd = ''
+  form.rePwd = ''
+  pwdRef.value?.clearValidate?.()
+  ElMessage.info('已取消修改')
 }
-// 修改店铺状态
+
 const fixStatus = async () => {
-  console.log('修改后的店铺状态为')
-  console.log(status_active.value)
-  const { data: res } = await fixStatusAPI(status_active.value)
-  if (res.code != 0) return   // 修改失败信息会在相应拦截器中捕获并提示
-  // 修改成功才改变status的值
-  status.value = status_active.value
-  ElMessage({
-    type: 'success',
-    message: '修改成功',
-  })
+  const { data: res } = await fixStatusAPI(statusActive.value)
+  if (res.code !== 0) return
+  status.value = statusActive.value
   dialogStatusVisible.value = false
+  ElMessage.success('门店状态已更新')
 }
-// 修改密码
+
 const fixPwd = async () => {
   const valid = await pwdRef.value.validate()
-  if (valid) {
-    const submitForm = {
-      oldPwd: form.oldPwd,
-      newPwd: form.newPwd,
-    }
-    console.log('要提交的表单信息')
-    console.log(submitForm)
-    const { data: res } = await fixPwdAPI(submitForm)
-    if (res.code != 0) return   // 密码错误信息会在相应拦截器中捕获并提示
-    ElMessage({
-      type: 'success',
-      message: '修改成功',
-    })
-    dialogFormVisible.value = false
-  } else {
-    return false
-  }
+  if (!valid) return
+  const { data: res } = await fixPwdAPI({
+    oldPwd: form.oldPwd,
+    newPwd: form.newPwd
+  })
+  if (res.code !== 0) return
+  ElMessage.success('密码修改成功')
+  cancelForm()
 }
 
 const quitFn = () => {
-  // 为了让用户体验更好，来个确认提示框
-  ElMessageBox.confirm(
-    '走了，爱是会消失的吗?',
-    '退出登录',
-    {
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      type: 'warning',
-    }
-  )
+  ElMessageBox.confirm('退出后需要重新登录，是否继续？', '退出登录', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
     .then(() => {
-      ElMessage({
-        type: 'success',
-        message: '退出成功',
-      })
-      // 清除用户信息，包括token
       userInfoStore.userInfo = null
-      console.log(userInfoStore)
+      ElMessage.success('已退出登录')
       router.push('/login')
     })
     .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: '已取消退出',
-      })
+      ElMessage.info('已取消退出')
     })
 }
 
-// refs
-const websocket = ref<WebSocket | null>(null)
-const shopShow = ref(false)
-
-const audio1 = ref<HTMLAudioElement | null>(null)
-const audio2 = ref<HTMLAudioElement | null>(null)
+const notifyMessage = (payload: { type: number; content: string; orderId: number }) => {
+  ElNotification({
+    title: payload.type === 1 ? '新订单提醒' : '催单提醒',
+    message:
+      payload.type === 1
+        ? `您有新的待接订单，${payload.content}`
+        : `${payload.content}，点击后前往订单页处理`,
+    duration: 0,
+    type: payload.type === 1 ? 'success' : 'warning',
+    onClick: () => {
+      router.push(`/order?orderId=${payload.orderId}`).catch(() => undefined)
+      setTimeout(() => {
+        location.reload()
+      }, 100)
+    }
+  })
+}
 
 const webSocket = () => {
   const clientId = Math.random().toString(36).slice(2)
-  const socketUrl = 'ws://localhost:8081/ws/' + clientId
-  console.log('socketUrl', socketUrl)
+  const socketUrl = `ws://localhost:8081/ws/${clientId}`
 
-  if (typeof WebSocket == 'undefined') {
-    console.log('当前浏览器无法接收实时报警信息，请使用谷歌浏览器！')
+  if (typeof WebSocket === 'undefined') {
     ElNotification({
-      title: '提示',
-      message: '当前浏览器无法接收实时报警信息，请使用谷歌浏览器！',
+      title: '浏览器不支持',
+      message: '当前浏览器无法接收实时消息提醒，请更换浏览器重试。',
       type: 'warning',
-      duration: 0,
+      duration: 0
     })
-  } else {
-    websocket.value = new WebSocket(socketUrl)
-    websocket.value.onopen = () => {
-      console.log('浏览器WebSocket已打开')
+    return
+  }
+
+  websocket.value = new WebSocket(socketUrl)
+  websocket.value.onmessage = (msg) => {
+    const payload = JSON.parse(msg.data)
+    if (audio1.value) audio1.value.currentTime = 0
+    if (audio2.value) audio2.value.currentTime = 0
+    if (payload.type === 1) {
+      audio1.value?.play()
+    } else if (payload.type === 2) {
+      audio2.value?.play()
     }
-    websocket.value.onmessage = (msg) => {
-      console.log('接收到的消息', msg)
-      audio1.value && audio1.value.click()
-      // 重置音频，从头开始播放
-      audio1.value!.currentTime = 0
-      audio2.value!.currentTime = 0
-      // 解析服务器通过WebSocket发送的消息
-      const jsonMsg = JSON.parse(msg.data)
-      if (jsonMsg.type === 1) {
-        audio1.value!.play()
-      } else if (jsonMsg.type === 2) {
-        audio2.value!.play()
-      }
-      // 右上角弹窗提示
-      ElNotification({
-        title: jsonMsg.type === 1 ? '待接单' : '催单',
-        message: jsonMsg.type === 1
-          ? `<span>您有1个<span style="color:#419EFF">订单待处理</span>,${jsonMsg.content},请及时接单</span>`
-          : `${jsonMsg.content}<span style='color:#419EFF;cursor: pointer'>去处理</span>`,
-        duration: 0,
-        dangerouslyUseHTMLString: true,
-        onClick: () => {
-          router.push(`/order?orderId=${jsonMsg.orderId}`).catch((err) => {
-            console.log(err)
-          })
-          setTimeout(() => {
-            location.reload()
-          }, 100)
-        },
-      })
-    }
-    websocket.value.onerror = () => {
-      ElNotification({
-        title: '错误',
-        message: '服务器错误，无法接收实时报警信息',
-        type: 'error',
-        duration: 0,
-      })
-    }
-    websocket.value.onclose = () => {
-      console.log('WebSocket已关闭')
-    }
+    notifyMessage(payload)
+  }
+
+  websocket.value.onerror = () => {
+    ElNotification({
+      title: '服务异常',
+      message: '实时消息连接失败，当前无法接收订单提醒。',
+      type: 'error',
+      duration: 0
+    })
   }
 }
 
-const handleClose = () => {
-  shopShow.value = false
-}
-
-// lifecycle hooks
 onMounted(() => {
-  document.addEventListener('click', handleClose)
-  // getStatus()
+  init()
   webSocket()
 })
 
 onBeforeUnmount(() => {
-  if (websocket.value) {
-    websocket.value.close()
-  }
+  websocket.value?.close()
 })
 </script>
 
 <template>
-  <div class="common-layout">
-    <el-dialog v-model="dialogStatusVisible" title="店铺状态设置" width="500">
-      <el-radio-group v-model="status_active">
-        <el-radio :value="1" size="large">营业中
-          <span>当前餐厅处于营业状态，自动接收任何订单，可点击打烊进入店铺打烊状态。</span>
-        </el-radio>
-        <el-radio :value="0" size="large">打烊中
-          <span>当前餐厅处于打烊状态，仅接受营业时间内的预定订单，可点击营业中手动恢复营业状态。</span>
-        </el-radio>
-      </el-radio-group>
+  <div class="layout-shell">
+    <el-dialog v-model="dialogStatusVisible" title="门店营业状态" width="560px">
+      <div class="status-dialog">
+        <el-radio-group v-model="statusActive" class="status-radio-group">
+          <el-radio :value="1" size="large" class="status-radio">
+            <div class="status-radio-copy">
+              <strong>营业中</strong>
+              <span>系统自动接收新的外卖订单，适合门店正常出餐时使用。</span>
+            </div>
+          </el-radio>
+          <el-radio :value="0" size="large" class="status-radio">
+            <div class="status-radio-copy">
+              <strong>打烊中</strong>
+              <span>暂停自动接单，适合备货、休息或临时关闭门店时使用。</span>
+            </div>
+          </el-radio>
+        </el-radio-group>
+      </div>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="cancelStatus">取消</el-button>
-          <el-button type="primary" @click="fixStatus">确定</el-button>
+          <el-button type="primary" @click="fixStatus">确认</el-button>
         </div>
       </template>
     </el-dialog>
-    <el-dialog v-model="dialogFormVisible" title="修改密码" width="500">
-      <el-form :model="form" :rules="rules" ref="pwdRef">
+
+    <el-dialog v-model="dialogFormVisible" title="修改密码" width="520px">
+      <el-form ref="pwdRef" :model="form" :rules="rules">
         <el-form-item prop="oldPwd" label="原密码" :label-width="formLabelWidth">
-          <el-input v-model="form.oldPwd" autocomplete="off" />
+          <el-input v-model="form.oldPwd" autocomplete="off" show-password />
         </el-form-item>
         <el-form-item prop="newPwd" label="新密码" :label-width="formLabelWidth">
-          <el-input v-model="form.newPwd" autocomplete="off" />
+          <el-input v-model="form.newPwd" autocomplete="off" show-password />
         </el-form-item>
         <el-form-item prop="rePwd" label="确认密码" :label-width="formLabelWidth">
-          <el-input v-model="form.rePwd" autocomplete="off" />
+          <el-input v-model="form.rePwd" autocomplete="off" show-password />
         </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="cancelForm">取消</el-button>
-          <el-button type="primary" @click="fixPwd">确定</el-button>
+          <el-button type="primary" @click="fixPwd">保存</el-button>
         </div>
       </template>
     </el-dialog>
-    <el-container>
-      <el-header>
-        <div class="logo-title">嘉园外卖</div>
-        <el-icon class="icon1" v-if="isCollapse">
-          <Expand @click.stop="isCollapse = !isCollapse" />
-        </el-icon>
-        <el-icon class="icon1" v-else>
-          <Fold @click.stop="isCollapse = !isCollapse" />
-        </el-icon>
-        <div class="status">{{ status == 1 ? '营业中' : "打烊中" }}</div>
-        <div class="rightAudio">
-          <audio ref="audio1" hidden>
-            <source src="../../assets/preview.mp3" type="audio/mp3" />
-          </audio>
-          <audio ref="audio2" hidden>
-            <source src="../../assets/reminder.mp3" type="audio/mp3" />
-          </audio>
+
+    <div class="layout-grid">
+      <aside class="side-panel" :class="{ collapsed: isCollapse }">
+        <div class="brand-panel">
+          <img :src="brandLogo" alt="嘉园外卖" />
+          <div v-if="!isCollapse" class="brand-copy">
+            <strong>嘉园外卖</strong>
+            <span>餐饮后台管理台</span>
+          </div>
         </div>
-        <el-dropdown style="float: right">
-          <el-button type="primary">
-            {{ userInfoStore.userInfo ? userInfoStore.userInfo.account : '未登录' }}
-            <el-icon class="arrow-down-icon"><arrow-down /></el-icon>
-          </el-button>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item @click="dialogFormVisible = true">修改密码</el-dropdown-item>
-              <el-dropdown-item @click="quitFn">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <el-button class="status-change" @click="dialogStatusVisible = true">店铺状态设置</el-button>
-      </el-header>
-      <el-container class="box1">
-        <!-- 左侧导航菜单区域 -->
-        <el-menu :width="isCollapse ? '640px' : '200px'" :default-active="getActiveAside()" :collapse="isCollapse"
-          background-color="#22aaee" text-color="#fff" unique-opened router>
-          <!-- 加了router模式，就会在激活导航时以 :index 作为path进行路径跳转（nb!不用自己写路由了!） -->
-          <!-- 根据不同情况选择menu-item/submenu进行遍历，所以外层套template遍历，里面组件做判断看是否该次遍历到自己 -->
+
+        <div v-if="!isCollapse" class="brand-intro">
+          <p>统一处理订单、商品、门店与经营数据，让日常运营界面更像一个完整产品。</p>
+        </div>
+
+        <el-menu
+          :default-active="activePath"
+          :collapse="isCollapse"
+          :collapse-transition="false"
+          router
+          class="aside-menu"
+        >
           <template v-for="item in menuList" :key="item.path">
             <el-menu-item :index="item.path">
-              <el-icon>
-                <component :is="item.icon" />
-              </el-icon>
-              <span>{{ item.title }}</span>
+              <el-icon><component :is="item.icon" /></el-icon>
+              <template #title>
+                <div class="menu-copy">
+                  <span>{{ item.title }}</span>
+                  <small>{{ item.desc }}</small>
+                </div>
+              </template>
             </el-menu-item>
           </template>
         </el-menu>
 
-        <el-container class="mycontainer">
-          <el-main>
-            <router-view></router-view>
-          </el-main>
-          <el-footer>© 2026.5.15 jiayuan-take-out. All rights reserved.</el-footer>
-        </el-container>
-      </el-container>
-    </el-container>
+        <div v-if="!isCollapse" class="side-bottom">
+          <div class="status-pill" :class="{ closed: status !== 1 }">
+            <span class="status-dot"></span>
+            {{ currentStatusText }}
+          </div>
+          <p>实时消息会在此后台持续监听。</p>
+        </div>
+      </aside>
+
+      <div class="main-shell">
+        <header class="topbar">
+          <div class="topbar-left">
+            <button class="collapse-toggle" type="button" @click="isCollapse = !isCollapse">
+              <el-icon v-if="isCollapse"><Expand /></el-icon>
+              <el-icon v-else><Fold /></el-icon>
+            </button>
+            <div class="title-block">
+              <span class="eyebrow">{{ currentMenu.title }}</span>
+              <h1>{{ currentMenu.desc }}</h1>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <button class="shop-status-chip" type="button" @click="dialogStatusVisible = true">
+              <span class="chip-dot"></span>
+              {{ currentStatusText }}
+            </button>
+
+            <el-dropdown>
+              <div class="user-chip">
+                <div class="user-avatar">{{ currentUserName.slice(0, 1).toUpperCase() }}</div>
+                <div class="user-copy">
+                  <strong>{{ currentUserName }}</strong>
+                  <span>欢迎回来</span>
+                </div>
+                <el-icon><ArrowDown /></el-icon>
+              </div>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item @click="dialogFormVisible = true">修改密码</el-dropdown-item>
+                  <el-dropdown-item @click="quitFn">退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+
+            <audio ref="audio1" hidden>
+              <source src="../../assets/preview.mp3" type="audio/mp3" />
+            </audio>
+            <audio ref="audio2" hidden>
+              <source src="../../assets/reminder.mp3" type="audio/mp3" />
+            </audio>
+          </div>
+        </header>
+
+        <main class="content-shell">
+          <router-view></router-view>
+        </main>
+
+        <footer class="layout-footer">
+          <span>JiaYuan Take Out Admin</span>
+          <span>让订单、商品与经营数据在同一块工作台里流动</span>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.common-layout {
-  height: 100%;
-  background-color: #eee;
+.layout-shell {
+  min-height: 100vh;
+  padding: 18px;
 }
 
-.el-header {
-  background-color: #00aaff;
-  color: #ffffff;
-  line-height: 60px;
-
-  .logo-title {
-    display: inline-block;
-    margin: 10px 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  .icon1 {
-    position: absolute;
-    top: 18px;
-    margin: 5px 10px 0 0;
-  }
-
-  .status {
-    display: inline-block;
-    align-items: center;
-    vertical-align: top;
-    line-height: 30px;
-    margin: 15px 50px;
-    padding: 0 10px;
-    border-radius: 5px;
-    background-color: #eebb00;
-    color: #fff;
-  }
+.layout-grid {
+  min-height: calc(100vh - 36px);
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 18px;
 }
 
-.rightAudio {
-  float: right;
-  // margin: 14px 20px;
+.side-panel,
+.main-shell {
+  border-radius: 32px;
+  box-shadow: var(--shadow-lg);
 }
 
-.status-change {
-  float: right;
-  margin: 14px 20px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border: none;
-  color: #fff;
-}
-
-.user {
-  float: right;
-  margin-right: 20px;
-}
-
-.el-dropdown .el-button {
-  float: right;
-  width: 80px;
-  margin: 14px 20px;
-  background-color: #eebb00;
-  border-color: #eebb00;
-  color: #fff;
-
-  .arrow-down-icon {
-    margin-left: 5px;
-  }
-}
-
-.box1 {
+.side-panel {
   display: flex;
-  height: 92vh;
-}
-
-.mycontainer {
-  display: flex;
-  flex: 6;
   flex-direction: column;
+  padding: 18px;
+  color: var(--text-light);
+  background: linear-gradient(180deg, rgba(23, 50, 57, 0.98), rgba(23, 50, 57, 0.9)),
+    radial-gradient(circle at top right, rgba(239, 143, 53, 0.2), transparent 26%);
 }
 
-.el-main {
-  flex: 1;
-  background-color: #e9f5ff;
-  color: #333;
-  /* text-align: center; */
-  /* line-height: 80px; */
+.side-panel.collapsed {
+  padding-inline: 14px;
 }
 
-a {
-  display: block;
-  height: 4rem;
-  color: #334455;
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-a:hover {
-  background-color: #445566;
-  color: #eee;
-}
-
-.el-footer {
-  background-color: #eee;
-  font-size: 12px;
+.brand-panel {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+
+  img {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 6px;
+  }
+}
+
+.brand-copy {
+  strong {
+    display: block;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+  }
+
+  span {
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 0.88rem;
+  }
+}
+
+.brand-intro {
+  padding: 18px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.aside-menu {
+  flex: 1;
+  border: none;
+  background: transparent;
+}
+
+:deep(.aside-menu.el-menu) {
+  background: transparent;
+}
+
+:deep(.aside-menu .el-menu-item) {
+  height: auto;
+  min-height: 58px;
+  margin: 0 0 10px;
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.76);
+  background: transparent;
+  line-height: 1.25;
+  padding: 14px 16px !important;
+}
+
+:deep(.aside-menu .el-menu-item:hover) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:deep(.aside-menu .el-menu-item.is-active) {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(239, 143, 53, 0.96), rgba(221, 107, 32, 0.92));
+  box-shadow: 0 16px 28px rgba(239, 143, 53, 0.24);
+}
+
+:deep(.aside-menu .el-menu-item .el-icon) {
+  font-size: 1.15rem;
+}
+
+.menu-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  small {
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 0.74rem;
+    font-style: normal;
+  }
+}
+
+:deep(.aside-menu .el-menu-item.is-active .menu-copy small) {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.side-bottom {
+  margin-top: 12px;
+  padding: 18px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+
+  p {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(31, 140, 139, 0.18);
+  color: #9ef0dd;
+  font-weight: 700;
+}
+
+.status-pill.closed {
+  background: rgba(239, 143, 53, 0.2);
+  color: #ffd2a6;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.main-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  padding: 18px;
+  background: rgba(255, 251, 246, 0.58);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 6px 20px;
+}
+
+.topbar-left,
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.collapse-toggle,
+.shop-status-chip {
+  border: none;
+  cursor: pointer;
+}
+
+.collapse-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--text-main);
+  box-shadow: inset 0 0 0 1px rgba(23, 50, 57, 0.06);
+
+  .el-icon {
+    font-size: 1.25rem;
+  }
+}
+
+.title-block {
+  .eyebrow {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand-deep);
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: clamp(1.35rem, 2vw, 2rem);
+    letter-spacing: -0.03em;
+  }
+}
+
+.shop-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 44px;
+  border-radius: 999px;
+  background: #fff7ef;
+  color: var(--brand-deep);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(239, 143, 53, 0.18);
+}
+
+.chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px 8px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(23, 50, 57, 0.06);
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), #52b6b5);
+  color: #fff;
+  font-weight: 800;
+}
+
+.user-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+
+  strong {
+    font-size: 0.94rem;
+  }
+
+  span {
+    color: var(--text-sub);
+    font-size: 0.8rem;
+  }
+}
+
+.content-shell {
+  min-height: 0;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.layout-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 8px 4px;
+  color: var(--text-sub);
+  font-size: 0.85rem;
+}
+
+.status-radio-group {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+}
+
+.status-radio {
+  margin-right: 0;
+  width: 100%;
+  min-height: 88px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: #fffaf4;
+  border: 1px solid rgba(239, 143, 53, 0.12);
+}
+
+.status-radio-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  white-space: normal;
+
+  strong {
+    color: var(--text-main);
+  }
+
+  span {
+    color: var(--text-sub);
+    line-height: 1.6;
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .layout-grid {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .side-panel {
+    padding-inline: 14px;
+  }
+
+  .brand-copy,
+  .brand-intro,
+  .side-bottom,
+  .menu-copy small {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-shell {
+    padding: 10px;
+  }
+
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    display: none;
+  }
+
+  .main-shell {
+    border-radius: 24px;
+  }
+
+  .topbar,
+  .layout-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topbar-right {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 }
 </style>
 
-
-
 <style lang="less">
-.el-dialog {
-  border-radius: 2%;
+.status-radio.is-checked {
+  border-color: rgba(239, 143, 53, 0.4);
+  box-shadow: 0 14px 24px rgba(239, 143, 53, 0.12);
 }
 
-.el-dialog__header {
-  height: 60px;
-  line-height: 60px;
-  padding: 0 30px;
-  font-weight: bold;
+.status-radio .el-radio__input {
+  align-self: flex-start;
+  margin-top: 2px;
 }
 
-.el-dialog__body {
-  padding: 10px 30px 30px;
-
-  .el-radio,
-  .el-radio__input {
-    white-space: normal; // 设置其自动换行，别撑不下还挤在一起...
-  }
-
-  .el-radio__label {
-    padding-top: 15px;
-    color: #445588;
-    font-weight: 700;
-
-    span {
-      display: block;
-      line-height: 20px;
-      padding: 12px 0 20px 0;
-      color: #666;
-      font-weight: normal;
-    }
-  }
-
-  .el-radio-group {
-    &>.is-checked {
-      border: 1px solid #00aaff;
-    }
-  }
-
-  .el-radio {
-    width: 410px; // 本来想设置100%的，但是设置成固定值能去除el-radio-last-child的样式影响
-    height: 100px;
-    background: #fbfbfa;
-    border: 1px solid #e5e4e4;
-    border-radius: 4px;
-    padding: 14px 22px;
-    margin-top: 20px;
-  }
-
-  // .el-radio__input.is-checked+.el-radio__label {
-  //   span {}
-  // }
-}
-
-.el-badge__content.is-fixed {
-  top: 24px;
-  right: 2px;
-  width: 18px;
-  height: 18px;
-  font-size: 10px;
-  line-height: 16px;
-  font-size: 10px;
-  border-radius: 50%;
-  padding: 0;
-}
-
-.badgeW {
-  .el-badge__content.is-fixed {
-    width: 30px;
-    border-radius: 20px;
-  }
-}
-
-.el-menu {
-  padding: 30px 0 0 0;
-  background-color: #445566;
-}
-
-.el-menu-item {
-  margin: 10px;
-  padding-right: 30px;
-  border-radius: 10px;
-}
-
-.el-menu-item.is-active {
-  background-color: #22ccff;
-  color: #fff;
-}
-
-.el-menu--collapse {
-  width: 85px;
+.status-radio .el-radio__label {
+  width: calc(100% - 26px);
 }
 </style>
