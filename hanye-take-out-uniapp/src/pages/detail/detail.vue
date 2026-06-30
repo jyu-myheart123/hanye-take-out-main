@@ -251,6 +251,7 @@ const chooseNorm = async (dish: DishItem) => {
   console.log('点击了选择规格chooseNorm，得到了该菜品的所有口味数据', dish.flavors)
   // 所有口味数据放到flavors中
   flavors.value = dish.flavors
+  chosedflavors.value = []
   // dish -> dialogDish, flavor涉及类型转换(所有flavors -> 已选的flavors)，需要绕过ts校验
   const tmpdish = Object.assign({}, dish) as unknown as DishToCartItem
   // 删除临时对象中的 'flavors' 属性

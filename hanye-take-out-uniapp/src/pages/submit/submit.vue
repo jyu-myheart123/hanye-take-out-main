@@ -108,7 +108,7 @@
             <image src="../../static/icon/close.png" class="close_img" />
           </view>
         </view>
-        <picker-view class="picker" indicator-style="height: 50px;" :value="cookers" @change="pickerChange">
+        <picker-view class="picker" indicator-style="height: 50px;" :value="getCookerPickerValue()" @change="pickerChange">
           <picker-view-column>
             <view v-for="item in cookers" :key="item" style="line-height: 50px; text-align: center">
               {{ item === -1 ? '无需餐具' : item === 0 ? '商家依据餐量提供' : item === 11 ? '10份以上' : item + '份' }}
@@ -187,15 +187,17 @@ onLoad(async (options: any) => {
   // 再看看路径参数有没有传过来的地址，有的话以这个地址为准
   console.log('options', options)
   if (options.address) {
-    const addressObj = JSON.parse(options.address)
+    const addressObj = JSON.parse(decodeURIComponent(options.address))
     console.log('获取新的地址啊！addressObj', addressObj)
     addressId.value = addressObj.id
     label.value = addressObj.label
     address.value = addressObj.provinceName + addressObj.cityName + addressObj.districtName + addressObj.detail
     phoneNumber.value = addressObj.phone
     consignee.value = addressObj.consignee
-  } else if (options.remark) {
-    remark.value = options.remark
+    gender.value = addressObj.gender
+  }
+  if (options.remark) {
+    remark.value = decodeURIComponent(options.remark)
   }
   console.log('我地址id赋值了啊1-------------', addressId.value)
   // 获取购物车列表
@@ -205,8 +207,10 @@ onLoad(async (options: any) => {
   // 默认选择的餐具状态
   if (store.defaultCook === '无需餐具') {
     cookerNum.value = -1
+    radioStatus.value = true
   } else if (store.defaultCook === '商家依据餐量提供') {
     cookerNum.value = 0
+    radioStatus.value = true
   }
 })
 
@@ -264,6 +268,7 @@ const getAddressBookDefault = async () => {
     if (res.data.provinceName) {
       address.value = res.data.provinceName + res.data.cityName + res.data.districtName + res.data.detail
     }
+    label.value = (res.data.label as string) || ''
     phoneNumber.value = res.data.phone as string
     consignee.value = res.data.consignee as string
     gender.value = res.data.gender as number
@@ -297,7 +302,7 @@ const goAddress = () => {
 // 去备注页面
 const goRemark = () => {
   uni.redirectTo({
-    url: '/pages/remark/remark',
+    url: '/pages/remark/remark?remark=' + encodeURIComponent(remark.value),
   })
 }
 // 选择餐具
@@ -312,9 +317,13 @@ const getCookerInfo = () => {
   else if (cookerNum.value === 11) return '10份以上'
   else return cookerNum.value + '份'
 }
+const getCookerPickerValue = () => {
+  const index = cookers.value.findIndex((item) => item === cookerNum.value)
+  return [index >= 0 ? index : 0]
+}
 const pickerChange = (ev: any) => {
   console.log(ev.detail.value)
-  cookerNum.value = ev.detail.value[0] - 1
+  cookerNum.value = cookers.value[ev.detail.value[0]] ?? -2
 }
 // 改变radio状态，顺便改变store里默认餐具选择的状态
 const radioChange = () => {
@@ -332,6 +341,13 @@ const closeMask = () => {
 
 // 支付下单
 const payOrderHandle = async () => {
+  if (cartList.value.length === 0) {
+    uni.showToast({
+      title: '购物车为空',
+      icon: 'none',
+    })
+    return false
+  }
   // 先去后端查询一下是否有未支付但没取消的订单，如果有的话无法下单
   const unPayRes = await getUnPayOrderAPI()
   console.log('未支付订单', unPayRes)
@@ -384,9 +400,9 @@ const payOrderHandle = async () => {
         '&orderAmount=' +
         res.data!.orderAmount +
         '&orderNumber=' +
-        res.data!.orderNumber +
+        encodeURIComponent(res.data!.orderNumber) +
         '&orderTime=' +
-        res.data!.orderTime,
+        encodeURIComponent(String(res.data!.orderTime)),
     })
   } else {
     uni.showToast({

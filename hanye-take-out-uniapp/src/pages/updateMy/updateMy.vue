@@ -36,7 +36,7 @@ import {getUserInfoAPI, updateUserAPI} from '@/api/user'
 const userStore = useUserStore()
 
 const user = reactive({
-  id: userStore.profile!.id,
+  id: userStore.profile?.id || 0,
   name: '',
   gender: 1,
   phone: '未设置',
@@ -55,6 +55,12 @@ const items = [
 
 onLoad(async () => {
   console.log('userStore', userStore.profile)
+  if (!userStore.profile?.id) {
+    uni.navigateTo({
+      url: '/pages/login/login',
+    })
+    return
+  }
   await getUserInfo(user.id)
 })
 

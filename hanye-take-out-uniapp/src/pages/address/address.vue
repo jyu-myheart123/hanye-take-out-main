@@ -109,7 +109,7 @@ const trans = (item: string) => {
 
 // 未选择标签时，默认展示其他
 const getLableVal = (item: string) => {
-  if (item === null) {
+  if (!item) {
     return '其他'
   }
   return item
@@ -138,7 +138,7 @@ const choseAddress = (e: any, item: any) => {
   }
   // 2、有记录addressBackUrl，要跳回订单页面
   uni.redirectTo({
-    url: '/pages/submit/submit?address=' + JSON.stringify(item),
+    url: '/pages/submit/submit?address=' + encodeURIComponent(JSON.stringify(item)),
   })
 }
 

@@ -16,14 +16,21 @@
 
 <script lang="ts" setup>
 import {ref} from 'vue'
+import {onLoad} from '@dcloudio/uni-app'
 
 const remark = ref('')
+
+onLoad((options) => {
+  if (options?.remark) {
+    remark.value = decodeURIComponent(options.remark)
+  }
+})
 
 // 返回提交页面，把备注信息传递给store
 const returnToSubmit = () => {
   console.log('remark', remark.value)
   uni.redirectTo({
-    url: '/pages/submit/submit?remark=' + remark.value,
+    url: '/pages/submit/submit?remark=' + encodeURIComponent(remark.value),
   })
 }
 </script>

@@ -18,98 +18,97 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "orderDetail",
   setup(__props) {
     const childComp = common_vendor.ref(null);
-    const statusList = [
-      {
-        status: 0,
-        name: "全部订单"
-      },
-      {
-        status: 1,
-        name: "等待支付"
-      },
-      {
-        status: 2,
-        name: "等待商家接单"
-      },
-      {
-        status: 3,
-        name: "商家已接单"
-      },
-      {
-        status: 4,
-        name: "正在派送中"
-      },
-      {
-        status: 5,
-        name: "订单已完成"
-      },
-      {
-        status: 6,
-        name: "订单已取消"
-      }
-    ];
     const countdownStore = stores_modules_countdown.useCountdownStore();
+    const statusMap = {
+      0: "全部订单",
+      1: "等待支付",
+      2: "等待商家接单",
+      3: "商家已接单",
+      4: "正在配送中",
+      5: "订单已完成",
+      6: "订单已取消"
+    };
     const order = common_vendor.reactive({
       id: 0,
-      // 订单id
       number: "",
-      // 订单号
       status: 0,
-      // 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
-      userId: 0,
-      // 下单用户id
       addressBookId: 0,
-      // 地址id
       orderTime: /* @__PURE__ */ new Date(),
-      // 下单时间
       orderDetailList: []
-      // 订单详情
     });
+    const statusText = common_vendor.computed(() => statusMap[Number(order.status)] || "订单详情");
+    const tablewareText = common_vendor.computed(() => {
+      if (order.tablewareNumber === -1)
+        return "无需餐具";
+      if (order.tablewareNumber === 0)
+        return "按餐量提供";
+      return order.tablewareNumber || 0;
+    });
+    const isExpired = common_vendor.computed(() => countdownStore.showM <= 0 && countdownStore.showS <= 0);
+    const clearCountdown = () => {
+      if (countdownStore.timer !== void 0) {
+        clearInterval(countdownStore.timer);
+        countdownStore.timer = void 0;
+      }
+    };
+    const startCountdown = () => {
+      clearCountdown();
+      const update = async () => {
+        const createdAt = new Date(String(order.orderTime).replace(" ", "T")).getTime();
+        const remain = createdAt + 15 * 60 * 1e3 - Date.now();
+        if (remain <= 0) {
+          clearCountdown();
+          countdownStore.showM = 0;
+          countdownStore.showS = 0;
+          if (order.status === 1) {
+            await api_order.cancelOrderAPI(order.id);
+            await getOrderDetail();
+          }
+          return;
+        }
+        countdownStore.showM = Math.floor(remain / 1e3 / 60 % 60);
+        countdownStore.showS = Math.floor(remain / 1e3 % 60);
+      };
+      void update();
+      countdownStore.timer = setInterval(() => {
+        void update();
+      }, 1e3);
+    };
+    const getOrderDetail = async () => {
+      const res = await api_order.getOrderAPI(order.id);
+      Object.assign(order, res.data);
+      if (order.status === 1) {
+        startCountdown();
+      } else {
+        clearCountdown();
+        countdownStore.showM = 0;
+        countdownStore.showS = 0;
+      }
+    };
     common_vendor.onLoad(async (options) => {
-      console.log("options", options);
-      order.id = options.orderId;
+      order.id = Number((options == null ? void 0 : options.orderId) || 0);
       await getOrderDetail();
     });
-    const getOrderDetail = async () => {
-      console.log("获取订单详情");
-      const res = await api_order.getOrderAPI(order.id);
-      console.log("res", res);
-      Object.assign(order, res.data);
-      console.log("刷新得到新的order", order);
-    };
+    common_vendor.onUnload(() => {
+      clearCountdown();
+    });
     const cancelOrder = async () => {
-      console.log("取消订单");
       const res = await api_order.cancelOrderAPI(order.id);
-      if (res.code === 0) {
-        common_vendor.index.showToast({
-          title: "订单已取消",
-          icon: "none"
-        });
-      } else {
+      if (res.code !== 0) {
         common_vendor.index.showModal({
           title: "提示",
-          content: "商家已接单，欲取消订单请与商家联系！",
-          showCancel: false,
-          // 不显示取消按钮
-          success: function(res2) {
-            if (res2.confirm) {
-              console.log("用户点击确定");
-            }
-          }
+          content: "商家已接单，如需取消订单请联系商家",
+          showCancel: false
         });
       }
       await getOrderDetail();
     };
     const pushOrder = async () => {
-      console.log("催单");
-      const res = await api_order.urgeOrderAPI(order.id);
-      console.log("催单res信息", res.data);
-      if (childComp.value) {
-        childComp.value.openPopup();
-      }
+      var _a;
+      await api_order.urgeOrderAPI(order.id);
+      (_a = childComp.value) == null ? void 0 : _a.openPopup();
     };
     const reOrder = async () => {
-      console.log("再来一单");
       await api_cart.cleanCartAPI();
       await api_order.reOrderAPI(order.id);
       common_vendor.index.redirectTo({
@@ -117,34 +116,23 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       });
     };
     const connectShop = () => {
-      console.log("联系商家");
       common_vendor.index.makePhoneCall({
         phoneNumber: "1999"
       });
     };
-    const toPay = async () => {
-      console.log("支付成功");
-      const payDTO = {
-        orderNumber: order.number,
-        payMethod: 1
-        // 本平台默认微信支付
-      };
-      await api_order.payOrderAPI(payDTO);
-      if (countdownStore.timer !== void 0) {
-        clearInterval(countdownStore.timer);
-        countdownStore.timer = void 0;
-      }
+    const toPay = () => {
+      clearCountdown();
       common_vendor.index.redirectTo({
-        url: "/pages/pay/pay?orderId=" + order.id + "&orderNumber=" + order.number + "&orderAmount=" + order.amount + "&orderTime=" + order.orderTime
+        url: "/pages/pay/pay?orderId=" + order.id + "&orderNumber=" + encodeURIComponent(order.number) + "&orderAmount=" + order.amount + "&orderTime=" + encodeURIComponent(String(order.orderTime))
       });
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.t(statusList[order.status].name),
+        a: common_vendor.t(statusText.value),
         b: order.status === 1
       }, order.status === 1 ? common_vendor.e({
-        c: common_vendor.unref(countdownStore).showM <= 0 && common_vendor.unref(countdownStore).showS <= 0
-      }, common_vendor.unref(countdownStore).showM <= 0 && common_vendor.unref(countdownStore).showS <= 0 ? {} : {
+        c: isExpired.value
+      }, isExpired.value ? {} : {
         d: common_vendor.p({
           color: "#888",
           ["show-day"]: false,
@@ -153,12 +141,12 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           second: common_vendor.unref(countdownStore).showS
         })
       }) : {}, {
-        e: order.status <= 2
-      }, order.status <= 2 ? {
+        e: Number(order.status) <= 2
+      }, Number(order.status) <= 2 ? {
         f: common_vendor.o(cancelOrder)
       } : {}, {
-        g: order.status === 1 && (common_vendor.unref(countdownStore).showM > 0 || common_vendor.unref(countdownStore).showS > 0)
-      }, order.status === 1 && (common_vendor.unref(countdownStore).showM > 0 || common_vendor.unref(countdownStore).showS > 0) ? {
+        g: order.status === 1 && !isExpired.value
+      }, order.status === 1 && !isExpired.value ? {
         h: common_vendor.o(toPay)
       } : {}, {
         i: order.status === 2
@@ -185,16 +173,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             h: index
           });
         }),
-        n: common_vendor.t(order.packAmount),
-        o: common_vendor.t(order.amount),
+        n: common_vendor.t(order.packAmount || 0),
+        o: common_vendor.t(order.amount || 0),
         p: common_vendor.o(connectShop),
-        q: common_vendor.t(order.remark),
-        r: common_vendor.t(order.tablewareNumber == -1 ? "无需餐具" : order.tablewareNumber == 0 ? "商家根据餐量提供" : order.tablewareNumber),
+        q: common_vendor.t(order.remark || "无"),
+        r: common_vendor.t(tablewareText.value),
         s: common_vendor.t(order.number),
         t: common_vendor.t(order.orderTime),
         v: common_vendor.t(order.address),
-        w: common_vendor.t(order.packAmount === -1 ? "无需餐具" : order.packAmount === 0 ? "按餐量提供" : order.packAmount),
-        x: common_vendor.sr(childComp, "2d945b00-1", {
+        w: common_vendor.sr(childComp, "2d945b00-1", {
           "k": "childComp"
         })
       });

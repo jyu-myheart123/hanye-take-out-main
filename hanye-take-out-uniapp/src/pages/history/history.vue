@@ -50,7 +50,7 @@
 import pushMsg from '../../components/message/pushMsg.vue'
 import {ref} from 'vue'
 import {onLoad, onReachBottom} from '@dcloudio/uni-app'
-import {getOrderPageAPI, reOrderAPI} from '@/api/order'
+import {getOrderPageAPI, reOrderAPI, urgeOrderAPI} from '@/api/order'
 import {cleanCartAPI} from '@/api/cart'
 import type {OrderPageDTO, OrderVO} from '@/types/order'
 
@@ -141,6 +141,9 @@ onReachBottom(() => {
 
 const getOrderPage = async (index: number, type?: string) => {
   activeIndex.value = index
+  if (type) {
+    orderDTO.value.page = 1
+  }
   console.log('根据status获取订单信息')
   // != 0 说明不是全部订单，需要传入status条件分页查询
   if (index !== 0) {
@@ -150,6 +153,11 @@ const getOrderPage = async (index: number, type?: string) => {
   }
   console.log('orderDTO', orderDTO.value)
   const res = await getOrderPageAPI(orderDTO.value)
+  if (type) {
+    historyOrders.value = res.data.records
+    total.value = res.data.total
+    return
+  }
   if (type === '更改状态') {
     historyOrders.value = res.data.records
     orderDTO.value.page = 1
@@ -178,8 +186,9 @@ const reOrder = async (id: number) => {
 }
 
 // 催单
-const pushOrder = (id: number) => {
+const pushOrder = async (id: number) => {
   console.log('催单', id)
+  await urgeOrderAPI(id)
   childComp.value.openPopup()
   // uni.showToast({
   //   title: '已催单',

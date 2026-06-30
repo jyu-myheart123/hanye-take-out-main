@@ -24,9 +24,9 @@ const arrivalTime = ref('')
 onLoad(async (options: any) => {
   console.log('options', options)
   orderId.value = options.orderId
-  orderNumber.value = options.orderNumber
+  orderNumber.value = decodeURIComponent(options.orderNumber)
   orderAmount.value = options.orderAmount
-  orderTime.value = options.orderTime
+  orderTime.value = decodeURIComponent(options.orderTime)
   getHarfAnOur()
 })
 

@@ -11,9 +11,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     common_vendor.onLoad(async (options) => {
       console.log("options", options);
       orderId.value = options.orderId;
-      orderNumber.value = options.orderNumber;
+      orderNumber.value = decodeURIComponent(options.orderNumber);
       orderAmount.value = options.orderAmount;
-      orderTime.value = options.orderTime;
+      orderTime.value = decodeURIComponent(options.orderTime);
       getHarfAnOur();
     });
     const getHarfAnOur = () => {

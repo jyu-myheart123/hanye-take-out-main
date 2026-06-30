@@ -12,29 +12,23 @@
     <div class="orderviewBox">
       <ul>
         <li>
-          <span class="status">
-            <el-icon>
-              <Finished />
-            </el-icon>
-            已启售
-          </span>
+          <div class="stat-item">
+            <el-icon class="stat-icon"><Finished /></el-icon>
+            <span class="stat-label">已启售</span>
+          </div>
           <span class="num">{{ setMealData.sold }}</span>
         </li>
         <li>
-          <span class="status"> 
-            <el-icon>
-              <Lock />
-            </el-icon>
-            已停售
-          </span>
+          <div class="stat-item">
+            <el-icon class="stat-icon"><Lock /></el-icon>
+            <span class="stat-label">已停售</span>
+          </div>
           <span class="num">{{ setMealData.discontinued }}</span>
         </li>
         <li class="add">
           <router-link to="setmeal/add">
-            <el-icon>
-              <CirclePlus />
-            </el-icon>
-            <p>新增套餐</p>
+            <el-icon class="add-icon"><CirclePlus /></el-icon>
+            <span class="add-label">新增套餐</span>
           </router-link>
         </li>
       </ul>

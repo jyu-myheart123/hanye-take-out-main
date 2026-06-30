@@ -99,7 +99,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         };
         Object.assign(form, newForm);
         if (res.data.provinceName && res.data.cityName && res.data.districtName) {
-          address.value = res.data.provinceName + "-" + res.data.cityName + "-" + res.data.districtName;
+          address.value = res.data.provinceName + " " + res.data.cityName + " " + res.data.districtName;
         }
       }
     };
@@ -236,7 +236,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }, showDel.value ? {
         p: common_vendor.o(($event) => deleteAddress())
       } : {}, {
-        q: `calc(100% - ${statusBarHeight} - 44px)`
+        q: `calc(100% - ${statusBarHeight()} - 44px)`
       });
     };
   }

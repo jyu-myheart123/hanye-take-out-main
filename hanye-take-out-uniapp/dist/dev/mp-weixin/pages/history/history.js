@@ -88,6 +88,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     });
     const getOrderPage = async (index, type) => {
       activeIndex.value = index;
+      if (type) {
+        orderDTO.value.page = 1;
+      }
       console.log("根据status获取订单信息");
       if (index !== 0) {
         orderDTO.value.status = statusOptions[index].status;
@@ -96,6 +99,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }
       console.log("orderDTO", orderDTO.value);
       const res = await api_order.getOrderPageAPI(orderDTO.value);
+      if (type) {
+        historyOrders.value = res.data.records;
+        total.value = res.data.total;
+        return;
+      }
       if (type === "更改状态") {
         historyOrders.value = res.data.records;
         orderDTO.value.page = 1;
@@ -117,8 +125,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         url: "/pages/order/order"
       });
     };
-    const pushOrder = (id) => {
+    const pushOrder = async (id) => {
       console.log("催单", id);
+      await api_order.urgeOrderAPI(id);
       childComp.value.openPopup();
     };
     return (_ctx, _cache) => {

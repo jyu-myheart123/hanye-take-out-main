@@ -4,7 +4,7 @@
     <view class="my_info">
       <!-- 头像部分 -->
       <view class="head">
-        <image class="head_image" :src="user.pic"></image>
+        <image class="head_image" :src="user.pic || '../../static/images/user_default.png'"></image>
       </view>
       <!-- 姓名、性别及手机号 -->
       <view class="phone_name">
@@ -142,10 +142,14 @@ const total = ref(0)
 onLoad(async (options) => {
   console.log('options', options)
   console.log('userStore', userStore.profile)
-  if (userStore.profile) {
-    user.id = userStore.profile.id
-    const res = await getUserInfo(user.id)
+  if (!userStore.profile?.id) {
+    uni.navigateTo({
+      url: '/pages/login/login',
+    })
+    return
   }
+  user.id = userStore.profile.id
+  await getUserInfo(user.id)
   // 获取所有订单信息
   await getOrderPage()
 })

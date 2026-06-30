@@ -40,23 +40,27 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       await getAddressBookDefault();
       console.log("options", options);
       if (options.address) {
-        const addressObj = JSON.parse(options.address);
+        const addressObj = JSON.parse(decodeURIComponent(options.address));
         console.log("获取新的地址啊！addressObj", addressObj);
         addressId.value = addressObj.id;
         label.value = addressObj.label;
         address.value = addressObj.provinceName + addressObj.cityName + addressObj.districtName + addressObj.detail;
         phoneNumber.value = addressObj.phone;
         consignee.value = addressObj.consignee;
-      } else if (options.remark) {
-        remark.value = options.remark;
+        gender.value = addressObj.gender;
+      }
+      if (options.remark) {
+        remark.value = decodeURIComponent(options.remark);
       }
       console.log("我地址id赋值了啊1-------------", addressId.value);
       await getCartList();
       getHarfAnOur();
       if (store.defaultCook === "无需餐具") {
         cookerNum.value = -1;
+        radioStatus.value = true;
       } else if (store.defaultCook === "商家依据餐量提供") {
         cookerNum.value = 0;
+        radioStatus.value = true;
       }
     });
     common_vendor.onShow(async (options) => {
@@ -93,6 +97,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         if (res.data.provinceName) {
           address.value = res.data.provinceName + res.data.cityName + res.data.districtName + res.data.detail;
         }
+        label.value = res.data.label || "";
         phoneNumber.value = res.data.phone;
         consignee.value = res.data.consignee;
         gender.value = res.data.gender;
@@ -119,7 +124,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     const goRemark = () => {
       common_vendor.index.redirectTo({
-        url: "/pages/remark/remark"
+        url: "/pages/remark/remark?remark=" + encodeURIComponent(remark.value)
       });
     };
     const chooseCooker = () => {
@@ -137,9 +142,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       else
         return cookerNum.value + "份";
     };
+    const getCookerPickerValue = () => {
+      const index = cookers.value.findIndex((item) => item === cookerNum.value);
+      return [index >= 0 ? index : 0];
+    };
     const pickerChange = (ev) => {
       console.log(ev.detail.value);
-      cookerNum.value = ev.detail.value[0] - 1;
+      cookerNum.value = cookers.value[ev.detail.value[0]] ?? -2;
     };
     const radioChange = () => {
       radioStatus.value = !radioStatus.value;
@@ -153,6 +162,13 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       openCooker.value = false;
     };
     const payOrderHandle = async () => {
+      if (cartList.value.length === 0) {
+        common_vendor.index.showToast({
+          title: "购物车为空",
+          icon: "none"
+        });
+        return false;
+      }
       const unPayRes = await api_order.getUnPayOrderAPI();
       console.log("未支付订单", unPayRes);
       if (unPayRes.data !== 0) {
@@ -198,7 +214,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (res.code === 0) {
         console.log("订单生成成功", res.data);
         common_vendor.index.redirectTo({
-          url: "/pages/pay/pay?orderId=" + res.data.id + "&orderAmount=" + res.data.orderAmount + "&orderNumber=" + res.data.orderNumber + "&orderTime=" + res.data.orderTime
+          url: "/pages/pay/pay?orderId=" + res.data.id + "&orderAmount=" + res.data.orderAmount + "&orderNumber=" + encodeURIComponent(res.data.orderNumber) + "&orderTime=" + encodeURIComponent(String(res.data.orderTime))
         });
       } else {
         common_vendor.index.showToast({
@@ -253,7 +269,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             b: item
           };
         }),
-        w: cookers.value,
+        w: getCookerPickerValue(),
         x: common_vendor.o(pickerChange),
         y: radioStatus.value,
         z: common_vendor.o(radioChange),

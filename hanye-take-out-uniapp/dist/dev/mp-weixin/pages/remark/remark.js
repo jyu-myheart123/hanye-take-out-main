@@ -4,10 +4,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "remark",
   setup(__props) {
     const remark = common_vendor.ref("");
+    common_vendor.onLoad((options) => {
+      if (options == null ? void 0 : options.remark) {
+        remark.value = decodeURIComponent(options.remark);
+      }
+    });
     const returnToSubmit = () => {
       console.log("remark", remark.value);
       common_vendor.index.redirectTo({
-        url: "/pages/submit/submit?remark=" + remark.value
+        url: "/pages/submit/submit?remark=" + encodeURIComponent(remark.value)
       });
     };
     return (_ctx, _cache) => {

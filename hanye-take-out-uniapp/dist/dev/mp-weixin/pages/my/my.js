@@ -59,12 +59,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     });
     const total = common_vendor.ref(0);
     common_vendor.onLoad(async (options) => {
+      var _a2;
       console.log("options", options);
       console.log("userStore", userStore.profile);
-      if (userStore.profile) {
-        user.id = userStore.profile.id;
-        await getUserInfo(user.id);
+      if (!((_a2 = userStore.profile) == null ? void 0 : _a2.id)) {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+        return;
       }
+      user.id = userStore.profile.id;
+      await getUserInfo(user.id);
       await getOrderPage();
     });
     const getUserInfo = async (id) => {
@@ -130,7 +135,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: user.pic,
+        a: user.pic || "../../static/images/user_default.png",
         b: common_vendor.t(user.name),
         c: user.gender === 0
       }, user.gender === 0 ? {} : {}, {

@@ -62,6 +62,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const chooseNorm = async (dish) => {
       console.log("点击了选择规格chooseNorm，得到了该菜品的所有口味数据", dish.flavors);
       flavors.value = dish.flavors;
+      chosedflavors.value = [];
       const tmpdish = Object.assign({}, dish);
       delete tmpdish.flavors;
       dialogDish.value = tmpdish;

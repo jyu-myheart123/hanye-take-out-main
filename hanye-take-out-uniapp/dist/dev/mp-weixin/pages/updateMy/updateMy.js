@@ -6,9 +6,10 @@ require("../../utils/http.js");
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "updateMy",
   setup(__props) {
+    var _a;
     const userStore = stores_modules_user.useUserStore();
     const user = common_vendor.reactive({
-      id: userStore.profile.id,
+      id: ((_a = userStore.profile) == null ? void 0 : _a.id) || 0,
       name: "",
       gender: 1,
       phone: "未设置",
@@ -25,7 +26,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }
     ];
     common_vendor.onLoad(async () => {
+      var _a2;
       console.log("userStore", userStore.profile);
+      if (!((_a2 = userStore.profile) == null ? void 0 : _a2.id)) {
+        common_vendor.index.navigateTo({
+          url: "/pages/login/login"
+        });
+        return;
+      }
       await getUserInfo(user.id);
     });
     const getUserInfo = async (id) => {

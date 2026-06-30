@@ -19,76 +19,78 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const orderId = common_vendor.ref(0);
     const orderNumber = common_vendor.ref("");
     const orderAmount = common_vendor.ref(0);
-    const orderTime = common_vendor.ref();
-    common_vendor.ref(null);
-    common_vendor.onLoad(async (options) => {
-      console.log("orderTime什么东西？", options);
-      orderId.value = options.orderId;
-      orderNumber.value = options.orderNumber;
-      orderAmount.value = options.orderAmount;
-      orderTime.value = options.orderTime.replace(" ", "T");
+    const orderTime = common_vendor.ref("");
+    const isExpired = common_vendor.computed(() => countdownStore.showM <= 0 && countdownStore.showS <= 0);
+    const clearCountdown = () => {
+      if (countdownStore.timer !== void 0) {
+        clearInterval(countdownStore.timer);
+        countdownStore.timer = void 0;
+      }
+    };
+    const cancelExpiredOrder = async () => {
+      if (orderId.value) {
+        await api_order.cancelOrderAPI(orderId.value);
+      }
+    };
+    const startCountdown = () => {
+      clearCountdown();
+      const update = async () => {
+        const createdAt = new Date(orderTime.value.replace(" ", "T")).getTime();
+        const remain = createdAt + 15 * 60 * 1e3 - Date.now();
+        if (remain <= 0) {
+          clearCountdown();
+          countdownStore.showM = 0;
+          countdownStore.showS = 0;
+          await cancelExpiredOrder();
+          return;
+        }
+        countdownStore.showM = Math.floor(remain / 1e3 / 60 % 60);
+        countdownStore.showS = Math.floor(remain / 1e3 % 60);
+      };
+      void update();
+      countdownStore.timer = setInterval(() => {
+        void update();
+      }, 1e3);
+    };
+    common_vendor.onLoad((options) => {
+      orderId.value = Number((options == null ? void 0 : options.orderId) || 0);
+      orderNumber.value = decodeURIComponent((options == null ? void 0 : options.orderNumber) || "");
+      orderAmount.value = Number((options == null ? void 0 : options.orderAmount) || 0);
+      orderTime.value = decodeURIComponent((options == null ? void 0 : options.orderTime) || "");
+      startCountdown();
+    });
+    common_vendor.onUnload(() => {
+      clearCountdown();
     });
     const toSuccess = async () => {
-      if (countdownStore.showM == -1 && countdownStore.showS == -1) {
+      if (isExpired.value) {
         common_vendor.index.redirectTo({
           url: "/pages/orderDetail/orderDetail?orderId=" + orderId.value
         });
         return;
       }
-      console.log("支付成功");
       const payDTO = {
         orderNumber: orderNumber.value,
         payMethod: 1
-        // 本平台默认微信支付
       };
-      await api_order.payOrderAPI(payDTO);
-      if (countdownStore.timer !== void 0) {
-        clearInterval(countdownStore.timer);
-        countdownStore.timer = void 0;
+      const res = await api_order.payOrderAPI(payDTO);
+      if (res.code !== 0) {
+        common_vendor.index.showToast({
+          title: res.msg || "支付失败",
+          icon: "none"
+        });
+        return;
       }
+      clearCountdown();
       common_vendor.index.redirectTo({
-        url: "/pages/submit/success?orderId=" + orderId.value + "&orderNumber=" + orderNumber.value + "&orderAmount=" + orderAmount.value + "&orderTime=" + orderTime.value
+        url: "/pages/submit/success?orderId=" + orderId.value + "&orderNumber=" + encodeURIComponent(orderNumber.value) + "&orderAmount=" + orderAmount.value + "&orderTime=" + encodeURIComponent(orderTime.value)
       });
-    };
-    const timeup = () => {
-      console.log("------------ 执行了一次倒计时timeup ---------------");
-      let timeupSecond = common_vendor.ref(20);
-      if (countdownStore.timer !== void 0) {
-        clearInterval(countdownStore.timer);
-      }
-      countdownStore.timer = setInterval(() => {
-        console.log("什么timer？", countdownStore.timer);
-        console.log("看看是不是一秒执行一次", orderTime.value);
-        let buy_time = new Date(orderTime.value).getTime();
-        let time = buy_time + 15 * 60 * 1e3 - (/* @__PURE__ */ new Date()).getTime();
-        console.log("time", time);
-        if (time > 0 && countdownStore.timer !== void 0) {
-          var m = time / 1e3 / 60 % 60;
-          console.log("m", m);
-          var s = time / 1e3 % 60;
-          console.log("s", s);
-          timeupSecond.value = time / 1e3;
-          console.log("timeupSecond小于0？", timeupSecond.value);
-          countdownStore.showM = Math.floor(m);
-          countdownStore.showS = Math.floor(s);
-        } else {
-          console.log("订单已超时！");
-          clearInterval(countdownStore.timer);
-          countdownStore.showM = -1;
-          countdownStore.showS = -1;
-          cancelOrder();
-        }
-      }, 1e3);
-    };
-    const cancelOrder = async () => {
-      await api_order.cancelOrderAPI(orderId.value);
     };
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.unref(countdownStore).showM == 0 && common_vendor.unref(countdownStore).showS == 0
-      }, common_vendor.unref(countdownStore).showM == 0 && common_vendor.unref(countdownStore).showS == 0 ? {} : {
-        b: common_vendor.o(($event) => timeup()),
-        c: common_vendor.p({
+        a: isExpired.value
+      }, isExpired.value ? {} : {
+        b: common_vendor.p({
           color: "#888",
           ["show-day"]: false,
           ["show-hour"]: false,
@@ -96,9 +98,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           second: common_vendor.unref(countdownStore).showS
         })
       }, {
-        d: common_vendor.t(orderAmount.value),
-        e: common_vendor.t(orderNumber.value),
-        f: common_vendor.o(($event) => toSuccess())
+        c: common_vendor.t(orderAmount.value),
+        d: common_vendor.t(orderNumber.value),
+        e: common_vendor.o(toSuccess)
       });
     };
   }

@@ -1,0 +1,65 @@
+# 嘉园外卖接口自动化测试配置文件
+# 配置说明：
+# 1. base_url: 测试服务器地址
+# 2. timeout: 请求超时时间（秒）
+# 3. test_data: 测试数据配置
+# 4. report: 报告配置
+
+# 服务器配置
+base_url: "http://192.168.1.100:8081"
+timeout: 30
+
+# 测试数据
+test_data:
+  # 用户测试数据
+  user:
+    phone: "13800138000"
+    code: "123456"
+    wrong_code: "654321"
+  
+  # 店铺测试数据
+  shop:
+    shop_id: 1
+    status_open: 1
+    status_close: 0
+  
+  # 菜品测试数据
+  dish:
+    dish_id: 1
+    category_id: 1
+    name: "测试菜品"
+    price: 10.0
+  
+  # 订单测试数据
+  order:
+    address_id: 1
+    remark: "测试订单"
+  
+  # 分页配置
+  pagination:
+    page: 1
+    page_size: 10
+
+# 报告配置
+report:
+  # Allure报告目录
+  allure_results: "allure-results"
+  allure_report: "allure-report"
+  
+  # 日志配置
+  log_level: "INFO"
+  log_file: "test_api.log"
+
+# 数据库配置（可选，用于数据准备和验证）
+database:
+  host: "192.168.1.101"
+  port: 3306
+  database: "hanye_take_out"
+  username: "root"
+  password: "Qq@135791759"
+
+# Redis配置（可选）
+redis:
+  host: "192.168.1.102"
+  port: 6379
+  database: 3

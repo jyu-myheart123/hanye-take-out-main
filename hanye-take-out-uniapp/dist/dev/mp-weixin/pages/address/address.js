@@ -39,7 +39,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       }
     };
     const getLableVal = (item) => {
-      if (item === null) {
+      if (!item) {
         return "其他";
       }
       return item;
@@ -62,7 +62,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         return false;
       }
       common_vendor.index.redirectTo({
-        url: "/pages/submit/submit?address=" + JSON.stringify(item)
+        url: "/pages/submit/submit?address=" + encodeURIComponent(JSON.stringify(item))
       });
     };
     const getRadio = async (e, item) => {

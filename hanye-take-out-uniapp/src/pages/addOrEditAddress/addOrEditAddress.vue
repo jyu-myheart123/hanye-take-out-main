@@ -1,6 +1,6 @@
 <template>
   <view class="customer-box">
-    <view class="add_edit" :style="{height: `calc(100% - ${statusBarHeight} - 44px)`}">
+    <view class="add_edit" :style="{height: `calc(100% - ${statusBarHeight()} - 44px)`}">
       <form class="form_address">
         <view class="uni-form-item uni-column form_item">
           <view class="title">联系人</view>
@@ -191,7 +191,7 @@ const queryAddressBookById = async (id: number) => {
     }
     Object.assign(form, newForm)
     if (res.data.provinceName && res.data.cityName && res.data.districtName) {
-      address.value = res.data.provinceName + '-' + res.data.cityName + '-' + res.data.districtName
+      address.value = res.data.provinceName + ' ' + res.data.cityName + ' ' + res.data.districtName
     }
   }
 }
