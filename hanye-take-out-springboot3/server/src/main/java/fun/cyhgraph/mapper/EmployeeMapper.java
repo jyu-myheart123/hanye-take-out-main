@@ -16,15 +16,17 @@ public interface EmployeeMapper {
     @Select("select * from employee where account = #{account}")
     Employee getByAccount(String account);
 
-    @Insert("insert into employee (name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time) VALUES " +
-            "(#{name}, #{account}, #{password}, #{phone}, #{age}, #{gender}, #{pic}, #{status}, #{createUser}, #{updateUser}, #{createTime}, #{updateTime})")
+    @Insert("insert into employee (name, account, password, phone, age, gender, pic, status, role, create_user, update_user, create_time, update_time) VALUES " +
+            "(#{name}, #{account}, #{password}, #{phone}, #{age}, #{gender}, #{pic}, #{status}, 0, #{createUser}, #{updateUser}, #{createTime}, #{updateTime})")
     @AutoFill(value = OperationType.REG)
         // 由于员工自己注册，但还没注册无法拿到线程id，所以createUser、updateUser只能先手动设置100表示自己操作，填充另外2个time字段就行
+        // role 固定写 0：自己注册的一律是普通员工，超级管理员只能由数据库/超管指定，不能自助提权
     void regEmployee(Employee employee);
 
-    @Insert("insert into employee (name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time) VALUES " +
-            "(#{name}, #{account}, #{password}, #{phone}, #{age}, #{gender}, #{pic}, #{status}, #{createUser}, #{updateUser}, #{createTime}, #{updateTime})")
+    @Insert("insert into employee (name, account, password, phone, age, gender, pic, status, role, create_user, update_user, create_time, update_time) VALUES " +
+            "(#{name}, #{account}, #{password}, #{phone}, #{age}, #{gender}, #{pic}, #{status}, 0, #{createUser}, #{updateUser}, #{createTime}, #{updateTime})")
     @AutoFill(value = OperationType.INSERT)
+        // role 固定写 0：超管新增的员工默认也是普通员工，保证权限不会被随意放大
     void addEmployee(Employee employee);
 
     Page<Employee> pageQuery(PageDTO pageDTO);

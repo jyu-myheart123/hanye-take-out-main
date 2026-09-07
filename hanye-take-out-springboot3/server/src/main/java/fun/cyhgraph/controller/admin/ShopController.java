@@ -28,8 +28,18 @@ public class ShopController {
 
     @GetMapping("/status")
     public Result<Integer> getStatus(){
-        Integer status = (Integer) redisTemplate.opsForValue().get(KEY);
-        log.info("查询当前店铺营业状态");
+        // 小白讲解：这里加了容错。Redis里没值或旧数据格式不对时，默认按"营业中"处理，
+        // 避免类型转换异常直接抛500（user端早就有这个兜底，admin端之前漏了）
+        Integer status = 1;
+        try {
+            Object obj = redisTemplate.opsForValue().get(KEY);
+            if (obj != null) {
+                status = Integer.valueOf(obj.toString());
+            }
+        } catch (Exception e) {
+            log.error("查询店铺状态失败，按营业中处理：", e);
+        }
+        log.info("查询当前店铺营业状态：{}", status == 1 ? "营业中" : "打烊中");
         return Result.success(status);
     }
 

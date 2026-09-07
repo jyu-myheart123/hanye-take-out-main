@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { addEmployeeAPI } from '@/api/employee'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { useUserInfoStore } from '@/store'
 
 // ------ 数据 ------
 const formLabelWidth = '60px'
@@ -78,6 +79,7 @@ const rules = {
 
 const router = useRouter()
 const route = useRoute()
+const userInfoStore = useUserInfoStore()
 
 // 选择图片->点击事件->让选择框出现
 const chooseImg = () => {
@@ -150,6 +152,11 @@ const cancel = () => {
 
 const init = async () => {
   console.log(route.query)
+  // 页面级守卫：普通员工即使手动输入 /employee/add 地址直达，也会被拦下并退回列表页
+  if (userInfoStore.userInfo?.role !== 1) {
+    ElMessage.error('权限不足，仅超级管理员可新增员工')
+    router.replace('/employee')
+  }
 }
 
 init()

@@ -7,7 +7,8 @@ hanye:
   redis:
     host: localhost
     port: 6379
-    password: 123456
+    # 本地Redis没有设置密码，不能配password，否则会报 "Client sent AUTH, but no password is set"
+    # password: 123456
     database: 1
   wechat:
     # 下面这两句改成自己的，不然小程序登不上！

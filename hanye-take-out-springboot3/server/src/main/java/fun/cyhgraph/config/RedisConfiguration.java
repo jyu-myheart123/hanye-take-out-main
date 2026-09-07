@@ -31,6 +31,15 @@ public class RedisConfiguration {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         // 设置redis key的序列化器
         redisTemplate.setKeySerializer(new StringRedisSerializer());
+        // 设置value的序列化器为JSON（小白讲解：原来这段配置被注释掉了，
+        // value用的是JDK默认的字节序列化，存进去的数字读出来类型对不上会报500，
+        // 改成JSON后数字、对象都能正常存取）
+        redisTemplate.setValueSerializer(RedisSerializer.json());
+        // hash结构的key和value也统一用字符串/JSON序列化
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(RedisSerializer.json());
+        // 使上面的序列化配置生效
+        redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
 }

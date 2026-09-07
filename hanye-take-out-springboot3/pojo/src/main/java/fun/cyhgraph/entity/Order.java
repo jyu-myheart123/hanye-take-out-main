@@ -61,4 +61,9 @@ public class Order implements Serializable {
     private int packAmount; // 打包费
     private int tablewareNumber; // 餐具数量
     private Integer tablewareStatus; // 餐具数量状态  1按餐量提供  0选择具体数量
+    /**
+     * 订单类型：1=外卖（微信小程序用户下单），2=堂食（员工在后台为到店客户代下单）
+     * 小白讲解：用这个字段区分订单来源，堂食单没有收货地址、现场付款
+     */
+    private Integer orderType;
 }

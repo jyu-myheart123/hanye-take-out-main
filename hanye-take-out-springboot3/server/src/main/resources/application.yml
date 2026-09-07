@@ -13,7 +13,8 @@ spring:
     redis:
       host: ${hanye.redis.host}
       port: ${hanye.redis.port}
-      password: ${hanye.redis.password}
+      # 冒号后留空表示"没有配置密码时默认空密码"，本地Redis无密码时就不会发送AUTH命令
+      password: ${hanye.redis.password:}
       database: ${hanye.redis.database}
 
 # ??mybatis

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import { getEmployeeByIdAPI, updateEmployeeAPI } from '@/api/employee'
+import { computed, reactive, ref } from 'vue'
+import { deleteEmployeeAPI, getEmployeeByIdAPI, updateEmployeeAPI } from '@/api/employee'
 import { useRouter, useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserInfoStore } from '@/store'
 
 // ------ 数据 ------
@@ -18,6 +18,7 @@ const form = reactive({
   age: '',
   gender: '',
   pic: '',
+  role: 0, // 被编辑员工的角色：1=超级管理员 0=普通员工，用来判断删除按钮是否显示
 })
 const genders = [
   {
@@ -162,6 +163,59 @@ const cancel = () => {
   })
 }
 
+// ------ 删除员工（在修改页内也能删）------
+// 当前登录人是不是超级管理员
+const isAdmin = computed(() => userInfoStore.userInfo?.role === 1)
+// 当前登录人的id
+const currentId = computed(() => userInfoStore.userInfo?.id ?? 0)
+// 正在编辑的这个员工是不是自己
+const isSelf = computed(() => form.id === currentId.value)
+/**
+ * 删除按钮要不要显示：
+ *   超级管理员 -> 可以删【普通员工】，但不能删超管账号、不能删自己
+ *   普通员工   -> 只能删【自己】
+ * 小白讲解：这里只是界面上藏按钮，真正的安全在后端接口里也校验了一遍
+ */
+const canDelete = computed(() => {
+  if (isAdmin.value) {
+    return form.role !== 1 && !isSelf.value
+  }
+  return isSelf.value
+})
+
+/**
+ * 点击删除按钮：弹二次确认 -> 调后端删除接口 -> 处理跳转
+ * 特殊情况：如果删的是当前登录的自己，删完要清空登录态并跳回登录页
+ */
+const deleteSelfOrTarget = () => {
+  ElMessageBox.confirm(
+    isSelf.value ? '确定要删除您自己的账号吗？删除后需重新登录。' : `确定要删除员工「${form.name}」吗？此操作不可恢复。`,
+    '删除员工',
+    {
+      confirmButtonText: '确认删除',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    .then(async () => {
+      const res = await deleteEmployeeAPI(form.id)
+      if (res.data.code !== 0) {
+        return
+      }
+      ElMessage.success('删除成功')
+      if (isSelf.value) {
+        // 自己把自己删了，清空登录态，回登录页
+        userInfoStore.userInfo = null
+        router.replace('/login')
+      } else {
+        router.push('/employee')
+      }
+    })
+    .catch(() => {
+      ElMessage.info('已取消删除')
+    })
+}
+
 const init = async () => {
   console.log(route.query)
   if (route.query) {
@@ -218,6 +272,15 @@ init()
     </el-form>
     <el-form-item class="btn_box">
       <el-button class="submit_btn" type="success" @click="submit">修改</el-button>
+      <!-- 删除按钮：按权限显示。超管可删普通员工，普通员工只能删自己 -->
+      <el-button
+        v-if="canDelete"
+        class="delete_btn"
+        type="danger"
+        @click="deleteSelfOrTarget"
+      >
+        删除
+      </el-button>
       <el-button class="cancel_btn" type="info" plain @click="cancel">取消</el-button>
     </el-form-item>
   </el-card>
@@ -251,6 +314,12 @@ img {
     width: 100px;
     height: 40px;
     margin: 30px 0 0 400px;
+  }
+
+  .delete_btn {
+    width: 100px;
+    height: 40px;
+    margin: 30px 0 0 20px;
   }
 
   .cancel_btn {

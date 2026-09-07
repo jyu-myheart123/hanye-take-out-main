@@ -20,6 +20,12 @@ const router = createRouter({
           component: () => import('./views/statistics/index.vue')
         },
         {
+          // 堂食开单：员工为到店老客户现场代下单（放在数据统计与订单管理之间）
+          path: 'dinein',
+          name: 'dinein',
+          component: () => import('./views/dinein/index.vue')
+        },
+        {
           path: 'order',
           name: 'order',
           component: () => import('./views/order/index.vue')

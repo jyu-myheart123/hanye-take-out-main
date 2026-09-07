@@ -51,6 +51,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private AddressBookMapper addressBookMapper;
     @Autowired
+    private DishMapper dishMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
+    @Autowired
     private WeChatPayUtil weChatPayUtil;
     @Autowired
     private UserMapper userMapper;
@@ -122,6 +126,113 @@ public class OrderServiceImpl implements OrderService {
                 .orderTime(order.getOrderTime())
                 .build();
         return orderSubmitVO;
+    }
+
+    /**
+     * 堂食下单（员工在后台为到店客户代下单）
+     * 小白讲解流程：
+     *   1. 员工在前端勾选菜品/套餐 -> 只传 id 和数量过来，不传价格（防止篡改）
+     *   2. 后端根据 id 查数据库里真实的单价，乘以数量算出每一项的小计
+     *   3. 汇总出总金额，生成订单 + 订单明细
+     *   4. 堂食是现场付款的，所以订单直接是"已付款 + 待接单"状态，后厨立刻能看到
+     */
+    public OrderSubmitVO dineInSubmit(DineInOrderDTO dineInOrderDTO) {
+        List<DineInOrderDTO.Item> items = dineInOrderDTO.getItems();
+        if (items == null || items.isEmpty()) {
+            throw new OrderBusinessException(MessageConstant.DINE_IN_EMPTY);
+        }
+
+        List<OrderDetail> orderDetailList = new ArrayList<>();
+        BigDecimal totalAmount = BigDecimal.ZERO;
+
+        // 逐项核算价格：价格一律以后端数据库为准，不信前端传的任何金额
+        for (DineInOrderDTO.Item item : items) {
+            // 份数没传或小于1，按1份算
+            int number = (item.getNumber() == null || item.getNumber() < 1) ? 1 : item.getNumber();
+            BigDecimal price;
+            String name;
+            String pic;
+            if (item.getDishId() != null) {
+                // 点的是菜品
+                Dish dish = dishMapper.getById(item.getDishId());
+                if (dish == null || dish.getStatus() == null || dish.getStatus() != 1) {
+                    throw new OrderBusinessException(MessageConstant.DISH_NOT_AVAILABLE);
+                }
+                price = dish.getPrice();
+                name = dish.getName();
+                pic = dish.getPic();
+            } else if (item.getSetmealId() != null) {
+                // 点的是套餐
+                Setmeal setmeal = setmealMapper.getSetmealById(item.getSetmealId());
+                if (setmeal == null || setmeal.getStatus() == null || setmeal.getStatus() != 1) {
+                    throw new OrderBusinessException(MessageConstant.DISH_NOT_AVAILABLE);
+                }
+                price = setmeal.getPrice();
+                name = setmeal.getName();
+                pic = setmeal.getPic();
+            } else {
+                throw new OrderBusinessException(MessageConstant.DISH_NOT_AVAILABLE);
+            }
+            // 小计 = 单价 × 份数
+            BigDecimal itemAmount = price.multiply(BigDecimal.valueOf(number));
+            totalAmount = totalAmount.add(itemAmount);
+
+            OrderDetail detail = OrderDetail.builder()
+                    .name(name)
+                    .pic(pic)
+                    .dishId(item.getDishId())
+                    .setmealId(item.getSetmealId())
+                    .dishFlavor(item.getDishFlavor())
+                    .number(number)
+                    .amount(itemAmount)
+                    .build();
+            orderDetailList.add(detail);
+        }
+
+        // 构建堂食订单
+        LocalDateTime now = LocalDateTime.now();
+        Order order = Order.builder()
+                .number(String.valueOf(System.currentTimeMillis())) // 用时间戳当订单号
+                .status(Order.TO_BE_CONFIRMED)   // 堂食现场已付款，直接进入"待接单"，后厨马上能处理
+                .userId(0)                        // 堂食客户不是微信用户，用 0 占位（表字段不允许为空）
+                .addressBookId(0)                 // 堂食没有收货地址，用 0 占位
+                .orderTime(now)
+                .checkoutTime(now)
+                .payMethod(3)                     // 3=线下/现金（1微信 2支付宝）
+                .payStatus(Order.PAID)            // 现场已付款
+                .amount(totalAmount)
+                .remark(dineInOrderDTO.getRemark())
+                .phone(dineInOrderDTO.getPhone())
+                .address("堂食")
+                .consignee(dineInOrderDTO.getTableNo()) // 收货人位置存"桌号/称呼"，方便后厨叫号
+                .deliveryStatus(1)
+                .packAmount(0)                    // 堂食无打包费
+                .tablewareStatus(1)
+                .orderType(2)                     // 2=堂食（1=外卖）
+                .build();
+        orderMapper.insert(order);
+
+        // 订单明细关联订单id，批量插入
+        for (OrderDetail detail : orderDetailList) {
+            detail.setOrderId(order.getId());
+        }
+        orderDetailMapper.insertBatch(orderDetailList);
+
+        // 通过 WebSocket 给后台推送来单提醒（和外卖来单是同一条通道，订单页会弹提醒）
+        Map map = new HashMap();
+        map.put("type", 1); // 1=来单提醒，2=客户催单
+        map.put("orderId", order.getId());
+        map.put("content", "堂食订单号：" + order.getNumber());
+        String json = JSON.toJSONString(map);
+        log.info("堂食开单成功，推送给后台：{}", map);
+        webSocketServer.sendToAllClient(json);
+
+        return OrderSubmitVO.builder()
+                .id(order.getId())
+                .orderNumber(order.getNumber())
+                .orderAmount(order.getAmount())
+                .orderTime(order.getOrderTime())
+                .build();
     }
 
     /**

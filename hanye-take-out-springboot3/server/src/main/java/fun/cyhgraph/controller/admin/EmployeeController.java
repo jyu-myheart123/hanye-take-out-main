@@ -50,6 +50,7 @@ public class EmployeeController {
                 .id(employee.getId())
                 .account(employee.getAccount())
                 .token(token)
+                .role(employee.getRole()) // 把角色一起返回，前端据此控制按钮显隐
                 .build();
         return Result.success(employeeLoginVO);
     }

@@ -19,6 +19,7 @@ const formLabelWidth = '92px'
 const menuList = [
   { title: '控制台', path: '/dashboard', icon: 'PieChart', desc: '经营概览与实时提醒' },
   { title: '数据统计', path: '/statistics', icon: 'DataAnalysis', desc: '营收、用户与订单趋势' },
+  { title: '堂食开单', path: '/dinein', icon: 'Bowl', desc: '到店客户现场代下单' },
   { title: '订单管理', path: '/order', icon: 'Tickets', desc: '接单、配送、取消处理' },
   { title: '分类管理', path: '/category', icon: 'Grid', desc: '菜品与套餐分类配置' },
   { title: '套餐管理', path: '/setmeal', icon: 'Food', desc: '套餐信息与上下架' },

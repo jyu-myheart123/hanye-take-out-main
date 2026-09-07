@@ -14,4 +14,10 @@ public class MessageConstant {
     public static final String ORDER_NOT_FOUND = "订单不存在";
     public static final String ORDER_STATUS_ERROR = "订单状态错误";
     public static final String UNKNOWN_ERROR = "未知错误";
+    // ===== 权限相关提示 =====
+    public static final String NOT_ADMIN = "权限不足，该操作仅超级管理员可执行";
+    public static final String CAN_NOT_OPERATE_ADMIN = "无权操作超级管理员账号";
+    public static final String CAN_NOT_OPERATE_OTHER = "普通员工只能修改自己的信息";
+    public static final String DINE_IN_EMPTY = "开单清单为空，请先添加菜品";
+    public static final String DISH_NOT_AVAILABLE = "部分菜品已停售或不存在，请刷新后重试";
 }
