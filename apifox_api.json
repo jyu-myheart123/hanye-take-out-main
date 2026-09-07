@@ -1,0 +1,1055 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "嘉园外卖校园外卖跑腿平台 - API接口文档",
+    "description": "嘉园外卖校园外卖跑腿平台后端接口文档，包含管理员端和用户端所有接口",
+    "version": "1.0.0",
+    "contact": {
+      "name": "第6组",
+      "email": "group6@jiayuan.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "本地开发环境"
+    }
+  ],
+  "security": [
+    {
+      "adminAuth": [],
+      "userAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "adminAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "token",
+        "description": "管理员登录Token"
+      },
+      "userAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "token",
+        "description": "用户登录Token"
+      }
+    },
+    "schemas": {
+      "Result": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "integer", "description": "响应码，0表示成功，1表示失败" },
+          "msg": { "type": "string", "description": "响应消息" },
+          "data": { "type": "object", "description": "响应数据" }
+        }
+      },
+      "UserLoginDTO": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string", "description": "微信授权码/验证码" }
+        },
+        "required": ["code"]
+      },
+      "UserLoginVO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "用户ID" },
+          "openid": { "type": "string", "description": "微信openid" },
+          "token": { "type": "string", "description": "登录Token" }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "用户ID" },
+          "name": { "type": "string", "description": "用户姓名" },
+          "phone": { "type": "string", "description": "手机号" },
+          "gender": { "type": "integer", "description": "性别，0男1女" },
+          "pic": { "type": "string", "description": "头像地址" }
+        }
+      },
+      "EmployeeLoginDTO": {
+        "type": "object",
+        "properties": {
+          "account": { "type": "string", "description": "账号" },
+          "password": { "type": "string", "description": "密码" }
+        },
+        "required": ["account", "password"]
+      },
+      "CategoryDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "分类ID" },
+          "name": { "type": "string", "description": "分类名称" },
+          "type": { "type": "integer", "description": "分类类型，1菜品2套餐" },
+          "sort": { "type": "integer", "description": "排序" },
+          "status": { "type": "integer", "description": "状态，0禁用1启用" }
+        }
+      },
+      "DishDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "菜品ID" },
+          "name": { "type": "string", "description": "菜品名称" },
+          "pic": { "type": "string", "description": "图片地址" },
+          "detail": { "type": "string", "description": "菜品详情" },
+          "price": { "type": "number", "description": "价格" },
+          "status": { "type": "integer", "description": "状态，0停售1启售" },
+          "categoryId": { "type": "integer", "description": "分类ID" },
+          "flavors": { "type": "array", "items": { "type": "object" }, "description": "口味列表" }
+        }
+      },
+      "SetmealDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "套餐ID" },
+          "name": { "type": "string", "description": "套餐名称" },
+          "pic": { "type": "string", "description": "图片地址" },
+          "detail": { "type": "string", "description": "套餐详情" },
+          "price": { "type": "number", "description": "价格" },
+          "status": { "type": "integer", "description": "状态，0停售1启售" },
+          "categoryId": { "type": "integer", "description": "分类ID" },
+          "setmealDishes": { "type": "array", "items": { "type": "object" }, "description": "套餐包含菜品" }
+        }
+      },
+      "CartDTO": {
+        "type": "object",
+        "properties": {
+          "dishId": { "type": "integer", "description": "菜品ID" },
+          "setmealId": { "type": "integer", "description": "套餐ID" },
+          "dishFlavor": { "type": "string", "description": "菜品口味" }
+        }
+      },
+      "AddressBook": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "地址ID" },
+          "consignee": { "type": "string", "description": "收货人" },
+          "phone": { "type": "string", "description": "手机号" },
+          "gender": { "type": "integer", "description": "性别" },
+          "provinceCode": { "type": "string", "description": "省份编码" },
+          "provinceName": { "type": "string", "description": "省份名称" },
+          "cityCode": { "type": "string", "description": "城市编码" },
+          "cityName": { "type": "string", "description": "城市名称" },
+          "districtCode": { "type": "string", "description": "区县编码" },
+          "districtName": { "type": "string", "description": "区县名称" },
+          "detail": { "type": "string", "description": "详细地址" },
+          "label": { "type": "string", "description": "标签" },
+          "isDefault": { "type": "integer", "description": "是否默认，0否1是" }
+        }
+      },
+      "OrderSubmitDTO": {
+        "type": "object",
+        "properties": {
+          "addressBookId": { "type": "integer", "description": "地址ID" },
+          "remark": { "type": "string", "description": "备注" },
+          "orderDetailList": { "type": "array", "items": { "type": "object" }, "description": "订单明细" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/user/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "description": "用户微信登录或验证码登录",
+        "tags": ["用户模块"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserLoginDTO" },
+              "examples": {
+                "测试登录": { "value": { "code": "test_code" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Result" },
+                "example": { "code": 0, "msg": "success", "data": { "id": 1, "openid": "test_openid", "token": "xxx" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/user/{id}": {
+      "get": {
+        "summary": "获取用户信息",
+        "description": "根据ID获取用户信息",
+        "tags": ["用户模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "用户ID", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } }
+        }
+      }
+    },
+    "/user/user": {
+      "put": {
+        "summary": "更新用户信息",
+        "description": "修改用户个人信息",
+        "tags": ["用户模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/shop/status": {
+      "get": {
+        "summary": "获取店铺状态",
+        "description": "获取当前店铺营业状态",
+        "tags": ["店铺模块"],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "example": { "code": 0, "msg": "success", "data": 1 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/category/list": {
+      "get": {
+        "summary": "获取分类列表",
+        "description": "获取菜品和套餐分类列表",
+        "tags": ["分类模块"],
+        "parameters": [
+          { "name": "type", "in": "query", "description": "分类类型，1菜品2套餐", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/dish/list/{id}": {
+      "get": {
+        "summary": "获取菜品列表",
+        "description": "根据分类ID获取菜品列表",
+        "tags": ["菜品模块"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "分类ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/dish/dish/{id}": {
+      "get": {
+        "summary": "获取菜品详情",
+        "description": "根据菜品ID获取详情",
+        "tags": ["菜品模块"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "菜品ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/setmeal/list/{id}": {
+      "get": {
+        "summary": "获取套餐列表",
+        "description": "根据分类ID获取套餐列表",
+        "tags": ["套餐模块"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "分类ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/setmeal/{id}": {
+      "get": {
+        "summary": "获取套餐详情",
+        "description": "根据套餐ID获取详情",
+        "tags": ["套餐模块"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "套餐ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/cart/add": {
+      "post": {
+        "summary": "添加购物车",
+        "description": "添加菜品或套餐到购物车",
+        "tags": ["购物车模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CartDTO" }, "examples": { "添加菜品": { "value": { "dishId": 1 } }, "添加套餐": { "value": { "setmealId": 1 } } } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/cart/sub": {
+      "put": {
+        "summary": "减少购物车",
+        "description": "减少购物车中菜品或套餐数量",
+        "tags": ["购物车模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CartDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/cart/list": {
+      "get": {
+        "summary": "获取购物车列表",
+        "description": "获取当前用户购物车列表",
+        "tags": ["购物车模块"],
+        "security": [{ "userAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/cart/clean": {
+      "delete": {
+        "summary": "清空购物车",
+        "description": "清空当前用户购物车",
+        "tags": ["购物车模块"],
+        "security": [{ "userAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/submit": {
+      "post": {
+        "summary": "提交订单",
+        "description": "提交订单并创建支付",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OrderSubmitDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/unPayOrderCount": {
+      "get": {
+        "summary": "获取未支付订单数",
+        "description": "获取当前用户未支付订单数量",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/payment": {
+      "put": {
+        "summary": "支付订单",
+        "description": "支付订单并更新状态",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "orderNumber": { "type": "string" }, "payMethod": { "type": "integer" } }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/orderDetail/{id}": {
+      "get": {
+        "summary": "获取订单详情",
+        "description": "根据订单ID获取订单详情",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/historyOrders": {
+      "get": {
+        "summary": "获取历史订单",
+        "description": "获取当前用户历史订单列表",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "description": "页码", "schema": { "type": "integer" } },
+          { "name": "pageSize", "in": "query", "description": "每页数量", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/cancel/{id}": {
+      "put": {
+        "summary": "取消订单",
+        "description": "取消指定订单",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/reOrder/{id}": {
+      "post": {
+        "summary": "再来一单",
+        "description": "根据历史订单重新下单",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "历史订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/order/reminder/{id}": {
+      "get": {
+        "summary": "催单",
+        "description": "催促商家尽快处理订单",
+        "tags": ["订单模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/address": {
+      "post": {
+        "summary": "新增地址",
+        "description": "新增收货地址",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressBook" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "put": {
+        "summary": "更新地址",
+        "description": "修改收货地址",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AddressBook" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/address/list": {
+      "get": {
+        "summary": "获取地址列表",
+        "description": "获取当前用户所有收货地址",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/address/default": {
+      "get": {
+        "summary": "获取默认地址",
+        "description": "获取当前用户默认收货地址",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "put": {
+        "summary": "设置默认地址",
+        "description": "设置指定地址为默认地址",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "id": { "type": "integer" } } }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/user/address/{id}": {
+      "get": {
+        "summary": "获取地址详情",
+        "description": "根据地址ID获取详情",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "地址ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "delete": {
+        "summary": "删除地址",
+        "description": "删除指定地址",
+        "tags": ["地址模块"],
+        "security": [{ "userAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "地址ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/login": {
+      "post": {
+        "summary": "管理员登录",
+        "description": "商家端管理员登录",
+        "tags": ["管理员模块"],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmployeeLoginDTO" }, "examples": { "测试登录": { "value": { "account": "cyh", "password": "123456" } } } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/register": {
+      "post": {
+        "summary": "管理员注册",
+        "description": "注册新的管理员账号",
+        "tags": ["管理员模块"],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EmployeeLoginDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/add": {
+      "post": {
+        "summary": "添加员工",
+        "description": "添加新员工",
+        "tags": ["管理员模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "account": { "type": "string" },
+                  "password": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "age": { "type": "integer" },
+                  "gender": { "type": "integer" },
+                  "pic": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/{id}": {
+      "get": {
+        "summary": "获取员工信息",
+        "description": "根据ID获取员工信息",
+        "tags": ["管理员模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "员工ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/page": {
+      "get": {
+        "summary": "员工分页查询",
+        "description": "分页查询员工列表",
+        "tags": ["管理员模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "description": "页码", "schema": { "type": "integer" } },
+          { "name": "pageSize", "in": "query", "description": "每页数量", "schema": { "type": "integer" } },
+          { "name": "name", "in": "query", "description": "员工姓名", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/update": {
+      "put": {
+        "summary": "更新员工信息",
+        "description": "修改员工信息",
+        "tags": ["管理员模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "name": { "type": "string" },
+                  "account": { "type": "string" },
+                  "password": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "age": { "type": "integer" },
+                  "gender": { "type": "integer" },
+                  "pic": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/status/{id}": {
+      "put": {
+        "summary": "修改员工状态",
+        "description": "启用或禁用员工",
+        "tags": ["管理员模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "员工ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/employee/delete/{id}": {
+      "delete": {
+        "summary": "删除员工",
+        "description": "删除指定员工",
+        "tags": ["管理员模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "员工ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/shop/{status}": {
+      "put": {
+        "summary": "修改店铺状态",
+        "description": "切换店铺营业状态",
+        "tags": ["店铺模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "status", "in": "path", "required": true, "description": "状态，0打烊1营业", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/shop/status": {
+      "get": {
+        "summary": "获取店铺状态",
+        "description": "获取当前店铺营业状态",
+        "tags": ["店铺模块"],
+        "security": [{ "adminAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/category": {
+      "post": {
+        "summary": "新增分类",
+        "description": "新增菜品或套餐分类",
+        "tags": ["分类模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CategoryDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "put": {
+        "summary": "更新分类",
+        "description": "修改分类信息",
+        "tags": ["分类模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CategoryDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/category/page": {
+      "get": {
+        "summary": "分类分页查询",
+        "description": "分页查询分类列表",
+        "tags": ["分类模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "description": "页码", "schema": { "type": "integer" } },
+          { "name": "pageSize", "in": "query", "description": "每页数量", "schema": { "type": "integer" } },
+          { "name": "name", "in": "query", "description": "分类名称", "schema": { "type": "string" } },
+          { "name": "type", "in": "query", "description": "分类类型", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/category/{id}": {
+      "get": {
+        "summary": "获取分类详情",
+        "description": "根据ID获取分类详情",
+        "tags": ["分类模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "分类ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "delete": {
+        "summary": "删除分类",
+        "description": "删除指定分类",
+        "tags": ["分类模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "分类ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/category/status/{id}": {
+      "put": {
+        "summary": "修改分类状态",
+        "description": "启用或禁用分类",
+        "tags": ["分类模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "分类ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/dish": {
+      "post": {
+        "summary": "新增菜品",
+        "description": "新增菜品信息",
+        "tags": ["菜品模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "put": {
+        "summary": "更新菜品",
+        "description": "修改菜品信息",
+        "tags": ["菜品模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DishDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "delete": {
+        "summary": "删除菜品",
+        "description": "批量删除菜品",
+        "tags": ["菜品模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "ids": { "type": "array", "items": { "type": "integer" } } } }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/dish/page": {
+      "get": {
+        "summary": "菜品分页查询",
+        "description": "分页查询菜品列表",
+        "tags": ["菜品模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "description": "页码", "schema": { "type": "integer" } },
+          { "name": "pageSize", "in": "query", "description": "每页数量", "schema": { "type": "integer" } },
+          { "name": "name", "in": "query", "description": "菜品名称", "schema": { "type": "string" } },
+          { "name": "categoryId", "in": "query", "description": "分类ID", "schema": { "type": "integer" } },
+          { "name": "status", "in": "query", "description": "状态", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/dish/{id}": {
+      "get": {
+        "summary": "获取菜品详情",
+        "description": "根据ID获取菜品详情",
+        "tags": ["菜品模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "菜品ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/dish/status/{id}": {
+      "put": {
+        "summary": "修改菜品状态",
+        "description": "启售或停售菜品",
+        "tags": ["菜品模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "菜品ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/setmeal": {
+      "post": {
+        "summary": "新增套餐",
+        "description": "新增套餐信息",
+        "tags": ["套餐模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SetmealDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "put": {
+        "summary": "更新套餐",
+        "description": "修改套餐信息",
+        "tags": ["套餐模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SetmealDTO" } } } },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      },
+      "delete": {
+        "summary": "删除套餐",
+        "description": "批量删除套餐",
+        "tags": ["套餐模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "ids": { "type": "array", "items": { "type": "integer" } } } }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/setmeal/page": {
+      "get": {
+        "summary": "套餐分页查询",
+        "description": "分页查询套餐列表",
+        "tags": ["套餐模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "description": "页码", "schema": { "type": "integer" } },
+          { "name": "pageSize", "in": "query", "description": "每页数量", "schema": { "type": "integer" } },
+          { "name": "name", "in": "query", "description": "套餐名称", "schema": { "type": "string" } },
+          { "name": "categoryId", "in": "query", "description": "分类ID", "schema": { "type": "integer" } },
+          { "name": "status", "in": "query", "description": "状态", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/setmeal/{id}": {
+      "get": {
+        "summary": "获取套餐详情",
+        "description": "根据ID获取套餐详情",
+        "tags": ["套餐模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "套餐ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/setmeal/status/{id}": {
+      "put": {
+        "summary": "修改套餐状态",
+        "description": "启售或停售套餐",
+        "tags": ["套餐模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "套餐ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/conditionSearch": {
+      "get": {
+        "summary": "订单条件查询",
+        "description": "根据条件查询订单列表",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "description": "页码", "schema": { "type": "integer" } },
+          { "name": "pageSize", "in": "query", "description": "每页数量", "schema": { "type": "integer" } },
+          { "name": "number", "in": "query", "description": "订单号", "schema": { "type": "string" } },
+          { "name": "phone", "in": "query", "description": "手机号", "schema": { "type": "string" } },
+          { "name": "status", "in": "query", "description": "订单状态", "schema": { "type": "integer" } },
+          { "name": "beginTime", "in": "query", "description": "开始时间", "schema": { "type": "string" } },
+          { "name": "endTime", "in": "query", "description": "结束时间", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/statistics": {
+      "get": {
+        "summary": "订单统计",
+        "description": "获取订单统计信息",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/details/{id}": {
+      "get": {
+        "summary": "获取订单详情",
+        "description": "根据订单ID获取详情",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/confirm": {
+      "put": {
+        "summary": "确认订单",
+        "description": "商家确认接单",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "id": { "type": "integer" } } }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/reject": {
+      "put": {
+        "summary": "拒单",
+        "description": "商家拒绝接单",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "id": { "type": "integer" }, "rejectionReason": { "type": "string" } } }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/cancel": {
+      "put": {
+        "summary": "取消订单",
+        "description": "商家取消订单",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "properties": { "id": { "type": "integer" }, "cancelReason": { "type": "string" } } }
+            }
+          }
+        },
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/delivery/{id}": {
+      "put": {
+        "summary": "订单派送",
+        "description": "商家标记订单为派送中",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/order/complete/{id}": {
+      "put": {
+        "summary": "订单完成",
+        "description": "商家标记订单为已完成",
+        "tags": ["订单模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "订单ID", "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/report/turnoverStatistics": {
+      "get": {
+        "summary": "营业额统计",
+        "description": "获取营业额统计数据",
+        "tags": ["统计模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "beginTime", "in": "query", "description": "开始时间", "schema": { "type": "string" } },
+          { "name": "endTime", "in": "query", "description": "结束时间", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/report/userStatistics": {
+      "get": {
+        "summary": "用户统计",
+        "description": "获取用户统计数据",
+        "tags": ["统计模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "beginTime", "in": "query", "description": "开始时间", "schema": { "type": "string" } },
+          { "name": "endTime", "in": "query", "description": "结束时间", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/report/orderStatistics": {
+      "get": {
+        "summary": "订单统计",
+        "description": "获取订单统计数据",
+        "tags": ["统计模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "beginTime", "in": "query", "description": "开始时间", "schema": { "type": "string" } },
+          { "name": "endTime", "in": "query", "description": "结束时间", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/report/top10Statistics": {
+      "get": {
+        "summary": "销量Top10",
+        "description": "获取销量前十菜品统计",
+        "tags": ["统计模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "beginTime", "in": "query", "description": "开始时间", "schema": { "type": "string" } },
+          { "name": "endTime", "in": "query", "description": "结束时间", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/report/export": {
+      "get": {
+        "summary": "导出数据",
+        "description": "导出统计数据报表",
+        "tags": ["统计模块"],
+        "security": [{ "adminAuth": [] }],
+        "parameters": [
+          { "name": "beginTime", "in": "query", "description": "开始时间", "schema": { "type": "string" } },
+          { "name": "endTime", "in": "query", "description": "结束时间", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "成功" } }
+      }
+    },
+    "/admin/workspace/businessData": {
+      "get": {
+        "summary": "获取营业数据",
+        "description": "获取商家工作台营业数据",
+        "tags": ["工作台模块"],
+        "security": [{ "adminAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/workspace/overviewOrders": {
+      "get": {
+        "summary": "订单概览",
+        "description": "获取订单概览数据",
+        "tags": ["工作台模块"],
+        "security": [{ "adminAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/workspace/overviewDishes": {
+      "get": {
+        "summary": "菜品概览",
+        "description": "获取菜品概览数据",
+        "tags": ["工作台模块"],
+        "security": [{ "adminAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    },
+    "/admin/workspace/overviewSetmeals": {
+      "get": {
+        "summary": "套餐概览",
+        "description": "获取套餐概览数据",
+        "tags": ["工作台模块"],
+        "security": [{ "adminAuth": [] }],
+        "responses": { "200": { "description": "成功", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Result" } } } } }
+      }
+    }
+  }
+}
