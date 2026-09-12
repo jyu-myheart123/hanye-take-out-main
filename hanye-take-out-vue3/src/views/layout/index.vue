@@ -6,6 +6,7 @@ import { fixPwdAPI } from '@/api/employee'
 import { fixStatusAPI, getStatusAPI } from '@/api/shop'
 import { useUserInfoStore } from '@/store'
 import brandLogo from '@/assets/image/logo2.png'
+import AIAssistant from '@/components/AIAssistant.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -343,6 +344,8 @@ onBeforeUnmount(() => {
         </footer>
       </div>
     </div>
+    <!-- 全局悬浮 AI 助手：所有页面都能看到，不遮挡主体内容 -->
+    <AIAssistant />
   </div>
 </template>
 
