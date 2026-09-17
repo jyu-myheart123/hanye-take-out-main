@@ -390,7 +390,12 @@ onMounted(async () => {
                   @click="orderAccept(scope.row), (isTableOperateBtn = true)">
                   接单
                 </el-button>
-                <el-button v-if="scope.row.status === 3" type="primary" link
+                <!-- 堂食单没有配送环节：已接单后直接"完成"，完成后顾客即可评价 -->
+                <el-button v-if="scope.row.status === 3 && scope.row.orderType === 2" type="primary" link
+                  @click="deliveryOrComplete(5, scope.row.id)">
+                  完成
+                </el-button>
+                <el-button v-else-if="scope.row.status === 3" type="primary" link
                   @click="deliveryOrComplete(3, scope.row.id)">
                   派送
                 </el-button>
@@ -554,7 +559,10 @@ onMounted(async () => {
               @click="orderAccept(my_row), (isTableOperateBtn = false)">接 单</el-button>
 
             <el-button v-if="[1, 3, 4, 5].includes(dialogOrderStatus)" @click="dialogVisible = false">返 回</el-button>
-            <el-button v-if="dialogOrderStatus === 3" type="primary" @click="deliveryOrComplete(3, my_row!.id)">派
+            <!-- 堂食单已接单可直接完成（diaForm 带订单类型） -->
+            <el-button v-if="dialogOrderStatus === 3 && diaForm?.orderType === 2" type="primary"
+              @click="deliveryOrComplete(5, my_row!.id)">完 成</el-button>
+            <el-button v-else-if="dialogOrderStatus === 3" type="primary" @click="deliveryOrComplete(3, my_row!.id)">派
               送</el-button>
             <el-button v-if="dialogOrderStatus === 4" type="primary" @click="deliveryOrComplete(4, my_row!.id)">完
               成</el-button>

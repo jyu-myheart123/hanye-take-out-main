@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import {
   getDineInCategoryListAPI,
   getDineInDishListAPI,
-  dineInSubmitAPI
+  dineInSubmitAPI,
+  dineInPreviewAPI
 } from '@/api/dinein'
 
 // ===== 类型约定（小白讲解：interface 就是给数据约定一个形状，方便写代码时有提示）=====
@@ -46,15 +47,31 @@ const form = reactive({
   remark: ''
 })
 
+// ===== 会员与优惠相关状态 =====
+const memberPhone = ref('')              // 会员手机号（顾客报号，员工输入）
+const payMethod = ref(1)                 // 支付方式：1=现金/扫码，2=会员余额
+const usePoints = ref(false)             // 是否使用积分抵扣
+const priceInfo = ref<any>(null)         // 后端试算返回的完整价格明细
+let previewTimer: any = null             // 防抖计时器（连续加菜只请求一次）
+
 // ===== 计算属性 =====
 // 清单总份数
 const totalNumber = computed(() =>
   cart.value.reduce((sum, item) => sum + item.number, 0)
 )
-// 清单总金额（前端实时预览，真正的价格以后端核算为准）
+// 清单原价总金额（仅在还没拿到后端试算结果时临时显示，真正价格以后端为准）
 const totalAmount = computed(() =>
   cart.value.reduce((sum, item) => sum + item.price * item.number, 0)
 )
+// 手机号格式是否正确（1开头的11位数字）
+const isValidPhone = computed(() => /^1\d{10}$/.test(memberPhone.value.trim()))
+// 是否已识别到会员（后端试算结果里带会员id才算）
+const isMember = computed(() => !!priceInfo.value?.memberId)
+// 余额是否足够支付当前实付金额
+const balanceEnough = computed(() => {
+  if (!priceInfo.value) return false
+  return Number(priceInfo.value.balance) >= Number(priceInfo.value.payAmount)
+})
 
 // ===== 方法 =====
 /** 页面加载：拉取分类 + 全部启售菜品 */
@@ -109,12 +126,67 @@ const removeItem = (item: CartItem) => {
   cart.value = cart.value.filter((x) => x.dishId !== item.dishId)
 }
 
+/** 组装给后端的开单参数（试算和提交共用，保证两次算账口径完全一致） */
+const buildPayload = () => ({
+  items: cart.value.map((item) => ({
+    dishId: item.dishId,
+    number: item.number
+  })),
+  // 手机号格式正确才传，否则当散客处理
+  memberPhone: isValidPhone.value ? memberPhone.value.trim() : '',
+  usePoints: usePoints.value
+})
+
+/**
+ * 价格试算（防抖350毫秒）
+ * 小白讲解：加菜、改手机号、勾选积分后，自动让后端重新算一遍账：
+ * 原价→活动优惠→会员等级折扣→积分抵扣→实付，前端只负责展示
+ */
+const requestPreview = () => {
+  clearTimeout(previewTimer)
+  if (cart.value.length === 0) {
+    priceInfo.value = null
+    return
+  }
+  previewTimer = setTimeout(async () => {
+    try {
+      const { data: res } = await dineInPreviewAPI(buildPayload())
+      if (res.code === 0) priceInfo.value = res.data
+    } catch (e) {
+      // 试算失败不打断点菜，保留上一次结果
+    }
+  }, 350)
+}
+
+// 清单/手机号/积分勾选有变化就重新试算（deep 深度监听清单里份数的变化）
+watch([cart, memberPhone, usePoints], requestPreview, { deep: true })
+
+// 手机号不合法时，清掉会员专属选项，防止误提交
+watch(memberPhone, (val) => {
+  if (!/^1\d{10}$/.test(val.trim())) {
+    usePoints.value = false
+    payMethod.value = 1
+  }
+})
+
+// 试算结果显示不是会员时（新手机号），自动切回现金支付并取消积分勾选
+watch(priceInfo, (info) => {
+  if (info && !info.memberId) {
+    payMethod.value = 1
+    usePoints.value = false
+  }
+})
+
 /** 清空清单和表单（开单成功后用） */
 const resetAll = () => {
   cart.value = []
   form.tableNo = ''
   form.phone = ''
   form.remark = ''
+  memberPhone.value = ''
+  payMethod.value = 1
+  usePoints.value = false
+  priceInfo.value = null
 }
 
 /** 提交开单 */
@@ -128,9 +200,26 @@ const submit = async () => {
     ElMessage.warning('请填写桌号或客户称呼，方便后厨叫号')
     return
   }
+  // 联系电话选填，但只要填了就必须是11位手机号（避免多输一位导致下单失败）
+  const contactPhone = form.phone.trim()
+  if (contactPhone && !/^1\d{10}$/.test(contactPhone)) {
+    ElMessage.warning('联系电话格式不正确，请填写11位手机号，或清空留空')
+    return
+  }
+  // 选了余额支付却没识别到会员 / 余额不足时的友好提示（后端也会再拦一道）
+  if (payMethod.value === 2) {
+    if (!isMember.value) {
+      ElMessage.warning('请先输入正确的会员手机号，才能使用余额支付')
+      return
+    }
+    if (!balanceEnough.value) {
+      ElMessage.warning('会员余额不足，请改用现金/扫码，或先到「堂食会员」充值')
+      return
+    }
+  }
   submitting.value = true
   try {
-    // 只传 id 和份数，价格由后端核算，前端不传金额
+    // 只传 id、份数、会员手机号、支付方式和积分勾选，金额一律由后端核算
     const { data: res } = await dineInSubmitAPI({
       tableNo: form.tableNo,
       phone: form.phone,
@@ -138,10 +227,27 @@ const submit = async () => {
       items: cart.value.map((item) => ({
         dishId: item.dishId,
         number: item.number
-      }))
+      })),
+      memberPhone: isValidPhone.value ? memberPhone.value.trim() : '',
+      payMethod: payMethod.value,
+      usePoints: usePoints.value
     })
     if (res.code !== 0) return
-    ElMessage.success(`开单成功！合计 ¥${Number(res.data.orderAmount).toFixed(2)}，已通知后厨`)
+    const p = res.data
+    // 汇总一下这单一共省了多少钱（活动+会员折扣+积分）
+    const saved =
+      Number(p.discountAmount || 0) +
+      Number(p.memberDiscount || 0) +
+      Number(p.pointsDeduction || 0)
+    let msg = `开单成功！实付 ¥${Number(p.payAmount).toFixed(2)}`
+    if (saved > 0) msg += `（本单共省 ¥${saved.toFixed(2)}）`
+    msg += '，已通知后厨'
+    // 会员单再提示返积分和余额剩余，让员工能直接告诉顾客
+    if (p.memberId) {
+      msg += `；本单返 ${p.pointsEarned || 0} 积分，当前共 ${p.pointsAfter} 分`
+      if (payMethod.value === 2) msg += `，余额剩余 ¥${Number(p.balanceAfter).toFixed(2)}`
+    }
+    ElMessage.success(msg)
     resetAll()
   } finally {
     submitting.value = false
@@ -233,7 +339,7 @@ onMounted(() => {
           <el-input v-model="form.tableNo" placeholder="如：A3桌 / 王先生" clearable />
         </el-form-item>
         <el-form-item label="联系电话（选填）">
-          <el-input v-model="form.phone" placeholder="方便后续联系" clearable />
+          <el-input v-model="form.phone" maxlength="11" placeholder="方便后续联系，填则须为11位手机号" clearable />
         </el-form-item>
         <el-form-item label="备注（选填）">
           <el-input
@@ -244,6 +350,39 @@ onMounted(() => {
           />
         </el-form-item>
       </el-form>
+
+      <!-- 会员识别区：顾客报手机号，输完自动识别并带出等级/余额/积分 -->
+      <div class="member-box">
+        <el-input v-model="memberPhone" maxlength="11" placeholder="会员手机号（选填，老顾客报号）" clearable>
+          <template #prefix>
+            <el-icon><GoldMedal /></el-icon>
+          </template>
+        </el-input>
+        <!-- 手机号还没输对 -->
+        <div v-if="memberPhone && !isValidPhone" class="member-hint member-hint--warn">
+          请输入正确的11位手机号
+        </div>
+        <!-- 手机号格式对，但系统里没这个会员 -->
+        <div v-else-if="isValidPhone && !isMember" class="member-hint">
+          未查到该会员，结账后将自动建档成为银卡会员
+        </div>
+        <!-- 识别成功：展示会员卡片 -->
+        <div v-else-if="isMember" class="member-card">
+          <div class="member-card__top">
+            <strong>{{ priceInfo.memberName || '会员顾客' }}</strong>
+            <el-tag type="warning" effect="dark" round size="small">
+              {{ priceInfo.memberLevelName || '银卡会员' }}
+            </el-tag>
+          </div>
+          <div class="member-card__stats">
+            <span><el-icon><Wallet /></el-icon>余额 ¥{{ Number(priceInfo.balance).toFixed(2) }}</span>
+            <span><el-icon><Coin /></el-icon>{{ priceInfo.points }} 积分</span>
+          </div>
+          <div v-if="Number(priceInfo.levelDiscount) < 1" class="member-card__discount">
+            本单在活动价基础上再享 {{ Number(priceInfo.levelDiscount) * 10 }} 折
+          </div>
+        </div>
+      </div>
 
       <!-- 清单列表 -->
       <div class="cart-list">
@@ -280,12 +419,67 @@ onMounted(() => {
         <el-empty v-if="cart.length === 0" description="还没点菜，点击左侧菜品 + 号开单" :image-size="80" />
       </div>
 
-      <!-- 合计 + 提交 -->
-      <div class="cart-footer">
-        <div class="cart-total">
-          <span>合计</span>
-          <strong>¥{{ totalAmount.toFixed(2) }}</strong>
+      <!-- 支付方式 + 积分抵扣（会员才显示） -->
+      <div v-if="isMember" class="pay-box">
+        <el-radio-group v-model="payMethod" size="small">
+          <el-radio-button :value="1">现金/扫码</el-radio-button>
+          <el-radio-button :value="2">余额支付</el-radio-button>
+        </el-radio-group>
+        <el-checkbox
+          v-model="usePoints"
+          :disabled="!(Number(priceInfo?.maxPointsDeduction) > 0)"
+          class="points-check"
+        >
+          使用积分抵扣（当前 {{ priceInfo?.points }} 分，本单最多抵 ¥{{ Number(priceInfo?.maxPointsDeduction || 0).toFixed(2) }}，100分抵5元）
+        </el-checkbox>
+        <div v-if="payMethod === 2 && !balanceEnough" class="pay-warn">
+          余额不足！差额请收现金，或先到「堂食会员」充值
         </div>
+      </div>
+
+      <!-- 价格明细 + 提交 -->
+      <div class="cart-footer">
+        <div class="price-box" v-if="priceInfo">
+          <!-- 原价 -->
+          <div class="price-row">
+            <span>原价合计</span>
+            <b>¥{{ Number(priceInfo.originalAmount).toFixed(2) }}</b>
+          </div>
+          <!-- 营销活动优惠 -->
+          <template v-if="priceInfo.promotionId">
+            <div class="price-row price-row--off">
+              <span>活动优惠（{{ priceInfo.promotionName }}）</span>
+              <b>-¥{{ Number(priceInfo.discountAmount).toFixed(2) }}</b>
+            </div>
+            <!-- 每道菜的优惠提示，如：宫保鸡丁 第二份半价 优惠¥9.00 -->
+            <div v-for="(tip, idx) in priceInfo.tips" :key="idx" class="price-tip">
+              <el-icon><Present /></el-icon>{{ tip }}
+            </div>
+          </template>
+          <!-- 会员等级折扣 -->
+          <div v-if="Number(priceInfo.memberDiscount) > 0" class="price-row price-row--off">
+            <span>会员折扣（{{ priceInfo.memberLevelName }}）</span>
+            <b>-¥{{ Number(priceInfo.memberDiscount).toFixed(2) }}</b>
+          </div>
+          <!-- 积分抵扣 -->
+          <div v-if="Number(priceInfo.pointsDeduction) > 0" class="price-row price-row--off">
+            <span>积分抵扣</span>
+            <b>-¥{{ Number(priceInfo.pointsDeduction).toFixed(2) }}</b>
+          </div>
+          <!-- 实付：大字醒目 -->
+          <div class="price-row price-row--pay">
+            <span>实付金额</span>
+            <strong>¥{{ Number(priceInfo.payAmount).toFixed(2) }}</strong>
+          </div>
+        </div>
+        <!-- 还没拿到后端试算结果时，先用前端合计兜底显示 -->
+        <div class="price-box" v-else>
+          <div class="price-row price-row--pay">
+            <span>合计</span>
+            <strong>¥{{ totalAmount.toFixed(2) }}</strong>
+          </div>
+        </div>
+
         <el-button
           type="primary"
           size="large"
@@ -294,7 +488,7 @@ onMounted(() => {
           @click="submit"
         >
           <el-icon style="margin-right: 6px;"><Select /></el-icon>
-          提交开单
+          确认提交开单
         </el-button>
         <el-button size="large" plain @click="router.push('/order')">
           去订单管理查看
@@ -469,8 +663,93 @@ onMounted(() => {
   }
 }
 
+// 会员识别区
+.member-box {
+  margin-bottom: 12px;
+}
+
+.member-hint {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--text-sub);
+
+  &--warn {
+    color: #e6a23c;
+  }
+}
+
+.member-card {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(239, 143, 53, 0.12), rgba(221, 107, 32, 0.06));
+  border: 1px solid rgba(239, 143, 53, 0.25);
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    strong {
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+  }
+
+  &__stats {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    font-variant-numeric: tabular-nums;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  &__discount {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--brand-deep);
+    font-weight: 600;
+  }
+}
+
+// 支付方式区
+.pay-box {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px dashed var(--line-soft);
+
+  .points-check {
+    display: flex;
+    margin-top: 8px;
+    margin-right: 0;
+    height: auto;
+    align-items: flex-start;
+    white-space: normal;
+
+    :deep(.el-checkbox__label) {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+.pay-warn {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #dc3545;
+}
+
 .cart-list {
-  max-height: 340px;
+  max-height: 260px;
   overflow-y: auto;
   margin: 8px 0 16px;
   padding-right: 4px;
@@ -560,22 +839,62 @@ onMounted(() => {
   padding-top: 16px;
 }
 
-.cart-total {
+// 价格明细区：原价/活动优惠/会员折扣/积分抵扣/实付
+.price-box {
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 247, 240, 0.6);
+}
+
+.price-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: var(--text-sub);
+  line-height: 1.9;
 
-  span {
-    color: var(--text-sub);
-    font-size: 0.95rem;
-  }
-
-  strong {
-    font-size: 1.7rem;
-    color: var(--brand-deep);
+  b {
+    font-weight: 600;
+    color: var(--text-main);
     font-variant-numeric: tabular-nums;
   }
+
+  // 优惠行：金额用绿色，表示帮顾客省了钱
+  &--off b {
+    color: #157347;
+  }
+
+  // 实付行：大字品牌橙
+  &--pay {
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--line-soft);
+
+    span {
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    strong {
+      font-size: 1.7rem;
+      color: var(--brand-deep);
+      font-variant-numeric: tabular-nums;
+    }
+  }
+}
+
+// 每道菜的优惠提示（第二份半价/买一送一，让员工能直接念给顾客听）
+.price-tip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  color: #157347;
+  line-height: 1.6;
+  padding-left: 4px;
 }
 
 .cart-submit {

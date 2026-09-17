@@ -13,15 +13,23 @@ import fun.cyhgraph.exception.AddressBookBusinessException;
 import fun.cyhgraph.exception.OrderBusinessException;
 import fun.cyhgraph.exception.ShoppingCartBusinessException;
 import fun.cyhgraph.mapper.*;
+import fun.cyhgraph.promotion.CalcItem;
+import fun.cyhgraph.promotion.PromotionEngine;
+import fun.cyhgraph.promotion.PromotionResult;
 import fun.cyhgraph.result.PageResult;
+import fun.cyhgraph.service.MemberService;
 import fun.cyhgraph.service.OrderService;
 import fun.cyhgraph.utils.HttpClientUtil;
 import fun.cyhgraph.utils.WeChatPayUtil;
+import fun.cyhgraph.vo.DineInPriceVO;
+import fun.cyhgraph.vo.MemberConsumeResult;
+import fun.cyhgraph.vo.MemberVO;
 import fun.cyhgraph.vo.OrderPaymentVO;
 import fun.cyhgraph.vo.OrderStatisticsVO;
 import fun.cyhgraph.vo.OrderSubmitVO;
 import fun.cyhgraph.vo.OrderVO;
 import fun.cyhgraph.websocket.WebSocketServer;
+import fun.cyhgraph.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
@@ -61,6 +69,12 @@ public class OrderServiceImpl implements OrderService {
     private Order order;
     @Autowired
     private WebSocketServer webSocketServer;
+    // 营销活动引擎：开单时自动挑最优惠的活动
+    @Autowired
+    private PromotionEngine promotionEngine;
+    // 会员服务：识别会员、等级折扣、积分抵扣、余额支付、消费后自动升级
+    @Autowired
+    private MemberService memberService;
     // 这个Value是annotation注解的包，不是lombok的！
     @Value("${hanye.shop.address}")
     private String shopAddress;
@@ -132,28 +146,137 @@ public class OrderServiceImpl implements OrderService {
      * 堂食下单（员工在后台为到店客户代下单）
      * 小白讲解流程：
      *   1. 员工在前端勾选菜品/套餐 -> 只传 id 和数量过来，不传价格（防止篡改）
-     *   2. 后端根据 id 查数据库里真实的单价，乘以数量算出每一项的小计
-     *   3. 汇总出总金额，生成订单 + 订单明细
-     *   4. 堂食是现场付款的，所以订单直接是"已付款 + 待接单"状态，后厨立刻能看到
+     *   2. 后端根据 id 查数据库真实单价，算出原价合计
+     *   3. 营销引擎自动挑一个"省得最多"的活动（满减/折扣/第二份半价/买一送一）
+     *   4. 识别会员手机号：会员等级在活动价上再打折，积分还能抵钱，余额可直接支付
+     *   5. 生成订单+明细，会员扣余额/加积分/累计消费/自动升级全部在同一个事务里
+     *   6. 堂食现场已付款，订单直接是"待接单"状态，后厨立刻能看到
      */
-    public OrderSubmitVO dineInSubmit(DineInOrderDTO dineInOrderDTO) {
+    @Override
+    @org.springframework.transaction.annotation.Transactional(rollbackFor = Exception.class)
+    public DineInPriceVO dineInSubmit(DineInOrderDTO dineInOrderDTO) {
         List<DineInOrderDTO.Item> items = dineInOrderDTO.getItems();
         if (items == null || items.isEmpty()) {
             throw new OrderBusinessException(MessageConstant.DINE_IN_EMPTY);
         }
+        if (dineInOrderDTO.getTableNo() == null || dineInOrderDTO.getTableNo().trim().isEmpty()) {
+            throw new OrderBusinessException("请填写桌号或客户称呼，方便后厨叫号");
+        }
+        // 联系电话是选填的，但只要填了就必须是11位手机号（防止多输一位导致订单入库失败、整单回滚）
+        String contactPhoneInput = dineInOrderDTO.getPhone() == null ? "" : dineInOrderDTO.getPhone().trim();
+        if (!contactPhoneInput.isEmpty() && !contactPhoneInput.matches("^1\\d{10}$")) {
+            throw new OrderBusinessException("联系电话格式不正确，请填写11位手机号，或留空不填");
+        }
 
-        List<OrderDetail> orderDetailList = new ArrayList<>();
-        BigDecimal totalAmount = BigDecimal.ZERO;
+        // 第一步：后端重新核算价格（活动优惠、会员折扣、积分抵扣），不信前端任何金额
+        DineInPriceVO priceVO = calculatePrice(dineInOrderDTO);
 
-        // 逐项核算价格：价格一律以后端数据库为准，不信前端传的任何金额
-        for (DineInOrderDTO.Item item : items) {
-            // 份数没传或小于1，按1份算
+        // 第二步：会员处理。填了会员手机号就识别/自动建档；选了余额支付必须是会员
+        boolean payByBalance = dineInOrderDTO.getPayMethod() != null && dineInOrderDTO.getPayMethod() == 2;
+        String memberPhone = normalizePhone(dineInOrderDTO.getMemberPhone());
+        Member member = null;
+        if (memberPhone != null) {
+            member = memberService.registerIfAbsent(memberPhone);
+        }
+        if (payByBalance && member == null) {
+            throw new OrderBusinessException("使用余额支付前，请先填写会员手机号识别会员");
+        }
+
+        // 第三步：构建堂食订单（原价、各项优惠、实付都落库，订单详情里能对账）
+        LocalDateTime now = LocalDateTime.now();
+        String contactPhone = dineInOrderDTO.getPhone() != null && !dineInOrderDTO.getPhone().trim().isEmpty()
+                ? dineInOrderDTO.getPhone().trim() : memberPhone;
+        Order order = Order.builder()
+                .number(String.valueOf(System.currentTimeMillis())) // 用时间戳当订单号
+                .status(Order.TO_BE_CONFIRMED)   // 堂食现场已付款，直接进入"待接单"
+                .userId(0)                        // 堂食客户不是微信用户，用 0 占位
+                .addressBookId(0)                 // 堂食没有收货地址，用 0 占位
+                .orderTime(now)
+                .checkoutTime(now)
+                .payMethod(payByBalance ? 4 : 3)  // 3=线下现金/扫码，4=会员余额
+                .payStatus(Order.PAID)            // 现场已付款
+                .amount(priceVO.getPayAmount())
+                .originalAmount(priceVO.getOriginalAmount())
+                .discountAmount(priceVO.getDiscountAmount())
+                .memberDiscount(priceVO.getMemberDiscount())
+                .pointsDeduction(priceVO.getPointsDeduction())
+                .promotionId(priceVO.getPromotionId())
+                .promotionName(priceVO.getPromotionName())
+                .memberId(member == null ? null : member.getId())
+                .remark(dineInOrderDTO.getRemark())
+                .phone(contactPhone)
+                .address("堂食")
+                .consignee(dineInOrderDTO.getTableNo().trim()) // 收货人位置存"桌号/称呼"
+                .deliveryStatus(1)
+                .packAmount(0)
+                .tablewareStatus(1)
+                .orderType(2)                     // 2=堂食（1=外卖）
+                .build();
+        orderMapper.insert(order);
+
+        // 订单明细关联订单id，批量插入（明细金额仍是原价小计，优惠在订单层体现）
+        for (OrderDetail detail : priceVO.getDetails() == null ? new ArrayList<OrderDetail>() : priceVO.getDetails()) {
+            detail.setOrderId(order.getId());
+        }
+        orderDetailMapper.insertBatch(priceVO.getDetails());
+
+        // 第四步：会员结算（扣余额/积分抵扣/返积分/累计消费/自动升级/写流水），和订单同事务
+        MemberConsumeResult consumeResult = null;
+        if (member != null) {
+            consumeResult = memberService.consume(order.getId(), memberPhone,
+                    priceVO.getPayAmount(), priceVO.getPointsDeduction(), payByBalance);
+            priceVO.setMemberId(member.getId());
+            priceVO.setMemberLevel(consumeResult.getLevel());
+            priceVO.setMemberLevelName(consumeResult.getLevelName());
+            priceVO.setBalanceAfter(consumeResult.getBalanceAfter());
+            priceVO.setPointsAfter(consumeResult.getPointsAfter());
+            priceVO.setPointsEarned(consumeResult.getPointsEarned());
+        }
+
+        // 第五步：WebSocket 给后台推送来单提醒
+        Map map = new HashMap();
+        map.put("type", 1);
+        map.put("orderId", order.getId());
+        map.put("content", "堂食订单号：" + order.getNumber());
+        String json = JSON.toJSONString(map);
+        log.info("堂食开单成功，推送给后台：{}，实付 ¥{}", map, order.getAmount());
+        webSocketServer.sendToAllClient(json);
+
+        // 回填订单信息后返回
+        priceVO.setId(order.getId());
+        priceVO.setOrderNumber(order.getNumber());
+        priceVO.setOrderTime(order.getOrderTime());
+        priceVO.setOrderAmount(order.getAmount());
+        return priceVO;
+    }
+
+    /**
+     * 堂食开单价格试算（只算账，不生成订单）
+     */
+    @Override
+    public DineInPriceVO preview(DineInOrderDTO dineInOrderDTO) {
+        if (dineInOrderDTO.getItems() == null || dineInOrderDTO.getItems().isEmpty()) {
+            // 空清单直接返回一个全0的空账，前端友好展示
+            return emptyPriceVO();
+        }
+        return calculatePrice(dineInOrderDTO);
+    }
+
+    /**
+     * 堂食价格核算核心方法（试算和正式下单共用，保证"看到的价"和"实收的价"完全一致）
+     */
+    private DineInPriceVO calculatePrice(DineInOrderDTO dineInOrderDTO) {
+        // 1. 逐项查库核价：价格一律以后端数据库为准
+        List<OrderDetail> details = new ArrayList<>();
+        List<CalcItem> calcItems = new ArrayList<>();
+        BigDecimal originalAmount = BigDecimal.ZERO;
+        for (DineInOrderDTO.Item item : dineInOrderDTO.getItems()) {
             int number = (item.getNumber() == null || item.getNumber() < 1) ? 1 : item.getNumber();
             BigDecimal price;
             String name;
             String pic;
+            Integer categoryId;
             if (item.getDishId() != null) {
-                // 点的是菜品
                 Dish dish = dishMapper.getById(item.getDishId());
                 if (dish == null || dish.getStatus() == null || dish.getStatus() != 1) {
                     throw new OrderBusinessException(MessageConstant.DISH_NOT_AVAILABLE);
@@ -161,8 +284,8 @@ public class OrderServiceImpl implements OrderService {
                 price = dish.getPrice();
                 name = dish.getName();
                 pic = dish.getPic();
+                categoryId = dish.getCategoryId();
             } else if (item.getSetmealId() != null) {
-                // 点的是套餐
                 Setmeal setmeal = setmealMapper.getSetmealById(item.getSetmealId());
                 if (setmeal == null || setmeal.getStatus() == null || setmeal.getStatus() != 1) {
                     throw new OrderBusinessException(MessageConstant.DISH_NOT_AVAILABLE);
@@ -170,14 +293,14 @@ public class OrderServiceImpl implements OrderService {
                 price = setmeal.getPrice();
                 name = setmeal.getName();
                 pic = setmeal.getPic();
+                categoryId = setmeal.getCategoryId();
             } else {
                 throw new OrderBusinessException(MessageConstant.DISH_NOT_AVAILABLE);
             }
-            // 小计 = 单价 × 份数
             BigDecimal itemAmount = price.multiply(BigDecimal.valueOf(number));
-            totalAmount = totalAmount.add(itemAmount);
+            originalAmount = originalAmount.add(itemAmount);
 
-            OrderDetail detail = OrderDetail.builder()
+            details.add(OrderDetail.builder()
                     .name(name)
                     .pic(pic)
                     .dishId(item.getDishId())
@@ -185,54 +308,101 @@ public class OrderServiceImpl implements OrderService {
                     .dishFlavor(item.getDishFlavor())
                     .number(number)
                     .amount(itemAmount)
-                    .build();
-            orderDetailList.add(detail);
+                    .build());
+            calcItems.add(CalcItem.builder()
+                    .dishId(item.getDishId())
+                    .setmealId(item.getSetmealId())
+                    .categoryId(categoryId)
+                    .name(name)
+                    .unitPrice(price)
+                    .number(number)
+                    .build());
         }
 
-        // 构建堂食订单
-        LocalDateTime now = LocalDateTime.now();
-        Order order = Order.builder()
-                .number(String.valueOf(System.currentTimeMillis())) // 用时间戳当订单号
-                .status(Order.TO_BE_CONFIRMED)   // 堂食现场已付款，直接进入"待接单"，后厨马上能处理
-                .userId(0)                        // 堂食客户不是微信用户，用 0 占位（表字段不允许为空）
-                .addressBookId(0)                 // 堂食没有收货地址，用 0 占位
-                .orderTime(now)
-                .checkoutTime(now)
-                .payMethod(3)                     // 3=线下/现金（1微信 2支付宝）
-                .payStatus(Order.PAID)            // 现场已付款
-                .amount(totalAmount)
-                .remark(dineInOrderDTO.getRemark())
-                .phone(dineInOrderDTO.getPhone())
-                .address("堂食")
-                .consignee(dineInOrderDTO.getTableNo()) // 收货人位置存"桌号/称呼"，方便后厨叫号
-                .deliveryStatus(1)
-                .packAmount(0)                    // 堂食无打包费
-                .tablewareStatus(1)
-                .orderType(2)                     // 2=堂食（1=外卖）
-                .build();
-        orderMapper.insert(order);
+        // 2. 营销引擎：自动选出本单最优惠的活动
+        PromotionResult bestPromotion = promotionEngine.calculateBest(calcItems);
+        BigDecimal discountAmount = bestPromotion == null ? BigDecimal.ZERO : bestPromotion.getSaving();
 
-        // 订单明细关联订单id，批量插入
-        for (OrderDetail detail : orderDetailList) {
-            detail.setOrderId(order.getId());
+        // 3. 会员识别 + 等级折扣（在活动优惠后的金额上再打折）+ 积分抵扣
+        BigDecimal memberDiscount = BigDecimal.ZERO;
+        BigDecimal pointsDeduction = BigDecimal.ZERO;
+        BigDecimal maxPointsDeduction = BigDecimal.ZERO;
+        MemberVO member = memberService.recognizeByPhone(dineInOrderDTO.getMemberPhone());
+        if (member != null) {
+            BigDecimal afterPromotion = originalAmount.subtract(discountAmount);
+            memberDiscount = memberService.calcLevelDiscount(member, afterPromotion);
+            BigDecimal afterMember = afterPromotion.subtract(memberDiscount);
+            boolean usePoints = Boolean.TRUE.equals(dineInOrderDTO.getUsePoints());
+            pointsDeduction = memberService.calcPointsDeduction(member, afterMember, usePoints);
+            // 最多能抵多少（勾选积分框时前端要提示）
+            maxPointsDeduction = memberService.calcPointsDeduction(member, afterMember, true);
         }
-        orderDetailMapper.insertBatch(orderDetailList);
 
-        // 通过 WebSocket 给后台推送来单提醒（和外卖来单是同一条通道，订单页会弹提醒）
-        Map map = new HashMap();
-        map.put("type", 1); // 1=来单提醒，2=客户催单
-        map.put("orderId", order.getId());
-        map.put("content", "堂食订单号：" + order.getNumber());
-        String json = JSON.toJSONString(map);
-        log.info("堂食开单成功，推送给后台：{}", map);
-        webSocketServer.sendToAllClient(json);
+        // 4. 实付金额 = 原价 - 活动优惠 - 会员折扣 - 积分抵扣
+        BigDecimal payAmount = originalAmount
+                .subtract(discountAmount)
+                .subtract(memberDiscount)
+                .subtract(pointsDeduction)
+                .setScale(2, java.math.RoundingMode.HALF_UP);
 
-        return OrderSubmitVO.builder()
-                .id(order.getId())
-                .orderNumber(order.getNumber())
-                .orderAmount(order.getAmount())
-                .orderTime(order.getOrderTime())
+        // 5. 组装试算结果
+        DineInPriceVO.DineInPriceVOBuilder builder = DineInPriceVO.builder()
+                .originalAmount(originalAmount)
+                .discountAmount(discountAmount)
+                .memberDiscount(memberDiscount)
+                .pointsDeduction(pointsDeduction)
+                .maxPointsDeduction(maxPointsDeduction)
+                .payAmount(payAmount)
+                .orderAmount(payAmount)
+                .tips(bestPromotion == null ? new ArrayList<>() : bestPromotion.getTips());
+        if (bestPromotion != null) {
+            builder.promotionId(bestPromotion.getPromotionId())
+                    .promotionName(bestPromotion.getName())
+                    .promotionType(bestPromotion.getType());
+        }
+        if (member != null) {
+            String displayName = member.getName() != null && !member.getName().isEmpty()
+                    ? member.getName() : "会员" + member.getPhone().substring(7);
+            builder.memberId(member.getId())
+                    .memberName(displayName)
+                    .memberPhone(member.getPhone())
+                    .memberLevel(member.getLevel())
+                    .memberLevelName(member.getLevelName())
+                    .levelDiscount(member.getDiscount())
+                    .balance(member.getBalance())
+                    .points(member.getPoints());
+        }
+        DineInPriceVO priceVO = builder.build();
+        // 明细只在内部提交时使用，不序列化给试算响应也无妨（多带一个字段无所谓）
+        priceVO.setDetails(details);
+        return priceVO;
+    }
+
+    /**
+     * 空清单的试算结果（页面刚打开、还没点菜时用）
+     */
+    private DineInPriceVO emptyPriceVO() {
+        return DineInPriceVO.builder()
+                .originalAmount(BigDecimal.ZERO)
+                .discountAmount(BigDecimal.ZERO)
+                .memberDiscount(BigDecimal.ZERO)
+                .pointsDeduction(BigDecimal.ZERO)
+                .maxPointsDeduction(BigDecimal.ZERO)
+                .payAmount(BigDecimal.ZERO)
+                .orderAmount(BigDecimal.ZERO)
+                .tips(new ArrayList<>())
                 .build();
+    }
+
+    /**
+     * 会员手机号简单规范化：去空格，不是11位手机号返回null
+     */
+    private String normalizePhone(String phone) {
+        if (phone == null) {
+            return null;
+        }
+        String trimmed = phone.trim();
+        return trimmed.matches("^1\\d{10}$") ? trimmed : null;
     }
 
     /**
@@ -504,19 +674,26 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 完成订单
+     * 小白讲解：外卖单必须先"派送中(4)"才能完成；堂食单没有配送环节，
+     * 后厨出餐、顾客就餐结束后在"已接单(3)"状态就可以直接完成，完成后顾客就能评价。
      *
      * @param id
      */
     public void complete(Integer id) {
         Order orderDB = orderMapper.getById(id);
-        // 订单存在 且 状态为4派送中，才能进行完成操作
-        if (orderDB == null || !orderDB.getStatus().equals(Order.DELIVERY_IN_PROGRESS)) {
+        if (orderDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        boolean takeoutCanComplete = Order.DELIVERY_IN_PROGRESS.equals(orderDB.getStatus());
+        boolean dineInCanComplete = Integer.valueOf(2).equals(orderDB.getOrderType())
+                && Order.CONFIRMED.equals(orderDB.getStatus());
+        if (!takeoutCanComplete && !dineInCanComplete) {
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
         }
         Order order = new Order();
         order.setId(orderDB.getId());
         order.setStatus(Order.COMPLETED);
-        order.setDeliveryTime(LocalDateTime.now()); // 设置订单完成时间
+        order.setDeliveryTime(LocalDateTime.now()); // 堂食单复用该字段记录完成时间
         orderMapper.update(order);
     }
 

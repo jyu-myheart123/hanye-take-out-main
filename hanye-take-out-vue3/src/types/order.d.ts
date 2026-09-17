@@ -11,6 +11,7 @@ export type Order = {
   id: number // 订单id
   number: string // 订单号
   status: number // 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
+  orderType?: number // 订单类型 1外卖 2堂食
   userId: number // 下单用户id
   addressBookId: number // 地址id
   orderTime: Date // 下单时间

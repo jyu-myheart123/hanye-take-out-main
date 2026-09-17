@@ -1,0 +1,93 @@
+﻿Active code page: 65001
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< fun.cyhgraph:server >-------------------------
+[INFO] Building server 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot-maven-plugin:3.2.5:run (default-cli) > test-compile @ server >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ server ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 13 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ server ---
+[INFO] Copying 10 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot-maven-plugin:3.2.5:run (default-cli) < test-compile @ server <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.2.5:run (default-cli) @ server ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-09-16T17:44:53.020+08:00  INFO 11328 --- [           main] fun.cyhgraph.ServerApplication           : Starting ServerApplication using Java 17.0.15 with PID 11328 (D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server\target\classes started by 86178 in D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server)
+2026-09-16T17:44:53.021+08:00  INFO 11328 --- [           main] fun.cyhgraph.ServerApplication           : The following 1 profile is active: "dev"
+2026-09-16T17:44:53.508+08:00  INFO 11328 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-16T17:44:53.510+08:00  INFO 11328 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-16T17:44:53.535+08:00  INFO 11328 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2026-09-16T17:44:54.183+08:00  INFO 11328 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-09-16T17:44:54.195+08:00  INFO 11328 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-16T17:44:54.195+08:00  INFO 11328 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-09-16T17:44:54.261+08:00  INFO 11328 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-09-16T17:44:54.262+08:00  INFO 11328 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1202 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+2026-09-16T17:44:54.631+08:00  INFO 11328 --- [           main] fun.cyhgraph.promotion.PromotionEngine   : Ӫ��������ʼ����ɣ���ע���������[1, 2, 3, 4]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12cd129c] was not registered for synchronization because synchronization is not active
+2026-09-16T17:44:54.664+08:00  INFO 11328 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-16T17:44:54.900+08:00  INFO 11328 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@214fba74
+2026-09-16T17:44:54.901+08:00  INFO 11328 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+JDBC Connection [HikariProxyConnection@1664248378 wrapping com.mysql.cj.jdbc.ConnectionImpl@214fba74] will not be managed by Spring
+==>  Preparing: select count(*) from member_level_rule
+==> Parameters: 
+<==    Columns: count(*)
+<==        Row: 3
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@12cd129c]
+2026-09-16T17:44:55.107+08:00  INFO 11328 --- [           main] fun.cyhgraph.config.RedisConfiguration   : ��ʼ����redisģ�����...
+2026-09-16T17:44:55.251+08:00  INFO 11328 --- [           main] f.cyhgraph.config.WebMvcConfiguration    : �Զ����������������Ҫ�����WebMvc��������ע��
+2026-09-16T17:44:55.304+08:00  INFO 11328 --- [           main] f.cyhgraph.config.WebMvcConfiguration    : ��չ��Ϣת����...
+
+
+,------.                           ,--.  ,--.         ,--.                         
+|  .--. '  ,--,--.  ,---.   ,---.  |  '--'  |  ,---.  |  |  ,---.   ,---.  ,--.--. 
+|  '--' | ' ,-.  | | .-. | | .-. : |  .--.  | | .-. : |  | | .-. | | .-. : |  .--' 
+|  | --'  \ '-'  | ' '-' ' \   --. |  |  |  | \   --. |  | | '-' ' \   --. |  |    
+`--'       `--`--' .`-  /   `----' `--'  `--'  `----' `--' |  |-'   `----' `--'    
+                   `---'                                   `--'                        is intercepting.
+
+2026-09-16T17:44:55.674+08:00  INFO 11328 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path ''
+2026-09-16T17:44:55.681+08:00  INFO 11328 --- [           main] fun.cyhgraph.ServerApplication           : Started ServerApplication in 2.956 seconds (process running for 3.202)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@64e3bc2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@738648389 wrapping com.mysql.cj.jdbc.ConnectionImpl@214fba74] will not be managed by Spring
+==>  Preparing: select * from employee where account = ?
+==> Parameters: cyh(String)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 5, ��������Ա, cyh, e10adc3949ba59abbe56e057f20f883e, 13800138000, 25, 1, <<BLOB>>, 1, 100, 5, 2026-03-18 10:49:36, 2026-03-18 19:43:15, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@64e3bc2]
+2026-09-16T17:44:55.706+08:00  INFO 11328 --- [           main] fun.cyhgraph.init.DataInitializer        : cyh�˺��Ѵ���
+2026-09-16T17:44:55.707+08:00  INFO 11328 --- [           main] fun.cyhgraph.ServerApplication           : server started successfully!
+2026-09-16T17:45:00.020+08:00  INFO 11328 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Wed Sep 16 17:45:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@263dd98c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@716734893 wrapping com.mysql.cj.jdbc.ConnectionImpl@214fba74] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-16T17:30:00.020120400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@263dd98c]

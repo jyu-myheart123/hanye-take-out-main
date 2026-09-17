@@ -7,7 +7,7 @@ import fun.cyhgraph.mapper.CategoryMapper;
 import fun.cyhgraph.mapper.DishMapper;
 import fun.cyhgraph.result.Result;
 import fun.cyhgraph.service.OrderService;
-import fun.cyhgraph.vo.OrderSubmitVO;
+import fun.cyhgraph.vo.DineInPriceVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,14 +57,24 @@ public class DineInController {
     }
 
     /**
+     * 堂食价格试算（不生成订单）
+     * 小白讲解：开单页每改一次菜品/会员/积分，前端就调一次，
+     * 后端返回原价、活动优惠、会员折扣、积分抵扣、实付金额，页面只做展示
+     */
+    @PostMapping("/preview")
+    public Result<DineInPriceVO> preview(@RequestBody DineInOrderDTO dineInOrderDTO) {
+        return Result.success(orderService.preview(dineInOrderDTO));
+    }
+
+    /**
      * 提交堂食订单
-     * 小白讲解：前端只传"点了哪些菜、各几份"，价格全部由后端重新核算，
-     * 防止前端篡改金额
+     * 小白讲解：前端只传"点了哪些菜、各几份、会员手机号、支付方式、是否用积分"，
+     * 价格全部由后端重新核算（活动优惠/会员折扣/积分抵扣），防止前端篡改金额
      */
     @PostMapping("/submit")
-    public Result<OrderSubmitVO> submit(@RequestBody DineInOrderDTO dineInOrderDTO) {
+    public Result<DineInPriceVO> submit(@RequestBody DineInOrderDTO dineInOrderDTO) {
         log.info("堂食开单信息：{}", dineInOrderDTO);
-        OrderSubmitVO vo = orderService.dineInSubmit(dineInOrderDTO);
+        DineInPriceVO vo = orderService.dineInSubmit(dineInOrderDTO);
         return Result.success(vo);
     }
 }

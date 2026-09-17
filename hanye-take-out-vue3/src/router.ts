@@ -79,6 +79,24 @@ const router = createRouter({
           path: 'employee/update',
           name: 'employee_update',
           component: () => import('./views/employee/update.vue')
+        },
+        {
+          // 营销活动：满减/折扣/第二份半价/买一送一配置（放在员工管理下面）
+          path: 'promotion',
+          name: 'promotion',
+          component: () => import('./views/promotion/index.vue')
+        },
+        {
+          // 堂食会员：会员信息、储值、积分、等级、消费记录（营销活动下面）
+          path: 'member',
+          name: 'member',
+          component: () => import('./views/member/index.vue')
+        },
+        {
+          // 客户评价：已完成堂食单的评分与改进意见，后厨可查看回复（最下面）
+          path: 'review',
+          name: 'review',
+          component: () => import('./views/review/index.vue')
         }
       ]
     },

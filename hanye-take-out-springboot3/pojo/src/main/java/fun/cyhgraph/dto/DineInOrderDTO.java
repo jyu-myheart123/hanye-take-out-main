@@ -24,6 +24,21 @@ public class DineInOrderDTO implements Serializable {
     private String phone;
 
     /**
+     * 会员手机号（选填）：填了就识别/自动建档会员，享受等级折扣、余额支付、积分抵扣
+     */
+    private String memberPhone;
+
+    /**
+     * 支付方式：1=现金/扫码线下支付（默认），2=会员余额支付
+     */
+    private Integer payMethod;
+
+    /**
+     * 是否使用积分抵扣：true=按规则用积分抵钱（100分抵5元），false或不传=不使用
+     */
+    private Boolean usePoints;
+
+    /**
      * 订单备注（比如"不要辣"、"孩子吃少放盐"）
      */
     private String remark;

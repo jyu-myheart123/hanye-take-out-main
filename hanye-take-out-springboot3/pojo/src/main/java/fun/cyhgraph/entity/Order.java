@@ -47,6 +47,34 @@ public class Order implements Serializable {
     private Integer payMethod; // 支付方式 1微信，2支付宝
     private Integer payStatus; // 支付状态 0未支付 1已支付 2退款
     private BigDecimal amount; // 实收金额
+    /**
+     * 优惠前原价（所有菜品单价×份数之和，老订单默认0）
+     */
+    private BigDecimal originalAmount;
+    /**
+     * 营销活动优惠金额（满减/折扣/第二份半价/买一送一）
+     */
+    private BigDecimal discountAmount;
+    /**
+     * 会员等级优惠金额（银卡/金卡/钻石折扣）
+     */
+    private BigDecimal memberDiscount;
+    /**
+     * 积分抵扣金额（100积分抵5元）
+     */
+    private BigDecimal pointsDeduction;
+    /**
+     * 命中的营销活动id（没命中为空）
+     */
+    private Integer promotionId;
+    /**
+     * 命中的营销活动名称（冗余，订单详情直接展示）
+     */
+    private String promotionName;
+    /**
+     * 下单会员id（散客为空）
+     */
+    private Integer memberId;
     private String remark; // 备注
     private String userName; // 用户名
     private String phone; // 手机号

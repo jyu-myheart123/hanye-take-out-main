@@ -25,7 +25,10 @@ const menuList = [
   { title: '分类管理', path: '/category', icon: 'Grid', desc: '菜品与套餐分类配置' },
   { title: '套餐管理', path: '/setmeal', icon: 'Food', desc: '套餐信息与上下架' },
   { title: '菜品管理', path: '/dish', icon: 'Dish', desc: '菜品详情、口味与状态' },
-  { title: '员工管理', path: '/employee', icon: 'User', desc: '账号、权限与人员信息' }
+  { title: '员工管理', path: '/employee', icon: 'User', desc: '账号、权限与人员信息' },
+  { title: '营销活动', path: '/promotion', icon: 'Discount', desc: '满减、折扣、第二份半价' },
+  { title: '堂食会员', path: '/member', icon: 'GoldMedal', desc: '储值、积分、等级与消费记录' },
+  { title: '客户评价', path: '/review', icon: 'ChatDotRound', desc: '菜品服务评分与改进意见' }
 ]
 
 const form = reactive({

@@ -24,9 +24,24 @@ export const getDineInDishListAPI = (categoryId?: number) => {
 }
 
 /**
+ * 堂食开单 - 价格试算（不生成订单）
+ * 小白讲解：改菜品、填会员手机号、勾选积分抵扣后实时调用，
+ * 后端返回原价/活动优惠/会员折扣/积分抵扣/实付金额，页面只展示不自己算账
+ * @param params { items 清单, memberPhone 会员手机号, usePoints 是否用积分 }
+ */
+export const dineInPreviewAPI = (params: any) => {
+  return request({
+    url: '/dinein/preview',
+    method: 'post',
+    data: { ...params }
+  })
+}
+
+/**
  * 堂食开单 - 提交订单
  * 小白讲解：只传菜品id和份数，价格由后端核算，前端传的价格不作数
- * @param params { tableNo 桌号/称呼, phone 电话, remark 备注, items 清单 }
+ * @param params { tableNo 桌号/称呼, phone 电话, remark 备注, items 清单,
+ *                 memberPhone 会员手机号(选填), payMethod 1现金 2余额, usePoints 是否用积分 }
  */
 export const dineInSubmitAPI = (params: any) => {
   return request({

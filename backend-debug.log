@@ -1,0 +1,410 @@
+﻿Active code page: 65001
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< fun.cyhgraph:server >-------------------------
+[INFO] Building server 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot-maven-plugin:3.2.5:run (default-cli) > test-compile @ server >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ server ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 13 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ server ---
+[INFO] Copying 10 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot-maven-plugin:3.2.5:run (default-cli) < test-compile @ server <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.2.5:run (default-cli) @ server ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-09-16T17:40:55.806+08:00  INFO 3768 --- [           main] fun.cyhgraph.ServerApplication           : Starting ServerApplication using Java 17.0.15 with PID 3768 (D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server\target\classes started by 86178 in D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server)
+2026-09-16T17:40:55.807+08:00  INFO 3768 --- [           main] fun.cyhgraph.ServerApplication           : The following 1 profile is active: "dev"
+2026-09-16T17:40:56.408+08:00  INFO 3768 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-16T17:40:56.410+08:00  INFO 3768 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-16T17:40:56.440+08:00  INFO 3768 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2026-09-16T17:40:57.206+08:00  INFO 3768 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-09-16T17:40:57.218+08:00  INFO 3768 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-16T17:40:57.218+08:00  INFO 3768 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-09-16T17:40:57.317+08:00  INFO 3768 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-09-16T17:40:57.318+08:00  INFO 3768 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1466 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+2026-09-16T17:40:57.739+08:00  INFO 3768 --- [           main] fun.cyhgraph.promotion.PromotionEngine   : Ӫ��������ʼ����ɣ���ע���������[1, 2, 3, 4]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1412682c] was not registered for synchronization because synchronization is not active
+2026-09-16T17:40:57.779+08:00  INFO 3768 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-16T17:40:58.086+08:00  INFO 3768 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4809c771
+2026-09-16T17:40:58.089+08:00  INFO 3768 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+JDBC Connection [HikariProxyConnection@1439821925 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select count(*) from member_level_rule
+==> Parameters: 
+<==    Columns: count(*)
+<==        Row: 3
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1412682c]
+2026-09-16T17:40:58.349+08:00  INFO 3768 --- [           main] fun.cyhgraph.config.RedisConfiguration   : ��ʼ����redisģ�����...
+2026-09-16T17:40:58.519+08:00  INFO 3768 --- [           main] f.cyhgraph.config.WebMvcConfiguration    : �Զ����������������Ҫ�����WebMvc��������ע��
+2026-09-16T17:40:58.584+08:00  INFO 3768 --- [           main] f.cyhgraph.config.WebMvcConfiguration    : ��չ��Ϣת����...
+
+
+,------.                           ,--.  ,--.         ,--.                         
+|  .--. '  ,--,--.  ,---.   ,---.  |  '--'  |  ,---.  |  |  ,---.   ,---.  ,--.--. 
+|  '--' | ' ,-.  | | .-. | | .-. : |  .--.  | | .-. : |  | | .-. | | .-. : |  .--' 
+|  | --'  \ '-'  | ' '-' ' \   --. |  |  |  | \   --. |  | | '-' ' \   --. |  |    
+`--'       `--`--' .`-  /   `----' `--'  `--'  `----' `--' |  |-'   `----' `--'    
+                   `---'                                   `--'                        is intercepting.
+
+2026-09-16T17:40:58.990+08:00  INFO 3768 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path ''
+2026-09-16T17:40:59.000+08:00  INFO 3768 --- [           main] fun.cyhgraph.ServerApplication           : Started ServerApplication in 3.544 seconds (process running for 3.856)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@113a6636] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1544967706 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from employee where account = ?
+==> Parameters: cyh(String)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 5, ��������Ա, cyh, e10adc3949ba59abbe56e057f20f883e, 13800138000, 25, 1, <<BLOB>>, 1, 100, 5, 2026-03-18 10:49:36, 2026-03-18 19:43:15, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@113a6636]
+2026-09-16T17:40:59.026+08:00  INFO 3768 --- [           main] fun.cyhgraph.init.DataInitializer        : cyh�˺��Ѵ���
+2026-09-16T17:40:59.027+08:00  INFO 3768 --- [           main] fun.cyhgraph.ServerApplication           : server started successfully!
+2026-09-16T17:41:00.014+08:00  INFO 3768 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Wed Sep 16 17:41:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@63fa62f1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1610084242 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-16T17:26:00.014563100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@63fa62f1]
+2026-09-16T17:41:20.283+08:00  INFO 3768 --- [nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-16T17:41:20.284+08:00  INFO 3768 --- [nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-16T17:41:20.284+08:00  INFO 3768 --- [nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-09-16T17:41:20.349+08:00  INFO 3768 --- [nio-8081-exec-2] f.c.controller.admin.EmployeeController  : �û��������ĵ�¼��ϢDTO:EmployeeLoginDTO(account=cyh, password=123456)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3c415f21] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1960051258 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from employee where account = ?
+==> Parameters: cyh(String)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 5, ��������Ա, cyh, e10adc3949ba59abbe56e057f20f883e, 13800138000, 25, 1, <<BLOB>>, 1, 100, 5, 2026-03-18 10:49:36, 2026-03-18 19:43:15, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3c415f21]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0MTU2ODB9.BZke7YbCxN6QN8Wvww0-L9I-03MI_P4WkfR0O5g-4Qw
+2026-09-16T17:41:20.441+08:00  INFO 3768 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0MTU2ODB9.BZke7YbCxN6QN8Wvww0-L9I-03MI_P4WkfR0O5g-4Qw
+2026-09-16T17:41:20.441+08:00  INFO 3768 --- [nio-8081-exec-1] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0MTU2ODB9.BZke7YbCxN6QN8Wvww0-L9I-03MI_P4WkfR0O5g-4Qw
+claims {employeeId=5, exp=1790415680}
+2026-09-16T17:41:20.453+08:00  INFO 3768 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��5
+2026-09-16T17:41:20.455+08:00  INFO 3768 --- [nio-8081-exec-1] f.c.controller.admin.DineInController    : ��ʳ������Ϣ��DineInOrderDTO(tableNo=DEBUG-T2, phone=137123456789, memberPhone=13712345678, payMethod=1, usePoints=false, remark=null, items=[DineInOrderDTO.Item(dishId=1, setmealId=null, dishFlavor=null, number=1)])
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+JDBC Connection [HikariProxyConnection@409615093 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will be managed by Spring
+==>  Preparing: select * from dish where id = ?
+==> Parameters: 1(Integer)
+<==    Columns: id, name, pic, detail, price, status, category_id, create_user, update_user, create_time, update_time
+<==        Row: 1, ��������, <<BLOB>>, ���䴨�ˣ��������ۣ��������, 26.00, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:22:10
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715] from current transaction
+==>  Preparing: select * from promotion where status = 1 and begin_time <= ? and end_time >= ? order by id asc
+==> Parameters: 2026-09-16T17:41:20.483525600(LocalDateTime), 2026-09-16T17:41:20.483525600(LocalDateTime)
+<==    Columns: id, name, type, rule_json, scope_type, scope_ids, begin_time, end_time, status, description, create_time, update_time
+<==        Row: 6, 6, 2, {"discount":6}, 0, null, 2026-09-16 00:00:00, 2026-09-16 21:00:00, 1, , 2026-09-16 17:08:16, 2026-09-16 17:08:16
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+2026-09-16T17:41:20.541+08:00  INFO 3768 --- [nio-8081-exec-1] fun.cyhgraph.promotion.PromotionEngine   : Ӫ����������������л��6�����Ż� ?10.40
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715] from current transaction
+==>  Preparing: select * from member where phone = ?
+==> Parameters: 13712345678(String)
+<==      Total: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715] from current transaction
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715] from current transaction
+==>  Preparing: insert into member (name, phone, balance, points, total_recharge, total_gift, total_consume, level, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: null, 13712345678(String), 0(BigDecimal), 0(Integer), 0(BigDecimal), 0(BigDecimal), 0(BigDecimal), 1(Integer), 1(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+2026-09-16T17:41:20.547+08:00  INFO 3768 --- [nio-8081-exec-1] f.c.s.serviceImpl.MemberServiceImpl      : ��Ա�״������Զ�������13712345678
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715] from current transaction
+==>  Preparing: insert into orders (number, status, user_id, address_book_id, order_time, checkout_time, pay_method, pay_status, amount, original_amount, discount_amount, member_discount, points_deduction, promotion_id, promotion_name, member_id, remark, phone, address, user_name, consignee, cancel_reason, rejection_reason, cancel_time, estimated_delivery_time, delivery_status, delivery_time, pack_amount, tableware_number, tableware_status, order_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 1789551680549(String), 2(Integer), 0(Integer), 0(Integer), 2026-09-16T17:41:20.548806500(LocalDateTime), 2026-09-16T17:41:20.548806500(LocalDateTime), 3(Integer), 1(Integer), 15.60(BigDecimal), 26.00(BigDecimal), 10.40(BigDecimal), 0(BigDecimal), 0(BigDecimal), 6(Integer), 6(String), 10(Integer), null, 137123456789(String), ��ʳ(String), null, DEBUG-T2(String), null, null, null, null, 1(Integer), null, 0(Integer), 0(Integer), 1(Integer), 2(Integer)
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70d42715]
+2026-09-16T17:41:20.646+08:00 ERROR 3768 --- [nio-8081-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phone' at row 1
+### The error may exist in file [D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server\target\classes\mapper\OrderMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: insert into orders (number, status, user_id, address_book_id, order_time, checkout_time, pay_method, pay_status,                             amount, original_amount, discount_amount, member_discount, points_deduction,                             promotion_id, promotion_name, member_id,                             remark, phone, address, user_name, consignee, cancel_reason, rejection_reason,                             cancel_time, estimated_delivery_time, delivery_status, delivery_time, pack_amount,                             tableware_number, tableware_status, order_type)         VALUES (?, ?, ?, ?, ?, ?, ?,                 ?, ?, ?, ?, ?, ?,                 ?, ?, ?,                 ?, ?, ?, ?, ?, ?,                 ?, ?, ?, ?, ?,                 ?, ?, ?, ?)
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phone' at row 1
+; Data truncation: Data too long for column 'phone' at row 1] with root cause
+
+com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phone' at row 1
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:104) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java) ~[HikariCP-5.0.1.jar:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:58) ~[mybatis-3.5.14.jar:3.5.14]
+	at jdk.proxy3/jdk.proxy3.$Proxy105.execute(Unknown Source) ~[na:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76) ~[mybatis-3.5.14.jar:3.5.14]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61) ~[mybatis-3.5.14.jar:3.5.14]
+	at jdk.proxy2/jdk.proxy2.$Proxy127.update(Unknown Source) ~[na:na]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:184) ~[mybatis-3.5.14.jar:3.5.14]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425) ~[mybatis-spring-3.0.3.jar:3.0.3]
+	at jdk.proxy2/jdk.proxy2.$Proxy81.insert(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:272) ~[mybatis-spring-3.0.3.jar:3.0.3]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141) ~[mybatis-3.5.14.jar:3.5.14]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86) ~[mybatis-3.5.14.jar:3.5.14]
+	at jdk.proxy2/jdk.proxy2.$Proxy88.insert(Unknown Source) ~[na:na]
+	at fun.cyhgraph.service.serviceImpl.OrderServiceImpl.dineInSubmit(OrderServiceImpl.java:210) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354) ~[spring-aop-6.1.6.jar:6.1.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.6.jar:6.1.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.6.jar:6.1.6]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.6.jar:6.1.6]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-6.1.6.jar:6.1.6]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392) ~[spring-tx-6.1.6.jar:6.1.6]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.1.6.jar:6.1.6]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.6.jar:6.1.6]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768) ~[spring-aop-6.1.6.jar:6.1.6]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720) ~[spring-aop-6.1.6.jar:6.1.6]
+	at fun.cyhgraph.service.serviceImpl.OrderServiceImpl$$SpringCGLIB$$0.dineInSubmit(<generated>) ~[classes/:na]
+	at fun.cyhgraph.controller.admin.DineInController.submit(DineInController.java:77) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.20.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.20.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2026-09-16T17:42:00.012+08:00  INFO 3768 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Wed Sep 16 17:42:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6efe1c5e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1815994116 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-16T17:27:00.012088200(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6efe1c5e]
+2026-09-16T17:43:00.002+08:00  INFO 3768 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Wed Sep 16 17:43:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51096805] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1334547094 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-16T17:28:00.002385700(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@51096805]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-16T17:43:10.672+08:00  INFO 3768 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-16T17:43:10.673+08:00  INFO 3768 --- [nio-8081-exec-8] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-16T17:43:10.674+08:00  INFO 3768 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-16T17:43:10.674+08:00  INFO 3768 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-16T17:43:10.675+08:00  INFO 3768 --- [io-8081-exec-10] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-16T17:43:10.675+08:00  INFO 3768 --- [nio-8081-exec-8] f.c.controller.admin.DineInController    : ��ʳ��������ѯ���õķ����б�
+Creating a new SqlSession
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2MzIzNDB9.OAobtMPqI2M-F4GZpoH23t0fcMlXNveCDUEVtuzkLlg
+claims {employeeId=2, exp=1789647279}
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1bc5e429] was not registered for synchronization because synchronization is not active
+2026-09-16T17:43:10.675+08:00  INFO 3768 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2MzIzNDB9.OAobtMPqI2M-F4GZpoH23t0fcMlXNveCDUEVtuzkLlg
+2026-09-16T17:43:10.676+08:00  INFO 3768 --- [nio-8081-exec-6] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+2026-09-16T17:43:10.676+08:00  INFO 3768 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2MzIzNDB9.OAobtMPqI2M-F4GZpoH23t0fcMlXNveCDUEVtuzkLlg
+claims {employeeId=2, exp=1789632340}
+2026-09-16T17:43:10.676+08:00  INFO 3768 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-16T17:43:10.676+08:00  INFO 3768 --- [nio-8081-exec-6] f.c.controller.admin.DineInController    : ��ʳ��������ѯ���õķ����б�
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d3a9e37] was not registered for synchronization because synchronization is not active
+2026-09-16T17:43:10.679+08:00  INFO 3768 --- [io-8081-exec-10] f.c.controller.admin.DineInController    : ��ʳ��������ѯ���۲�Ʒ������id=null
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3258dfe0] was not registered for synchronization because synchronization is not active
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2MzIzNDB9.OAobtMPqI2M-F4GZpoH23t0fcMlXNveCDUEVtuzkLlg
+2026-09-16T17:43:10.680+08:00  INFO 3768 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2MzIzNDB9.OAobtMPqI2M-F4GZpoH23t0fcMlXNveCDUEVtuzkLlg
+2026-09-16T17:43:10.681+08:00  INFO 3768 --- [nio-8081-exec-5] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2MzIzNDB9.OAobtMPqI2M-F4GZpoH23t0fcMlXNveCDUEVtuzkLlg
+claims {employeeId=2, exp=1789632340}
+2026-09-16T17:43:10.682+08:00  INFO 3768 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-16T17:43:10.682+08:00  INFO 3768 --- [nio-8081-exec-5] f.c.controller.admin.DineInController    : ��ʳ��������ѯ���۲�Ʒ������id=null
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@322a9c77] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@267600664 wrapping com.mysql.cj.jdbc.ConnectionImpl@5f0b3e76] will not be managed by Spring
+JDBC Connection [HikariProxyConnection@2122217885 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from category where status = 1 order by sort asc, create_time desc
+==>  Preparing: select * from category where status = 1 order by sort asc, create_time desc
+JDBC Connection [HikariProxyConnection@135537296 wrapping com.mysql.cj.jdbc.ConnectionImpl@5551b39c] will not be managed by Spring
+==>  Preparing: select * from dish WHERE status = ?
+==> Parameters: 
+==> Parameters: 
+==> Parameters: 1(Integer)
+JDBC Connection [HikariProxyConnection@1663211661 wrapping com.mysql.cj.jdbc.ConnectionImpl@1dff9136] will not be managed by Spring
+==>  Preparing: select * from dish WHERE status = ?
+==> Parameters: 1(Integer)
+<==    Columns: id, name, type, sort, status, create_user, update_user, create_time, update_time
+<==        Row: 1, ������Ʒ, 1, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:08
+<==    Columns: id, name, type, sort, status, create_user, update_user, create_time, update_time
+<==        Row: 1, ������Ʒ, 1, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:08
+<==        Row: 6, �����ײ�, 2, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:13
+<==        Row: 6, �����ײ�, 2, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:13
+<==        Row: 2, ��ɫ��Ʒ, 1, 2, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:19
+<==        Row: 2, ��ɫ��Ʒ, 1, 2, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:19
+<==        Row: 7, ˫���ײ�, 2, 2, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:28
+<==        Row: 3, ������Ʒ, 1, 3, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:33
+<==        Row: 7, ˫���ײ�, 2, 2, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:28
+<==        Row: 8, ��ͥ�ײ�, 2, 3, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:36
+<==        Row: 3, ������Ʒ, 1, 3, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:33
+<==        Row: 10, �����ײ�, 2, 4, 1, 5, 5, 2026-09-12 10:52:03, 2026-09-12 10:52:03
+<==        Row: 8, ��ͥ�ײ�, 2, 3, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:36
+<==        Row: 4, ��ʳ, 1, 4, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:42
+<==        Row: 10, �����ײ�, 2, 4, 1, 5, 5, 2026-09-12 10:52:03, 2026-09-12 10:52:03
+<==        Row: 9, �����ײ�, 2, 4, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:50
+<==        Row: 4, ��ʳ, 1, 4, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:42
+<==        Row: 5, ��Ʒ, 1, 5, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:57
+<==        Row: 9, �����ײ�, 2, 4, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:50
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1bc5e429]
+<==        Row: 5, ��Ʒ, 1, 5, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:20:57
+<==      Total: 10
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@d3a9e37]
+<==    Columns: id, name, pic, detail, price, status, category_id, create_user, update_user, create_time, update_time
+<==        Row: 1, ��������, <<BLOB>>, ���䴨�ˣ��������ۣ��������, 26.00, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:22:10
+<==    Columns: id, name, pic, detail, price, status, category_id, create_user, update_user, create_time, update_time
+<==        Row: 1, ��������, <<BLOB>>, ���䴨�ˣ��������ۣ��������, 26.00, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:22:10
+<==        Row: 2, ������˿, <<BLOB>>, ����ɿڣ������˱�, 27.00, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:22:24
+<==        Row: 2, ������˿, <<BLOB>>, ����ɿڣ������˱�, 27.00, 1, 1, 1, 5, 2025-12-28 22:04:37, 2026-06-14 10:22:24
+<==        Row: 3, ���Ŷ���, <<BLOB>>, �������㣬�ۻ��ɿ�, 22.00, 1, 1, 1, 2, 2025-12-28 22:04:37, 2026-01-02 16:56:46
+<==        Row: 3, ���Ŷ���, <<BLOB>>, �������㣬�ۻ��ɿ�, 22.00, 1, 1, 1, 2, 2025-12-28 22:04:37, 2026-01-02 16:56:46
+<==        Row: 4, ˮ����Ƭ, <<BLOB>>, �������㣬��Ƭ�ۻ�, 32.00, 1, 1, 1, 2, 2025-12-28 22:04:37, 2026-01-02 17:13:01
+<==        Row: 4, ˮ����Ƭ, <<BLOB>>, �������㣬��Ƭ�ۻ�, 32.00, 1, 1, 1, 2, 2025-12-28 22:04:37, 2026-01-02 17:13:01
+<==        Row: 5, ������Ѽ, <<BLOB>>, �������ۣ���������, 88.00, 1, 2, 1, 5, 2025-12-28 22:04:37, 2026-03-24 21:13:00
+<==        Row: 5, ������Ѽ, <<BLOB>>, �������ۣ���������, 88.00, 1, 2, 1, 5, 2025-12-28 22:04:37, 2026-03-24 21:13:00
+<==        Row: 6, ������, <<BLOB>>, �ʶ����壬��ڼ���, 48.00, 1, 2, 1, 5, 2025-12-28 22:04:37, 2026-03-24 21:37:33
+<==        Row: 6, ������, <<BLOB>>, �ʶ����壬��ڼ���, 48.00, 1, 2, 1, 5, 2025-12-28 22:04:37, 2026-03-24 21:37:33
+<==        Row: 7, ��������, <<BLOB>>, ����ɿڣ���������, 58.00, 1, 2, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 8, ������������, <<BLOB>>, ����ɿڣ�Ӫ���ḻ, 12.00, 1, 3, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 7, ��������, <<BLOB>>, ����ɿڣ���������, 58.00, 1, 2, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 9, �ϲ˵�����, <<BLOB>>, �嵭�ɿڣ����ٽ���, 10.00, 1, 3, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 8, ������������, <<BLOB>>, ����ɿڣ�Ӫ���ḻ, 12.00, 1, 3, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 10, �����Ź���, <<BLOB>>, �������ã�Ӫ���ḻ, 38.00, 1, 3, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 11, �׷�, <<BLOB>>, ���ʴ��ף�����ɿ�, 2.00, 1, 4, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 9, �ϲ˵�����, <<BLOB>>, �嵭�ɿڣ����ٽ���, 10.00, 1, 3, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 12, ��ͷ, <<BLOB>>, �ֹ�����������ɿ�, 1.00, 1, 4, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 10, �����Ź���, <<BLOB>>, �������ã�Ӫ���ḻ, 38.00, 1, 3, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 13, ����, <<BLOB>>, �ֹ����������ˬ��, 8.00, 1, 4, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 11, �׷�, <<BLOB>>, ���ʴ��ף�����ɿ�, 2.00, 1, 4, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 12, ��ͷ, <<BLOB>>, �ֹ�����������ɿ�, 1.00, 1, 4, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 14, ����, <<BLOB>>, �ɿڿ��֣���ˬ���, 6.00, 1, 5, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 15, ѩ��, <<BLOB>>, ��ˬ����ζ���������, 6.00, 1, 5, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 13, ����, <<BLOB>>, �ֹ����������ˬ��, 8.00, 1, 4, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 16, ��֭, <<BLOB>>, ���ʳ�֭��Ӫ���ḻ, 12.00, 1, 5, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 14, ����, <<BLOB>>, �ɿڿ��֣���ˬ���, 6.00, 1, 5, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 15, ѩ��, <<BLOB>>, ��ˬ����ζ���������, 6.00, 1, 5, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 17, С����, <<BLOB>>, 666, 6.00, 1, 4, 1, 1, 2025-12-28 22:05:11, 2025-12-29 14:23:03
+<==        Row: 16, ��֭, <<BLOB>>, ���ʳ�֭��Ӫ���ḻ, 12.00, 1, 5, 1, 1, 2025-12-28 22:04:37, 2025-12-28 22:04:37
+<==        Row: 18, �����ܲ�, <<BLOB>>, 666, 6.00, 1, 2, 1, 1, 2025-12-29 14:22:41, 2025-12-29 14:22:41
+<==        Row: 17, С����, <<BLOB>>, 666, 6.00, 1, 4, 1, 1, 2025-12-28 22:05:11, 2025-12-29 14:23:03
+<==        Row: 18, �����ܲ�, <<BLOB>>, 666, 6.00, 1, 2, 1, 1, 2025-12-29 14:22:41, 2025-12-29 14:22:41
+<==        Row: 19, �տ����⴮, <<BLOB>>, 666, 66.00, 1, 1, 5, 5, 2026-03-18 10:56:27, 2026-03-18 10:56:27
+<==        Row: 23, �տ��⴮, <<BLOB>>, 666, 66.00, 1, 1, 5, 5, 2026-03-18 10:56:38, 2026-03-18 10:56:38
+<==        Row: 19, �տ����⴮, <<BLOB>>, 666, 66.00, 1, 1, 5, 5, 2026-03-18 10:56:27, 2026-03-18 10:56:27
+<==        Row: 26, 1, <<BLOB>>, 1, 1.00, 1, 1, 5, 5, 2026-03-18 11:00:55, 2026-03-18 11:00:55
+<==        Row: 23, �տ��⴮, <<BLOB>>, 666, 66.00, 1, 1, 5, 5, 2026-03-18 10:56:38, 2026-03-18 10:56:38
+<==        Row: 28, ���ݿ���, <<BLOB>>, 555, 55.00, 1, 1, 5, 5, 2026-05-03 16:41:18, 2026-05-03 16:41:18
+<==        Row: 26, 1, <<BLOB>>, 1, 1.00, 1, 1, 5, 5, 2026-03-18 11:00:55, 2026-03-18 11:00:55
+<==        Row: 28, ���ݿ���, <<BLOB>>, 555, 55.00, 1, 1, 5, 5, 2026-05-03 16:41:18, 2026-05-03 16:41:18
+<==        Row: 30, ����, <<BLOB>>, 666, 6.00, 1, 1, 4, 4, 2026-06-04 10:28:08, 2026-06-04 10:28:08
+<==        Row: 30, ����, <<BLOB>>, 666, 6.00, 1, 1, 4, 4, 2026-06-04 10:28:08, 2026-06-04 10:28:08
+<==        Row: 32, ��Ǯ��, <<BLOB>>, 66, 66.00, 1, 2, 5, 5, 2026-06-12 22:00:54, 2026-06-12 22:00:54
+<==        Row: 32, ��Ǯ��, <<BLOB>>, 66, 66.00, 1, 2, 5, 5, 2026-06-12 22:00:54, 2026-06-12 22:00:54
+<==        Row: 35, ����, <<BLOB>>, 666, 6.00, 1, 4, 2, 2, 2026-09-12 09:44:00, 2026-09-12 09:44:00
+<==        Row: 35, ����, <<BLOB>>, 666, 6.00, 1, 4, 2, 2, 2026-09-12 09:44:00, 2026-09-12 09:44:00
+<==        Row: 37, ����1, <<BLOB>>, 6, 6.00, 1, 4, 7, 7, 2026-09-12 16:28:04, 2026-09-12 16:28:04
+<==        Row: 37, ����1, <<BLOB>>, 6, 6.00, 1, 4, 7, 7, 2026-09-12 16:28:04, 2026-09-12 16:28:04
+<==      Total: 26
+<==      Total: 26
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@322a9c77]
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3258dfe0]
+2026-09-16T17:44:00.007+08:00  INFO 3768 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Wed Sep 16 17:44:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1adf34c5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@9191131 wrapping com.mysql.cj.jdbc.ConnectionImpl@4809c771] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-16T17:29:00.007237300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1adf34c5]
