@@ -97,6 +97,12 @@ const router = createRouter({
           path: 'review',
           name: 'review',
           component: () => import('./views/review/index.vue')
+        },
+        {
+          // 员工赏罚：顾客服务评分、小费打赏、北极星积分排名、店主奖励惩戒
+          path: 'staff',
+          name: 'staff',
+          component: () => import('./views/staff/index.vue')
         }
       ]
     },

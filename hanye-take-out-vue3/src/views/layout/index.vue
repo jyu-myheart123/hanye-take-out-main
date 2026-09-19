@@ -28,7 +28,8 @@ const menuList = [
   { title: '员工管理', path: '/employee', icon: 'User', desc: '账号、权限与人员信息' },
   { title: '营销活动', path: '/promotion', icon: 'Discount', desc: '满减、折扣、第二份半价' },
   { title: '堂食会员', path: '/member', icon: 'GoldMedal', desc: '储值、积分、等级与消费记录' },
-  { title: '客户评价', path: '/review', icon: 'ChatDotRound', desc: '菜品服务评分与改进意见' }
+  { title: '客户评价', path: '/review', icon: 'ChatDotRound', desc: '菜品服务评分与改进意见' },
+  { title: '员工赏罚', path: '/staff', icon: 'Trophy', desc: '服务评分、小费打赏与北极星排名' }
 ]
 
 const form = reactive({

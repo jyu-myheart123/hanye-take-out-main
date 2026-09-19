@@ -1,0 +1,1530 @@
+﻿Active code page: 65001
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< fun.cyhgraph:server >-------------------------
+[INFO] Building server 1.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot-maven-plugin:3.2.5:run (default-cli) > test-compile @ server >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ server ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 13 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ server ---
+[INFO] Copying 10 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot-maven-plugin:3.2.5:run (default-cli) < test-compile @ server <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.2.5:run (default-cli) @ server ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-09-17T12:08:38.967+08:00  INFO 22512 --- [           main] fun.cyhgraph.ServerApplication           : Starting ServerApplication using Java 17.0.15 with PID 22512 (D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server\target\classes started by 86178 in D:\small-third\project1\hanye-take-out-main\hanye-take-out-springboot3\server)
+2026-09-17T12:08:38.969+08:00  INFO 22512 --- [           main] fun.cyhgraph.ServerApplication           : The following 1 profile is active: "dev"
+2026-09-17T12:08:39.493+08:00  INFO 22512 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-17T12:08:39.495+08:00  INFO 22512 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-17T12:08:39.522+08:00  INFO 22512 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2026-09-17T12:08:40.147+08:00  INFO 22512 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-09-17T12:08:40.161+08:00  INFO 22512 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-17T12:08:40.161+08:00  INFO 22512 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-09-17T12:08:40.216+08:00  INFO 22512 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-09-17T12:08:40.217+08:00  INFO 22512 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1206 ms
+Logging initialized using 'class org.apache.ibatis.logging.stdout.StdOutImpl' adapter.
+2026-09-17T12:08:40.557+08:00  INFO 22512 --- [           main] fun.cyhgraph.promotion.PromotionEngine   : Ӫ��������ʼ����ɣ���ע���������[1, 2, 3, 4]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7d8b66d9] was not registered for synchronization because synchronization is not active
+2026-09-17T12:08:40.591+08:00  INFO 22512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-17T12:08:40.779+08:00  INFO 22512 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67b8d45
+2026-09-17T12:08:40.780+08:00  INFO 22512 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+JDBC Connection [HikariProxyConnection@760125918 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select count(*) from member_level_rule
+==> Parameters: 
+<==    Columns: count(*)
+<==        Row: 3
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7d8b66d9]
+2026-09-17T12:08:40.967+08:00  INFO 22512 --- [           main] fun.cyhgraph.config.RedisConfiguration   : ��ʼ����redisģ�����...
+2026-09-17T12:08:41.133+08:00  INFO 22512 --- [           main] f.cyhgraph.config.WebMvcConfiguration    : �Զ����������������Ҫ�����WebMvc��������ע��
+2026-09-17T12:08:41.194+08:00  INFO 22512 --- [           main] f.cyhgraph.config.WebMvcConfiguration    : ��չ��Ϣת����...
+
+
+,------.                           ,--.  ,--.         ,--.                         
+|  .--. '  ,--,--.  ,---.   ,---.  |  '--'  |  ,---.  |  |  ,---.   ,---.  ,--.--. 
+|  '--' | ' ,-.  | | .-. | | .-. : |  .--.  | | .-. : |  | | .-. | | .-. : |  .--' 
+|  | --'  \ '-'  | ' '-' ' \   --. |  |  |  | \   --. |  | | '-' ' \   --. |  |    
+`--'       `--`--' .`-  /   `----' `--'  `--'  `----' `--' |  |-'   `----' `--'    
+                   `---'                                   `--'                        is intercepting.
+
+2026-09-17T12:08:41.564+08:00  INFO 22512 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path ''
+2026-09-17T12:08:41.573+08:00  INFO 22512 --- [           main] fun.cyhgraph.ServerApplication           : Started ServerApplication in 2.915 seconds (process running for 3.159)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6c2fea95] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@184854180 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from employee where account = ?
+==> Parameters: cyh(String)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 5, ��������Ա, cyh, e10adc3949ba59abbe56e057f20f883e, 13800138000, 25, 1, <<BLOB>>, 1, 100, 5, 2026-03-18 10:49:36, 2026-03-18 19:43:15, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6c2fea95]
+2026-09-17T12:08:41.599+08:00  INFO 22512 --- [           main] fun.cyhgraph.init.DataInitializer        : cyh�˺��Ѵ���
+2026-09-17T12:08:41.599+08:00  INFO 22512 --- [           main] fun.cyhgraph.ServerApplication           : server started successfully!
+2026-09-17T12:09:00.009+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:09:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@563b83d2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1950849319 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T11:54:00.009044(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@563b83d2]
+2026-09-17T12:09:16.022+08:00  INFO 22512 --- [nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-17T12:09:16.022+08:00  INFO 22512 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-17T12:09:16.023+08:00  INFO 22512 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-09-17T12:09:16.083+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.controller.admin.EmployeeController  : �û��������ĵ�¼��ϢDTO:EmployeeLoginDTO(account=cyh, password=123456)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@56290ac3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1675387785 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from employee where account = ?
+==> Parameters: cyh(String)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 5, ��������Ա, cyh, e10adc3949ba59abbe56e057f20f883e, 13800138000, 25, 1, <<BLOB>>, 1, 100, 5, 2026-03-18 10:49:36, 2026-03-18 19:43:15, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@56290ac3]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0ODIxNTZ9.ZFDgJAl8VQ4fnaTaX3SJg_fF6cjvAIrhZg1KNbuHh-A
+2026-09-17T12:09:16.167+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0ODIxNTZ9.ZFDgJAl8VQ4fnaTaX3SJg_fF6cjvAIrhZg1KNbuHh-A
+2026-09-17T12:09:16.168+08:00  INFO 22512 --- [nio-8081-exec-2] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0ODIxNTZ9.ZFDgJAl8VQ4fnaTaX3SJg_fF6cjvAIrhZg1KNbuHh-A
+claims {employeeId=5, exp=1790482156}
+2026-09-17T12:09:16.178+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��5
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65f271a1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1897137706 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 4.00, 15, 5.00, 10.00
+<==        Row: 7, test, 1, 3.00, 0.00, -2, 0.00, -5.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@65f271a1]
+2026-09-17T12:10:00.002+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:10:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@193e2812] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@763558181 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T11:55:00.002449400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@193e2812]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:10:03.872+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:10:03.872+08:00  INFO 22512 --- [nio-8081-exec-4] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:10:03.872+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@15493b84] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@462346077 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select id, name, role from employee where status = 1 order by role desc, id asc
+==> Parameters: 
+<==    Columns: id, name, role
+<==        Row: 2, ��������Ա, 1
+<==        Row: 5, ��������Ա, 1
+<==        Row: 1, Ա��, 0
+<==        Row: 7, test, 0
+<==        Row: 9, 66, 0
+<==        Row: 10, 123, 0
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@15493b84]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:10:34.884+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:10:34.885+08:00  INFO 22512 --- [nio-8081-exec-6] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:10:34.886+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:10:34.888+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.controller.admin.StaffController     : �ύԱ���������֣�Ա��id=1
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1cdd5a60] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1507841951 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 1(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 1, Ա��, now, e10adc3949ba59abbe56e057f20f883e, 19926473706, 19, 1, <<BLOB>>, 1, 100, 5, 2025-12-28 20:28:46, 2026-06-14 10:22:47, 0
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1cdd5a60]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1e3467a6] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@972040400 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: insert into staff_rating (employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 1(Integer), Ա��(String), null, T1(String), ������(String), 5(Integer), null, ��������飬�Ƽ�����ܺú�(String), 0(BigDecimal), 5(Integer), 1(Integer)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1e3467a6]
+2026-09-17T12:10:34.906+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.s.serviceImpl.StaffServiceImpl       : Ա�������������ύ��Ա��=Ա��������5�ǣ��Ƽ�null�ǣ�����id=1
+2026-09-17T12:11:00.000+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:11:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2ec0d2e5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1180045719 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T11:56:00.000061300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2ec0d2e5]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:11:03.955+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:11:03.956+08:00  INFO 22512 --- [nio-8081-exec-7] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:11:03.956+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:11:03.957+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.controller.admin.StaffController     : �ύԱ���������֣�Ա��id=7
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@299697b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@207521624 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 7(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 7, test, test, e10adc3949ba59abbe56e057f20f883e, 17878728999, 34, 1, <<BLOB>>, 1, 2, 2, 2026-09-07 18:26:58, 2026-09-17 11:42:45, 0
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@299697b]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d638d63] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@83420933 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: insert into staff_rating (employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 7(Integer), test(String), null, null, null, 5(Integer), null, ̬��һ��(String), 0(BigDecimal), 5(Integer), 1(Integer)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4d638d63]
+2026-09-17T12:11:03.971+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.s.serviceImpl.StaffServiceImpl       : Ա�������������ύ��Ա��=test������5�ǣ��Ƽ�null�ǣ�����id=2
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:11:18.440+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:11:18.441+08:00  INFO 22512 --- [nio-8081-exec-5] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:11:18.442+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:11:18.444+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.controller.admin.StaffController     : �˿ʹ���С�ѣ�����id=2�����=10
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+JDBC Connection [HikariProxyConnection@2071864579 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will be managed by Spring
+==>  Preparing: select * from staff_rating where id = ?
+==> Parameters: 2(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 0.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:11:03
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb] from current transaction
+==>  Preparing: update staff_rating set tip_amount = ? where id = ?
+==> Parameters: 10(BigDecimal), 2(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb] from current transaction
+==>  Preparing: insert into staff_reward (employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id) values (?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 7(Integer), 1(Integer), 10(BigDecimal), 0(Integer), 2(Integer), null, �˿�С�Ѵ���(String), 2(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+2026-09-17T12:11:18.459+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.s.serviceImpl.StaffServiceImpl       : �˿ʹ��ͣ�Ա��=test�����=10������id=2
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4836dacb]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:11:22.406+08:00  INFO 22512 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:11:22.407+08:00  INFO 22512 --- [nio-8081-exec-8] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:11:22.407+08:00  INFO 22512 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@39a8dec3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@930035590 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 5, 0.00, 0.00
+<==        Row: 7, test, 1, 5.00, 0.00, 5, 10.00, 0.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@39a8dec3]
+2026-09-17T12:12:00.011+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:12:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@186b7b3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@704191132 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T11:57:00.011818300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@186b7b3]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:01.825+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:01.826+08:00  INFO 22512 --- [nio-8081-exec-9] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:12:01.827+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@21da69cf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@790463364 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-09-14T12:12:01.827080(LocalDateTime), 2026-09-14T12:12:01.827080(LocalDateTime), 2026-09-14T12:12:01.827080(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 5, 0.00, 0.00
+<==        Row: 7, test, 1, 5.00, 0.00, 5, 10.00, 0.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@21da69cf]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:04.720+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:04.721+08:00  INFO 22512 --- [io-8081-exec-10] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:12:04.721+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@45b57cb] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1096407332 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-09-10T12:12:04.722951500(LocalDateTime), 2026-09-10T12:12:04.722951500(LocalDateTime), 2026-09-10T12:12:04.722951500(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 5, 0.00, 0.00
+<==        Row: 7, test, 1, 5.00, 0.00, 5, 10.00, 0.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@45b57cb]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:07.487+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:07.487+08:00  INFO 22512 --- [nio-8081-exec-1] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:12:07.487+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4429cf8f] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@556649590 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-08-17T12:12:07.488143400(LocalDateTime), 2026-08-17T12:12:07.488143400(LocalDateTime), 2026-08-17T12:12:07.488143400(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 5, 0.00, 0.00
+<==        Row: 7, test, 1, 5.00, 0.00, 5, 10.00, 0.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4429cf8f]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:28.682+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:28.682+08:00  INFO 22512 --- [nio-8081-exec-2] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:12:28.683+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:12:28.684+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.controller.admin.StaffController     : �����ͷ���Ա��id=1������=2
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+JDBC Connection [HikariProxyConnection@1616252840 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will be managed by Spring
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 2(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 2, ��������Ա, admin, e10adc3949ba59abbe56e057f20f883e, 13800138000, 24, 1, <<BLOB>>, 1, 1, 5, 2025-12-28 22:04:37, 2026-09-12 16:32:06, 1
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f] from current transaction
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 1(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 1, Ա��, now, e10adc3949ba59abbe56e057f20f883e, 19926473706, 19, 1, <<BLOB>>, 1, 100, 5, 2025-12-28 20:28:46, 2026-06-14 10:22:47, 0
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f] from current transaction
+==>  Preparing: insert into staff_reward (employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id) values (?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 1(Integer), 2(Integer), 20(BigDecimal), 10(Integer), null, null, ���ܷ����һ����(String), 2(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+2026-09-17T12:12:28.802+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.s.serviceImpl.StaffServiceImpl       : ����������Ա��=Ա�������=20������=10��ԭ��=���ܷ����һ����
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@760b341f]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:28.948+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:12:28.948+08:00  INFO 22512 --- [nio-8081-exec-3] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:12:28.948+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4296a6c4] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@127152370 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-08-17T12:12:28.948958900(LocalDateTime), 2026-08-17T12:12:28.948958900(LocalDateTime), 2026-08-17T12:12:28.948958900(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 15, 0.00, 20.00
+<==        Row: 7, test, 1, 5.00, 0.00, 5, 10.00, 0.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4296a6c4]
+2026-09-17T12:13:00.000+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:13:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1f2f8605] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@723554684 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T11:58:00.000882400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1f2f8605]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:01.400+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:01.400+08:00  INFO 22512 --- [nio-8081-exec-4] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:01.400+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:13:01.401+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.controller.admin.StaffController     : �����ͷ���Ա��id=7������=3
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+JDBC Connection [HikariProxyConnection@973588203 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will be managed by Spring
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 2(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 2, ��������Ա, admin, e10adc3949ba59abbe56e057f20f883e, 13800138000, 24, 1, <<BLOB>>, 1, 1, 5, 2025-12-28 22:04:37, 2026-09-12 16:32:06, 1
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6] from current transaction
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 7(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 7, test, test, e10adc3949ba59abbe56e057f20f883e, 17878728999, 34, 1, <<BLOB>>, 1, 2, 2, 2026-09-07 18:26:58, 2026-09-17 11:42:45, 0
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6] from current transaction
+==>  Preparing: insert into staff_reward (employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id) values (?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 7(Integer), 3(Integer), -5(BigDecimal), -5(Integer), null, null, ̬�Ȳ��Գͽ�(String), 2(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+2026-09-17T12:13:01.544+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.s.serviceImpl.StaffServiceImpl       : �����ͽ䣺Ա��=test�����=-5������=-5��ԭ��=̬�Ȳ��Գͽ�
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22d8af6]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:01.879+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:01.879+08:00  INFO 22512 --- [nio-8081-exec-6] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:01.880+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30bd6230] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1304467189 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-08-17T12:13:01.881253300(LocalDateTime), 2026-08-17T12:13:01.881253300(LocalDateTime), 2026-08-17T12:13:01.881253300(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 15, 0.00, 20.00
+<==        Row: 7, test, 1, 5.00, 0.00, 0, 10.00, -5.00
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30bd6230]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:13.089+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:13.089+08:00  INFO 22512 --- [nio-8081-exec-7] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:13.089+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@34d5c9ef] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.0
+JDBC Connection [HikariProxyConnection@776950372 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+<==    Columns: count(0)
+<==        Row: 2
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:11:18
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@34d5c9ef]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:19.363+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:19.363+08:00  INFO 22512 --- [nio-8081-exec-5] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:19.364+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@33f7793e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@339134583 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from staff_rating where id = ?
+==> Parameters: 2(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:11:18
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@33f7793e]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@530da2f] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2093171552 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: update staff_rating set status = IF(status = 0, 1, 0) where id = ?
+==> Parameters: 2(Integer)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@530da2f]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:19.628+08:00  INFO 22512 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:19.628+08:00  INFO 22512 --- [nio-8081-exec-8] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:19.629+08:00  INFO 22512 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@463f6729] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.5
+JDBC Connection [HikariProxyConnection@795591581 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+<==    Columns: count(0)
+<==        Row: 2
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 0, 2026-09-17 12:11:03, 2026-09-17 12:13:19
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@463f6729]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:19.692+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:19.692+08:00  INFO 22512 --- [nio-8081-exec-9] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:19.693+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6e2089bf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1678276287 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-08-17T12:13:19.693095500(LocalDateTime), 2026-08-17T12:13:19.693095500(LocalDateTime), 2026-08-17T12:13:19.693095500(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 15, 0.00, 20.00
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6e2089bf]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:54.436+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:54.436+08:00  INFO 22512 --- [io-8081-exec-10] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:54.437+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5533c894] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@238418240 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from staff_rating where id = ?
+==> Parameters: 2(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 0, 2026-09-17 12:11:03, 2026-09-17 12:13:19
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5533c894]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@10b2e53b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1527707857 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: update staff_rating set status = IF(status = 0, 1, 0) where id = ?
+==> Parameters: 2(Integer)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@10b2e53b]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:54.771+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:54.771+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:54.771+08:00  INFO 22512 --- [nio-8081-exec-2] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:54.771+08:00  INFO 22512 --- [nio-8081-exec-1] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:54.772+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:13:54.772+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d270791] was not registered for synchronization because synchronization is not active
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5032e654] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1735840148 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+Cache Hit Ratio [SQL_CACHE]: 0.6666666666666666
+==> Parameters: 2026-08-17T12:13:54.772701(LocalDateTime), 2026-08-17T12:13:54.772701(LocalDateTime), 2026-08-17T12:13:54.772701(LocalDateTime)
+JDBC Connection [HikariProxyConnection@1878093909 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 1, Ա��, 1, 5.00, 0.00, 15, 0.00, 20.00
+<==        Row: 7, test, 1, 5.00, 0.00, 0, 10.00, -5.00
+<==      Total: 2
+<==    Columns: count(0)
+<==        Row: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3d270791]
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:13:54
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5032e654]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:59.353+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:13:59.353+08:00  INFO 22512 --- [nio-8081-exec-3] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:13:59.353+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@36595457] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.5
+JDBC Connection [HikariProxyConnection@1677055167 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id
+==> Parameters: 
+<==    Columns: count(0)
+<==        Row: 3
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==        Row: 2, 1, 2, 20.00, 10, null, null, ���ܷ����һ����, 2, 2026-09-17 12:12:28, Ա��
+<==        Row: 1, 7, 1, 10.00, 0, 2, null, �˿�С�Ѵ���, 2, 2026-09-17 12:11:18, test
+<==      Total: 3
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@36595457]
+2026-09-17T12:14:00.000+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:14:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3e29ef3a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1565874516 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T11:59:00.000542400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3e29ef3a]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:20.554+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:20.554+08:00  INFO 22512 --- [nio-8081-exec-4] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:20.555+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6cb3957e] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.6
+JDBC Connection [HikariProxyConnection@495064656 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6cb3957e]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:23.516+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:23.517+08:00  INFO 22512 --- [nio-8081-exec-6] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:23.517+08:00  INFO 22512 --- [nio-8081-exec-6] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18d96879] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.6666666666666666
+JDBC Connection [HikariProxyConnection@168846366 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@18d96879]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:29.607+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:29.607+08:00  INFO 22512 --- [nio-8081-exec-7] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:29.608+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6bd56561] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.7142857142857143
+JDBC Connection [HikariProxyConnection@504879052 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6bd56561]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:34.193+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:34.193+08:00  INFO 22512 --- [nio-8081-exec-5] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:34.194+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@29434247] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.75
+JDBC Connection [HikariProxyConnection@337001446 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+<==    Columns: count(0)
+<==        Row: 2
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:13:54
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@29434247]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:34.494+08:00  INFO 22512 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:34.495+08:00  INFO 22512 --- [nio-8081-exec-8] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:34.496+08:00  INFO 22512 --- [nio-8081-exec-8] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35f2f309] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.7777777777777778
+JDBC Connection [HikariProxyConnection@1106238528 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@35f2f309]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:39.912+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:39.912+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:39.912+08:00  INFO 22512 --- [io-8081-exec-10] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:39.912+08:00  INFO 22512 --- [nio-8081-exec-9] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:39.913+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:14:39.913+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22e885bd] was not registered for synchronization because synchronization is not active
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22fe3fc] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.8
+Cache Hit Ratio [SQL_CACHE]: 0.8181818181818182
+JDBC Connection [HikariProxyConnection@2131549625 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+JDBC Connection [HikariProxyConnection@693628344 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 2
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:13:54
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22e885bd]
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22fe3fc]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:49.475+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:49.475+08:00  INFO 22512 --- [nio-8081-exec-2] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:49.475+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4381c3a2] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.8333333333333334
+JDBC Connection [HikariProxyConnection@212313842 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+<==    Columns: count(0)
+<==        Row: 2
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:13:54
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4381c3a2]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:49.783+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:14:49.783+08:00  INFO 22512 --- [nio-8081-exec-1] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:14:49.784+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71df9dc8] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.8461538461538461
+JDBC Connection [HikariProxyConnection@209002172 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71df9dc8]
+2026-09-17T12:15:00.015+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:15:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5a8ec264] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@732935728 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:00:00.015300600(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5a8ec264]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:15:00.824+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:15:00.824+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:15:00.824+08:00  INFO 22512 --- [nio-8081-exec-4] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:15:00.824+08:00  INFO 22512 --- [nio-8081-exec-3] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:15:00.825+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:15:00.825+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@617028c1] was not registered for synchronization because synchronization is not active
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@76ccb0d8] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.8571428571428571
+Cache Hit Ratio [SQL_CACHE]: 0.8666666666666667
+JDBC Connection [HikariProxyConnection@750348785 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+JDBC Connection [HikariProxyConnection@625498291 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==    Columns: count(0)
+<==        Row: 2
+<==      Total: 1
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+==>  Preparing: select w.*, e.name as employeeName from staff_reward w left join employee e on w.employee_id = e.id WHERE w.type = ? order by w.create_time desc, w.id desc LIMIT ?
+==> Parameters: 10(Integer)
+==> Parameters: 3(Integer), 10(Integer)
+<==    Columns: id, employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id, create_time, employeeName
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 3, 7, 3, -5.00, -5, null, null, ̬�Ȳ��Գͽ�, 2, 2026-09-17 12:13:01, test
+<==        Row: 2, 7, test, null, null, null, 5, null, ̬��һ��, 10.00, 5, 1, 2026-09-17 12:11:03, 2026-09-17 12:13:54
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@76ccb0d8]
+<==        Row: 1, 1, Ա��, null, T1, ������, 5, null, ��������飬�Ƽ�����ܺú�, 0.00, 5, 1, 2026-09-17 12:10:34, 2026-09-17 12:10:34
+<==      Total: 2
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@617028c1]
+2026-09-17T12:16:00.003+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:16:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22af4893] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@245244736 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:01:00.003143800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22af4893]
+2026-09-17T12:16:02.181+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.controller.admin.EmployeeController  : �û��������ĵ�¼��ϢDTO:EmployeeLoginDTO(account=cyh, password=123456)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@56a9d1e2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1981859148 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from employee where account = ?
+==> Parameters: cyh(String)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 5, ��������Ա, cyh, e10adc3949ba59abbe56e057f20f883e, 13800138000, 25, 1, <<BLOB>>, 1, 100, 5, 2026-03-18 10:49:36, 2026-03-18 19:43:15, 1
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@56a9d1e2]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0ODI1NjJ9.H8YAdwJV_GgnimT-akp3M6_xfmkXaeQlSU-_k7OWp70
+2026-09-17T12:16:02.232+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0ODI1NjJ9.H8YAdwJV_GgnimT-akp3M6_xfmkXaeQlSU-_k7OWp70
+2026-09-17T12:16:02.232+08:00  INFO 22512 --- [nio-8081-exec-5] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjo1LCJleHAiOjE3OTA0ODI1NjJ9.H8YAdwJV_GgnimT-akp3M6_xfmkXaeQlSU-_k7OWp70
+claims {employeeId=5, exp=1790482562}
+2026-09-17T12:16:02.232+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��5
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1dad930a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@952193618 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1dad930a]
+2026-09-17T12:17:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:17:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3adc7cf2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1659850986 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:02:00.010773800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3adc7cf2]
+2026-09-17T12:18:00.014+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:18:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@75fe4851] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@748454384 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:03:00.014438900(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@75fe4851]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:10.456+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:10.457+08:00  INFO 22512 --- [io-8081-exec-10] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:18:10.457+08:00  INFO 22512 --- [io-8081-exec-10] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:18:10.458+08:00  INFO 22512 --- [io-8081-exec-10] f.c.controller.admin.StaffController     : �ύԱ���������֣�Ա��id=7
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@369ea262] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@540189476 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+==>  Preparing: select * from employee where id = ?
+==> Parameters: 7(Integer)
+<==    Columns: id, name, account, password, phone, age, gender, pic, status, create_user, update_user, create_time, update_time, role
+<==        Row: 7, test, test, e10adc3949ba59abbe56e057f20f883e, 17878728999, 34, 1, <<BLOB>>, 1, 2, 2, 2026-09-07 18:26:58, 2026-09-17 11:42:45, 0
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@369ea262]
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3382a581] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1537319220 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+==>  Preparing: insert into staff_rating (employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 7(Integer), test(String), null, null, null, 4(Integer), 4(Integer), good(String), 0(BigDecimal), 4(Integer), 1(Integer)
+<==    Updates: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3382a581]
+2026-09-17T12:18:10.477+08:00  INFO 22512 --- [io-8081-exec-10] f.c.s.serviceImpl.StaffServiceImpl       : Ա�������������ύ��Ա��=test������4�ǣ��Ƽ�4�ǣ�����id=1
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:14.874+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:14.874+08:00  INFO 22512 --- [nio-8081-exec-9] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:18:14.875+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:18:14.875+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.controller.admin.StaffController     : �˿ʹ���С�ѣ�����id=1�����=5
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+JDBC Connection [HikariProxyConnection@1633371546 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will be managed by Spring
+==>  Preparing: select * from staff_rating where id = ?
+==> Parameters: 1(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 1, 7, test, null, null, null, 4, 4, good, 0.00, 4, 1, 2026-09-17 12:18:10, 2026-09-17 12:18:10
+<==      Total: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af] from current transaction
+==>  Preparing: update staff_rating set tip_amount = ? where id = ?
+==> Parameters: 5(BigDecimal), 1(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+Fetched SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af] from current transaction
+==>  Preparing: insert into staff_reward (employee_id, type, amount, star_points, rating_id, order_id, reason, operator_id) values (?, ?, ?, ?, ?, ?, ?, ?)
+==> Parameters: 7(Integer), 1(Integer), 5(BigDecimal), 0(Integer), 1(Integer), null, �˿�С�Ѵ���(String), 2(Integer)
+<==    Updates: 1
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+2026-09-17T12:18:14.880+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.s.serviceImpl.StaffServiceImpl       : �˿ʹ��ͣ�Ա��=test�����=5������id=1
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1acf43af]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:15.219+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:15.219+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:15.219+08:00  INFO 22512 --- [nio-8081-exec-1] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:15.219+08:00  INFO 22512 --- [nio-8081-exec-2] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+claims {employeeId=2, exp=1789647279}
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:15.220+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:15.220+08:00  INFO 22512 --- [nio-8081-exec-1] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:18:15.220+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:18:15.220+08:00  INFO 22512 --- [nio-8081-exec-4] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+Creating a new SqlSession
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54fc271] was not registered for synchronization because synchronization is not active
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7441249d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@38166570 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+Cache Hit Ratio [SQL_CACHE]: 0.875
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:18:15.220+08:00  INFO 22512 --- [nio-8081-exec-4] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+==> Parameters: 2026-08-17T12:18:15.220533900(LocalDateTime), 2026-08-17T12:18:15.220533900(LocalDateTime), 2026-08-17T12:18:15.220533900(LocalDateTime)
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@79a9b1e5] was not registered for synchronization because synchronization is not active
+Cache Hit Ratio [SQL_CACHE]: 0.8823529411764706
+JDBC Connection [HikariProxyConnection@2107789349 wrapping com.mysql.cj.jdbc.ConnectionImpl@2012b283] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_rating
+==> Parameters: 
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 7, test, 1, 4.00, 4.00, 4, 5.00, 0.00
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@54fc271]
+JDBC Connection [HikariProxyConnection@600309328 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: SELECT count(0) FROM staff_reward w LEFT JOIN employee e ON w.employee_id = e.id WHERE w.type = ?
+==> Parameters: 3(Integer)
+<==    Columns: count(0)
+<==        Row: 1
+<==      Total: 1
+<==    Columns: count(0)
+<==        Row: 0
+<==      Total: 1
+==>  Preparing: select * from staff_rating order by create_time desc, id desc LIMIT ?
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@79a9b1e5]
+==> Parameters: 10(Integer)
+<==    Columns: id, employee_id, employee_name, order_id, table_no, customer_name, service_score, recommend_score, content, tip_amount, star_points, status, create_time, update_time
+<==        Row: 1, 7, test, null, null, null, 4, 4, good, 5.00, 4, 1, 2026-09-17 12:18:10, 2026-09-17 12:18:14
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7441249d]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:24.295+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:18:24.295+08:00  INFO 22512 --- [nio-8081-exec-3] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:18:24.295+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5753fce1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1824757529 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select e.id as employeeId, e.name as employeeName, count(r.id) as ratingCount, coalesce(round(avg(r.service_score), 2), 0) as avgService, coalesce(round(avg(r.recommend_score), 2), 0) as avgRecommend, coalesce(sum(r.star_points), 0) + (select coalesce(sum(w.star_points), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as starPoints, coalesce(sum(r.tip_amount), 0) as tipTotal, (select coalesce(sum(w.amount), 0) from staff_reward w where w.employee_id = e.id and w.type in (2, 3) and w.create_time >= ?) as rewardNet from staff_rating r join employee e on e.id = r.employee_id where r.status = 1 and r.create_time >= ? group by e.id, e.name order by avgService desc, starPoints desc, ratingCount desc
+==> Parameters: 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime), 2026-09-17T00:00(LocalDateTime)
+<==    Columns: employeeId, employeeName, ratingCount, avgService, avgRecommend, starPoints, tipTotal, rewardNet
+<==        Row: 7, test, 1, 4.00, 4.00, 4, 5.00, 0.00
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5753fce1]
+2026-09-17T12:19:00.009+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:19:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@e9cfb9b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@153589465 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:04:00.009321500(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@e9cfb9b]
+2026-09-17T12:20:00.015+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:20:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1227b10e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2064568562 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:05:00.015637500(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1227b10e]
+2026-09-17T12:21:00.007+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:21:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6f5f28a8] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1088379788 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:06:00.007112100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6f5f28a8]
+2026-09-17T12:22:00.004+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:22:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@536f892a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1164177799 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:07:00.005268300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@536f892a]
+2026-09-17T12:23:00.003+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:23:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6e4166f0] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1095275723 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:08:00.003651300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6e4166f0]
+2026-09-17T12:24:00.005+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:24:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@52fa70dd] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@606378228 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:09:00.005866500(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@52fa70dd]
+2026-09-17T12:25:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:25:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5dfc9b0e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1551983860 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:10:00.010319(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5dfc9b0e]
+2026-09-17T12:26:00.003+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:26:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@560480d7] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1863931378 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:11:00.003458100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@560480d7]
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:26:49.282+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:26:49.282+08:00  INFO 22512 --- [nio-8081-exec-7] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:26:49.283+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:26:49.283+08:00  INFO 22512 --- [nio-8081-exec-5] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:26:49.283+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@42b93b44] was not registered for synchronization because synchronization is not active
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:26:49.283+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+JDBC Connection [HikariProxyConnection@1518851120 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select id, name, role from employee where status = 1 order by role desc, id asc
+==> Parameters: 
+<==    Columns: id, name, role
+<==        Row: 2, ��������Ա, 1
+<==        Row: 5, ��������Ա, 1
+<==        Row: 1, Ա��, 0
+<==        Row: 7, test, 0
+<==        Row: 9, 66, 0
+<==        Row: 10, 123, 0
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@42b93b44]
+�ͻ��ˣ�615p8gt4q5i��������
+2026-09-17T12:26:49.943+08:00  INFO 22512 --- [nio-8081-exec-5] f.c.controller.admin.ShopController      : ��ѯ��ǰ����Ӫҵ״̬��Ӫҵ��
+2026-09-17T12:27:00.909+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:27:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71e68e60] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@51817139 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:12:00.909613800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@71e68e60]
+2026-09-17T12:28:00.007+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:28:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5fc5c635] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@446027299 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:13:00.007999700(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5fc5c635]
+2026-09-17T12:29:00.008+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:29:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24221273] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1437043884 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:14:00.008580600(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24221273]
+2026-09-17T12:30:00.003+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:30:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@48599307] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2094834165 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:15:00.003026100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@48599307]
+2026-09-17T12:30:56.911+08:00 ERROR 22512 --- [nio-8081-exec-8] o.a.t.websocket.pojo.PojoEndpointBase    : No error handling configured for [fun.cyhgraph.websocket.WebSocketServer] and the following error occurred
+
+java.io.EOFException: null
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.fillReadBuffer(NioEndpoint.java:1288) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.read(NioEndpoint.java:1176) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:74) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+���ӶϿ�:615p8gt4q5i
+�ͻ��ˣ�ukfzbzndeyg��������
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:30:59.906+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:30:59.906+08:00  INFO 22512 --- [nio-8081-exec-2] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:30:59.906+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T12:30:59.906+08:00  INFO 22512 --- [nio-8081-exec-9] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+claims {employeeId=2, exp=1789647279}
+claims {employeeId=2, exp=1789647279}
+2026-09-17T12:30:59.907+08:00  INFO 22512 --- [nio-8081-exec-9] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+2026-09-17T12:30:59.907+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.i.JwtTokenAdminInterceptor           : ��ǰ�û�id��2
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5de5dc1d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1067016491 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select id, name, role from employee where status = 1 order by role desc, id asc
+==> Parameters: 
+2026-09-17T12:30:59.908+08:00  INFO 22512 --- [nio-8081-exec-2] f.c.controller.admin.ShopController      : ��ѯ��ǰ����Ӫҵ״̬��Ӫҵ��
+<==    Columns: id, name, role
+<==        Row: 2, ��������Ա, 1
+<==        Row: 5, ��������Ա, 1
+<==        Row: 1, Ա��, 0
+<==        Row: 7, test, 0
+<==        Row: 9, 66, 0
+<==        Row: 10, 123, 0
+<==      Total: 6
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5de5dc1d]
+2026-09-17T12:31:02.061+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:31:02 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f7d96b1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1262020082 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:16:02.061644900(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4f7d96b1]
+2026-09-17T12:32:00.002+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Thu Sep 17 12:32:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7badaaf9] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1481012003 wrapping com.mysql.cj.jdbc.ConnectionImpl@67b8d45] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-17T12:17:00.002797100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7badaaf9]
+2026-09-17T12:32:05.478+08:00 ERROR 22512 --- [nio-8081-exec-4] o.a.t.websocket.pojo.PojoEndpointBase    : No error handling configured for [fun.cyhgraph.websocket.WebSocketServer] and the following error occurred
+
+java.io.EOFException: null
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.fillReadBuffer(NioEndpoint.java:1288) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper.read(NioEndpoint.java:1176) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:74) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152) ~[tomcat-embed-websocket-10.1.20.jar:10.1.20]
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.20.jar:10.1.20]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+���ӶϿ�:ukfzbzndeyg
+�ͻ��ˣ�v44qjz5h15��������
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+-------------------------------- token -------------------------------- eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T23:04:06.453+08:00  INFO 22512 --- [nio-8081-exec-7] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T23:04:06.453+08:00  INFO 22512 --- [nio-8081-exec-3] f.c.i.JwtTokenAdminInterceptor           : jwtУ��:eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T23:04:06.453+08:00  INFO 22512 --- [nio-8081-exec-7] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+2026-09-17T23:04:06.453+08:00  INFO 22512 --- [nio-8081-exec-3] fun.cyhgraph.utils.JwtUtil               : ��������У��token�Ƿ�һ��
+eyJhbGciOiJIUzI1NiJ9.eyJlbXBsb3llZUlkIjoyLCJleHAiOjE3ODk2NDcyNzl9.Ri8BbMQJG5mZhc8oA8A1Vy5C5vbmyYakFcREBx7z-CI
+���ӶϿ�:v44qjz5h15
+2026-09-17T23:04:13.240+08:00  WARN 22512 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10h32m29s36ms838?s800ns).
+2026-09-18T11:14:12.862+08:00  WARN 22512 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12h9m59s623ms42?s600ns).
+2026-09-18T11:14:28.644+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:14:28 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@175fbf20] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@28521808 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T10:59:28.644781600(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@175fbf20]
+2026-09-18T11:14:28.651+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ���������ж�����Fri Sep 18 11:14:28 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3cfffde1] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@620643995 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 4(Integer), 2026-09-18T10:14:28.651856800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3cfffde1]
+2026-09-18T11:15:00.006+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:15:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3b29cb19] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2021271912 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:00:00.006299200(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3b29cb19]
+2026-09-18T11:16:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:16:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ded5a10] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@417932727 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:01:00.011063200(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6ded5a10]
+2026-09-18T11:17:00.006+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:17:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c197f85] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@723750348 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:02:00.006505(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2c197f85]
+2026-09-18T11:18:00.006+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:18:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@40087c59] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@663410314 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:03:00.006650400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@40087c59]
+2026-09-18T11:19:00.008+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:19:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c860b07] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1609522810 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:04:00.008237800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5c860b07]
+2026-09-18T11:20:00.008+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:20:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3dd128a7] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1365496361 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:05:00.008479700(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3dd128a7]
+2026-09-18T11:21:00.006+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:21:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5d3f3d44] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1772073556 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:06:00.007098300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5d3f3d44]
+2026-09-18T11:22:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:22:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e1dfb2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@5091853 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:07:00.010044700(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@30e1dfb2]
+2026-09-18T11:23:00.013+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 11:23:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2a548049] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@343328510 wrapping com.mysql.cj.jdbc.ConnectionImpl@6a07912e] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T11:08:00.013960(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2a548049]
+2026-09-18T13:05:53.079+08:00  WARN 22512 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h42m40s74ms163?s100ns).
+2026-09-18T13:06:10.062+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 13:06:10 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5b7816fa] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1428198164 wrapping com.mysql.cj.jdbc.ConnectionImpl@7743fe78] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T12:51:10.062322800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5b7816fa]
+2026-09-18T13:07:01.014+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 13:07:01 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2303cefa] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1919570365 wrapping com.mysql.cj.jdbc.ConnectionImpl@7743fe78] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T12:52:01.014976100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@2303cefa]
+2026-09-18T13:08:01.042+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 13:08:01 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c65a31c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@564976244 wrapping com.mysql.cj.jdbc.ConnectionImpl@7743fe78] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T12:53:01.043096(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1c65a31c]
+2026-09-18T15:55:31.251+08:00  WARN 22512 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h47m6s83ms434?s500ns).
+2026-09-18T15:55:36.097+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 15:55:36 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@dd85ebf] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1007968603 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:40:36.097873200(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@dd85ebf]
+2026-09-18T15:56:00.008+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 15:56:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69fa3285] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1996200024 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:41:00.008523700(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69fa3285]
+2026-09-18T15:57:00.006+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 15:57:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@dc0d54b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@890679404 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:42:00.006231(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@dc0d54b]
+2026-09-18T15:58:00.001+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 15:58:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7e495e92] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1973986973 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:43:00.002596(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7e495e92]
+2026-09-18T15:59:00.006+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 15:59:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@44376f4a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1883116688 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:44:00.006399100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@44376f4a]
+2026-09-18T16:00:00.012+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:00:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5a595c8f] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@636171697 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:45:00.012152500(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5a595c8f]
+2026-09-18T16:01:00.004+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:01:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7377931a] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1675232479 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:46:00.004359500(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7377931a]
+2026-09-18T16:02:00.005+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:02:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@33c50623] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2095430658 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:47:00.005207700(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@33c50623]
+2026-09-18T16:03:00.007+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:03:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@57cf6453] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1285592215 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:48:00.008291100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@57cf6453]
+2026-09-18T16:04:00.002+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:04:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7595bf5] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@723016369 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:49:00.002262800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7595bf5]
+2026-09-18T16:05:00.001+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:05:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5fb976f2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@309467139 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:50:00.001601500(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@5fb976f2]
+2026-09-18T16:06:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:06:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3b79ca12] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@795030889 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:51:00.010793200(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3b79ca12]
+2026-09-18T16:07:00.014+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:07:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66e71d77] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@331047651 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:52:00.014682100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@66e71d77]
+2026-09-18T16:08:00.001+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:08:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@14b3241c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1256300376 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:53:00.001326300(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@14b3241c]
+2026-09-18T16:09:00.015+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:09:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@967ec98] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@83470956 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:54:00.015992600(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@967ec98]
+2026-09-18T16:10:00.005+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:10:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6a0d4f95] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1555590496 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:55:00.006510900(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6a0d4f95]
+2026-09-18T16:11:00.009+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:11:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70ed8950] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1889272127 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:56:00.009457400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@70ed8950]
+2026-09-18T16:12:00.002+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:12:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22f4cb04] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1053782275 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:57:00.003953900(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@22f4cb04]
+2026-09-18T16:13:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:13:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4479ef5d] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1087479869 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:58:00.010841100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4479ef5d]
+2026-09-18T16:14:00.010+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:14:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7b37e611] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1891626285 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T15:59:00.010955(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7b37e611]
+2026-09-18T16:15:00.011+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:15:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24da6358] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1612259004 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T16:00:00.024796600(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@24da6358]
+2026-09-18T16:16:00.014+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:16:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4116a7b3] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@916573290 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T16:01:00.014219100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4116a7b3]
+2026-09-18T16:17:00.004+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:17:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7340face] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@127922218 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T16:02:00.004975800(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7340face]
+2026-09-18T16:18:00.002+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:18:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff7b307] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@2073411261 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T16:03:00.003770400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@ff7b307]
+2026-09-18T16:19:00.002+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Fri Sep 18 16:19:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1175ddd2] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@589835120 wrapping com.mysql.cj.jdbc.ConnectionImpl@7b2c73d7] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-18T16:04:00.003629100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1175ddd2]
+2026-09-19T01:07:32.970+08:00  WARN 22512 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8h48m31s388ms19?s200ns).

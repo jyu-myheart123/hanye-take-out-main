@@ -109,3 +109,40 @@ ALTER TABLE orders
 
 -- 6.1 联系电话列加长（原为 varchar(11)，员工多输一位号码会导致整单下单失败，放宽到 20 位）
 ALTER TABLE orders MODIFY COLUMN phone VARCHAR(20) DEFAULT NULL COMMENT '手机号/联系电话（堂食可留11位手机号）';
+
+-- ============================================================
+-- 7. 员工赏罚：员工服务评分（星级+小费打赏） + 北极星积分 + 赏罚流水
+-- ============================================================
+CREATE TABLE IF NOT EXISTS staff_rating (
+    id              INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    employee_id     INT          NOT NULL COMMENT '被评价的服务员工id',
+    employee_name   VARCHAR(64)  DEFAULT NULL COMMENT '员工姓名（冗余，方便直接展示）',
+    order_id        INT          DEFAULT NULL COMMENT '关联堂食订单id（选填）',
+    table_no        VARCHAR(32)  DEFAULT NULL COMMENT '桌号/顾客称呼（选填）',
+    customer_name   VARCHAR(32)  DEFAULT NULL COMMENT '顾客称呼（选填）',
+    service_score   TINYINT      NOT NULL COMMENT '服务态度评分1-5星',
+    recommend_score TINYINT      DEFAULT NULL COMMENT '推荐指数（推荐菜品合心意）1-5星',
+    content         VARCHAR(500) DEFAULT NULL COMMENT '评价内容/评语',
+    tip_amount      DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '顾客打赏小费金额',
+    star_points     INT          NOT NULL DEFAULT 0 COMMENT '本次评价获得的北极星积分',
+    status          TINYINT      NOT NULL DEFAULT 1 COMMENT '1有效 0隐藏',
+    create_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_employee_time (employee_id, create_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='员工服务评分表';
+
+CREATE TABLE IF NOT EXISTS staff_reward (
+    id           INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    employee_id  INT          NOT NULL COMMENT '员工id',
+    type         TINYINT      NOT NULL COMMENT '类型 1顾客打赏 2店主奖励 3店主惩戒',
+    amount       DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '金额：打赏/奖励为正，惩戒为负',
+    star_points  INT          NOT NULL DEFAULT 0 COMMENT '北极星积分变动：奖励为正，惩戒为负',
+    rating_id    INT          DEFAULT NULL COMMENT '关联的服务评分id（打赏时有值）',
+    order_id     INT          DEFAULT NULL COMMENT '关联订单id（选填）',
+    reason       VARCHAR(255) DEFAULT NULL COMMENT '奖惩原因/说明',
+    operator_id  INT          DEFAULT NULL COMMENT '操作人员工id（店主奖惩时记录）',
+    create_time  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_employee_time (employee_id, create_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='员工赏罚流水表';
