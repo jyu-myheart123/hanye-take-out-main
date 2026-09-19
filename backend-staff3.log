@@ -4431,3 +4431,35 @@ JDBC Connection [HikariProxyConnection@1273550598 wrapping com.mysql.cj.jdbc.Con
 <==        Row: 5, ��������, <<BLOB>>, 2, 1, null, null, 2, 52.00
 <==      Total: 2
 Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6d0b9f73]
+2026-09-19T20:25:00.008+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Sat Sep 19 20:25:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@79b2818e] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@572769403 wrapping com.mysql.cj.jdbc.ConnectionImpl@2146fca6] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-19T20:10:00.008820400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@79b2818e]
+2026-09-19T20:26:00.001+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Sat Sep 19 20:26:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@38cdb22b] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1428093517 wrapping com.mysql.cj.jdbc.ConnectionImpl@2146fca6] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-19T20:11:00.001545900(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@38cdb22b]
+2026-09-19T20:27:00.013+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Sat Sep 19 20:27:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@60adae3c] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@899941608 wrapping com.mysql.cj.jdbc.ConnectionImpl@2146fca6] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-19T20:12:00.013092400(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@60adae3c]
+2026-09-19T20:28:00.007+08:00  INFO 22512 --- [   scheduling-1] fun.cyhgraph.task.OrderTask              : ����֧����ʱ������Sat Sep 19 20:28:00 CST 2026
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69f22c57] was not registered for synchronization because synchronization is not active
+JDBC Connection [HikariProxyConnection@1688445723 wrapping com.mysql.cj.jdbc.ConnectionImpl@2146fca6] will not be managed by Spring
+==>  Preparing: select * from orders where status = ? and order_time < ?
+==> Parameters: 1(Integer), 2026-09-19T20:13:00.007326100(LocalDateTime)
+<==      Total: 0
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@69f22c57]
