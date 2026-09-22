@@ -29,7 +29,9 @@ const menuList = [
   { title: '营销活动', path: '/promotion', icon: 'Discount', desc: '满减、折扣、第二份半价' },
   { title: '堂食会员', path: '/member', icon: 'GoldMedal', desc: '储值、积分、等级与消费记录' },
   { title: '客户评价', path: '/review', icon: 'ChatDotRound', desc: '菜品服务评分与改进意见' },
-  { title: '员工赏罚', path: '/staff', icon: 'Trophy', desc: '服务评分、小费打赏与北极星排名' }
+  { title: '员工赏罚', path: '/staff', icon: 'Trophy', desc: '服务评分、小费打赏与北极星排名' },
+  { title: '惊喜盲盒', path: '/blindbox', icon: 'Present', desc: '随机套餐三选一翻卡牌' },
+  { title: '供应管理', path: '/supply', icon: 'Van', desc: '供应商、采购记录与月底对账' }
 ]
 
 const form = reactive({

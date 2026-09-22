@@ -146,3 +146,77 @@ CREATE TABLE IF NOT EXISTS staff_reward (
     PRIMARY KEY (id),
     KEY idx_employee_time (employee_id, create_time)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='员工赏罚流水表';
+
+-- ============================================================
+-- 8. 惊喜盲盒 + 供应管理
+-- ============================================================
+CREATE TABLE IF NOT EXISTS blind_box (
+    id          INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    name        VARCHAR(64)  NOT NULL COMMENT '盲盒名称',
+    price       DECIMAL(10,2) NOT NULL COMMENT '盲盒售价（固定价，先付款再抽卡）',
+    image       VARCHAR(255) DEFAULT NULL COMMENT '盲盒封面图',
+    description VARCHAR(255) DEFAULT NULL COMMENT '盲盒说明',
+    status      TINYINT      NOT NULL DEFAULT 1 COMMENT '1启用 0停用',
+    create_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='惊喜盲盒表';
+
+CREATE TABLE IF NOT EXISTS blind_box_option (
+    id           INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    box_id       INT          NOT NULL COMMENT '所属盲盒id',
+    option_name  VARCHAR(64)  NOT NULL COMMENT '套餐名',
+    dish_ids     VARCHAR(255) NOT NULL COMMENT '菜品id逗号串',
+    dish_summary VARCHAR(255) DEFAULT NULL COMMENT '菜品摘要冗余',
+    create_time  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_box (box_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='盲盒套餐选项表';
+
+ALTER TABLE orders
+    ADD COLUMN blind_box_id INT DEFAULT NULL COMMENT '惊喜盲盒id（盲盒订单才有）' AFTER member_id,
+    ADD COLUMN blind_box_option_id INT DEFAULT NULL COMMENT '抽中的盲盒套餐id' AFTER blind_box_id;
+
+CREATE TABLE IF NOT EXISTS supplier (
+    id             INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    name           VARCHAR(64)  NOT NULL COMMENT '供应商名称',
+    contact_person VARCHAR(32)  DEFAULT NULL COMMENT '联系人',
+    phone          VARCHAR(20)  DEFAULT NULL COMMENT '联系电话',
+    address        VARCHAR(255) DEFAULT NULL COMMENT '地址',
+    main_category  VARCHAR(64)  DEFAULT NULL COMMENT '主营品类',
+    status         TINYINT      NOT NULL DEFAULT 1 COMMENT '1合作中 0停用',
+    remark         VARCHAR(255) DEFAULT NULL COMMENT '备注',
+    create_time    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='原材料供应商表';
+
+CREATE TABLE IF NOT EXISTS material (
+    id              INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    name            VARCHAR(64)  NOT NULL COMMENT '原材料名称',
+    unit            VARCHAR(16)  NOT NULL DEFAULT '斤' COMMENT '单位',
+    reference_price DECIMAL(10,2) DEFAULT NULL COMMENT '参考单价',
+    category        VARCHAR(32)  DEFAULT NULL COMMENT '分类',
+    supplier_id     INT          DEFAULT NULL COMMENT '常用供应商id',
+    status          TINYINT      NOT NULL DEFAULT 1 COMMENT '1在用 0停用',
+    create_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='原材料表';
+
+CREATE TABLE IF NOT EXISTS purchase_record (
+    id            INT          NOT NULL AUTO_INCREMENT COMMENT '主键',
+    supplier_id   INT          NOT NULL COMMENT '供应商id',
+    material_id   INT          NOT NULL COMMENT '原材料id',
+    quantity      DECIMAL(10,2) NOT NULL COMMENT '采购数量',
+    unit_price    DECIMAL(10,2) NOT NULL COMMENT '实际单价',
+    total_amount  DECIMAL(10,2) NOT NULL COMMENT '合计金额',
+    is_on_time    TINYINT      NOT NULL DEFAULT 1 COMMENT '是否准时到货',
+    is_qualified  TINYINT      NOT NULL DEFAULT 1 COMMENT '是否验收合格',
+    purchase_time DATETIME     NOT NULL COMMENT '采购/到货时间',
+    remark        VARCHAR(255) DEFAULT NULL COMMENT '备注',
+    create_time   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    KEY idx_supplier_time (supplier_id, purchase_time),
+    KEY idx_material_time (material_id, purchase_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='采购入库记录表';

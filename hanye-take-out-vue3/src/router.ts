@@ -103,6 +103,18 @@ const router = createRouter({
           path: 'staff',
           name: 'staff',
           component: () => import('./views/staff/index.vue')
+        },
+        {
+          // 惊喜盲盒：商家配置盲盒套餐、付款后三选一翻卡牌，抽中转正式订单
+          path: 'blindbox',
+          name: 'blindbox',
+          component: () => import('./views/blindbox/index.vue')
+        },
+        {
+          // 供应管理：供应商/原材料档案、采购记录、准时率合格率、月底对账
+          path: 'supply',
+          name: 'supply',
+          component: () => import('./views/supply/index.vue')
         }
       ]
     },

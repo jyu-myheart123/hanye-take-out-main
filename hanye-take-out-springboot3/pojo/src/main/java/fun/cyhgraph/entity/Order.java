@@ -75,6 +75,14 @@ public class Order implements Serializable {
      * 下单会员id（散客为空）
      */
     private Integer memberId;
+    /**
+     * 惊喜盲盒id（只有盲盒订单才有值）
+     */
+    private Integer blindBoxId;
+    /**
+     * 抽中的盲盒套餐id（只有盲盒订单才有值）
+     */
+    private Integer blindBoxOptionId;
     private String remark; // 备注
     private String userName; // 用户名
     private String phone; // 手机号
